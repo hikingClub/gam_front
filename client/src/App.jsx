@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import MainContent from "./components/MainContent";
 import Navbar from "./components/Navbar";
 import SearchPage from "./pages/SearchPage";
+import TestPage from "./pages/TestPage";
 import "./styles/App.css";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainContent />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/test" element={<TestPage />} />
         </Routes>
       </div>
       <Footer />

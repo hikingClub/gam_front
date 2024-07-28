@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Input } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/mainLogo.png"; // 이미지 import
+import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
 
 const MainContent = () => {
@@ -33,7 +33,7 @@ const MainContent = () => {
               </Link>
             }
             endAdornment={
-              <Link to="/search">
+              <Link to="/test">
                 <MicIcon className="icon" sx={{ fontSize: "1.4em" }} />
               </Link>
             }

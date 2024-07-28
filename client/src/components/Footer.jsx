@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="footer-copy">
         Copyright © Korea Software Human Resources Development Institute. All
         Rights Reserved. | 주소: (06567) 서울특별시 서초구 동작대로 132 (방배동,
-        안석빌딩) 9층 | 고유번호: 010-3021-9040
+        안석빌딩) 9층 | 고객센터: pass-word-486
       </div>
     </footer>
   );
