@@ -1,0 +1,171 @@
+/* src/styles/NavRight.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+.notification-container {
+  position: relative;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 가운데 정렬 */
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background-color: rgba(100, 108, 255, 0.5);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(28, 67, 112, 0.1);
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+.notification-button {
+  padding: 0.25rem 0.5rem; /* 크기를 줄이기 위해 패딩 조정 */
+}
+
+.button:hover {
+  background-color: rgba(83, 91, 242, 0.5);
+  transform: translateY(-2px);
+}
+
+.button svg {
+  width: 20px; /* 알람 아이콘 크기를 줄임 */
+  height: 20px;
+}
+
+.user-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background-color: white;
+  color: #333;
+  font-weight: bold;
+  border: none; /* 버튼 윤곽선 제거 */
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+  outline: none; /* 버튼 윤곽선 제거 */
+  box-shadow: none; /* 박스 그림자 제거 */
+}
+
+.user-toggle-button:focus {
+  outline: none; /* 버튼 윤곽선 제거 */
+  box-shadow: none; /* 박스 그림자 제거 */
+}
+
+.user-toggle-button:hover {
+  background-color: #f0f0f0;
+}
+
+.username {
+  color: #646cff;
+  font-weight: bold;
+  margin-right: 0.5rem; /* 간격 추가 */
+}
+
+.dropdown-toggle svg {
+  width: 20px; /* SVG 크기 키우기 */
+  height: 20px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px); /* 사용자 버튼 바로 아래에 위치 */
+  right: 0; /* 위치 조정 */
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 200px; /* 메뉴 너비 조정 */
+  z-index: 1000;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s; /* 애니메이션 제거 */
+  border-bottom: 1px solid #ddd; /* 각 링크 사이에 줄 추가 */
+}
+
+.dropdown-link:last-child {
+  border-bottom: none; /* 마지막 링크에는 줄을 추가하지 않음 */
+}
+
+.dropdown-link:hover {
+  background-color: #f0f0f0;
+}
+
+/* 알람 드롭다운 */
+.alarm-dropdown {
+  position: absolute;
+  top: calc(100% + 10px); /* 알람 버튼 바로 아래에 위치 */
+  right: 0; /* 알람 버튼의 오른쪽 끝에 맞춤 */
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  width: 300px;
+  z-index: 1000;
+  margin-top: 10px;
+}
+
+.dropdown-content {
+  padding: 20px;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dropdown-title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.settings-button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.notification-content {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.more-button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}

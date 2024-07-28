@@ -1,25 +1,8 @@
 import React from "react";
 
-const Home2 = () => {
+const Home = () => {
   return (
     <div className="bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="container mx-auto flex justify-between items-center py-4 px-6">
-          <div className="flex space-x-4">
-            <button className="text-gray-700 hover:text-blue-500">
-              디지털집현전이란?
-            </button>
-            <button className="text-gray-700 hover:text-blue-500">
-              디지털정보소식
-            </button>
-            <button className="text-gray-700 hover:text-blue-500">
-              공지사항
-            </button>
-          </div>
-          <button className="text-gray-700 hover:text-blue-500">로그인</button>
-        </div>
-      </header>
-
       <main className="flex flex-col items-center justify-center min-h-screen bg-white">
         <div className="text-center">
           <img
@@ -195,4 +178,4 @@ const Home2 = () => {
   );
 };
 
-export default Home2;
+export default Home;
