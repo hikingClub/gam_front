@@ -1,5 +1,3 @@
-/* src/styles/NavRight.css */
-
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
 
 body {
@@ -119,19 +117,19 @@ body {
 /* 알람 드롭다운 */
 .alarm-dropdown {
   position: absolute;
-  top: calc(100% + 10px); /* 알람 버튼 바로 아래에 위치 */
-  right: 0; /* 알람 버튼의 오른쪽 끝에 맞춤 */
+  top: calc(100% + 10px);
+  right: 0;
   background: white;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   width: 300px;
   z-index: 1000;
-  margin-top: 10px;
 }
 
 .dropdown-content {
   padding: 20px;
+  color: #000; /* 글씨색을 검정색으로 설정 */
 }
 
 .dropdown-header {
@@ -139,33 +137,42 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  border-bottom: 1px solid #ddd; /* 구분선 추가 */
+  padding-bottom: 10px; /* 구분선과의 간격 추가 */
 }
 
-.dropdown-title {
-  font-size: 1rem;
-  font-weight: bold;
+.dropdown-header h2 {
+  font-size: 1.125rem; /* text-lg 크기 */
+  font-weight: 700; /* font-bold */
 }
 
 .settings-button {
   background-color: #e0e0e0;
+  color: #555; /* 글씨색을 회색으로 설정 */
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
   cursor: pointer;
+  font-size: 0.875rem; /* text-sm 크기 */
 }
 
 .notification-content {
   background-color: #f0f8ff;
-  padding: 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  color: #1e40af; /* 글씨색을 blue-600로 설정 */
+  padding: 1rem; /* py-4 */
+  border-radius: 0.5rem; /* rounded-lg */
+  margin-bottom: 1rem; /* mb-4 */
+  text-align: center; /* 가운데 정렬 */
+  border-bottom: 1px solid #ddd; /* 구분선 추가 */
 }
 
 .more-button {
   background-color: #e0e0e0;
+  color: #555; /* 글씨색을 회색으로 설정 */
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
   cursor: pointer;
+  font-size: 0.875rem; /* text-sm 크기 */
   width: 100%;
 }

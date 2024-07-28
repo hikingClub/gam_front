@@ -24,6 +24,7 @@
 .navbar-links {
   display: flex;
   gap: 20px;
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
 }
 
 .navbar-links a {

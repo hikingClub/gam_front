@@ -1,0 +1,35 @@
+footer {
+  background-color: #d6d4d4;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: fixed; /* 변경 */
+  bottom: 0;
+  left: 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+  gap: 15px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+}
+
+.footer-content a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  font-size: 0.875rem;
+  color: #666;
+  text-align: left; /* 왼쪽 정렬로 변경 */
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
+}
