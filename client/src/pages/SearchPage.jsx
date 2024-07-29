@@ -1,15 +1,4 @@
-import MicIcon from "@mui/icons-material/Mic";
-import SearchIcon from "@mui/icons-material/Search";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import "../styles/SearchPage.css";
 
@@ -32,28 +21,6 @@ const SearchPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box className="search-bar">
-        <TextField
-          variant="outlined"
-          fullWidth
-          placeholder="검색어를 입력하세요"
-          InputProps={{
-            endAdornment: (
-              <>
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-                <IconButton>
-                  <MicIcon />
-                </IconButton>
-              </>
-            ),
-          }}
-        />
-        <Button variant="outlined" className="search-button">
-          상세 검색
-        </Button>
-      </Box>
       <Tabs
         value={value}
         onChange={handleChange}
