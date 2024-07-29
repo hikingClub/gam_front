@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="javascript:kakaoLogin();">
+      <img
+        src="https://velog.velcdn.com/images/zad1264/post/3f9c8f78-fa33-4cfe-9a98-86bdfc98a9a0/image.png"
+        alt="Kakao Login"
+      />
+    </a>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      window.Kakao.init("75bbecbf1f32d4df72553cd2ca8e86e0");
+
+      function kakaoLogin() {
+        Kakao.Auth.login({
+          scope: "profile_nickname",
+          success: function (authObj) {
+            console.log(authObj);
+            Kakao.API.request({
+              url: "/v2/user/me",
+              success: res => {
+                const kakao_account = res.kakao_account;
+                console.log(kakao_account);
+                // 로그인 성공 후 리디렉션
+                window.location.href = "https://cdn.kyujanggak.com/"; // 여기에 리디렉션할 URL을 입력하세요.
+              },
+              fail: function (error) {
+                console.error(error);
+              },
+            });
+          },
+          fail: function (error) {
+            console.error(error);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,38 +1,32 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+// App.jsx
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./styles/App.css";
-import viteLogo from "/vite.svg";
-import Login from "./pages/Login";
+import Login from "./components/Login";
+import SignupTos from "./components/SignupTos";
+import SignupForm from "./components/SignupForm";
+import Home from "./components/Home";
+import KakaoRedirect from "./components/KakaoRedirect";
+import SearchID from "./components/SearchID";
+import SearchPW from "./components/SearchPW";
+import ModernLogin from "./components/ModernLogin";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <Login />
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/ModernLogin" element={<ModernLogin />} />
+          <Route path="/signuptos" element={<SignupTos />} />
+          <Route path="/signupform" element={<SignupForm />} />
+          <Route path="/search-id" element={<SearchID />} />
+          <Route path="/search-pw" element={<SearchPW />} />
+          <Route path="/auto/kakao/callback" element={<KakaoRedirect />} />
+        </Routes>
       </div>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>[ Deploy test - 3트! ]</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Router>
   );
 }
 
