@@ -1,0 +1,142 @@
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  max-width: 1000vw; /* 최대 너비를 설정 */
+  margin: auto; /* 가운데 정렬 */
+  border: 0.5rem double #ccc; /* 경계 추가 */
+  border-radius: 1vh; /* 모서리 둥글게 */
+  background-color: #ffffff68; /* 배경색 */
+}
+
+.title {
+  width: 100%; /* 제목을 전체 너비에 맞춤 */
+  margin-bottom: 8vh; /* vh 단위로 변경 */
+  text-align: center; /* 가운데 정렬 */
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between; /* 자식 요소들 간에 공간을 균등 분배 */
+  padding: 0 20vh; /* 좌우 패딩 */
+}
+
+.title-id a {
+  color: grey; /* 기본 텍스트 색상을 회색으로 설정 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+}
+
+.title-id hr {
+  border: 0.2vh solid rgba(0, 0, 0, 0.303); /* 경계선을 설정 */
+  border-radius: 10vh;
+}
+
+.title-id:hover a {
+  color: red; /* hover 시 텍스트 색상을 빨간색으로 변경 */
+}
+
+.title-id:hover hr {
+  border-color: red; /* hover 시 hr 경계선 색상을 빨간색으로 변경 */
+}
+
+.title-id,
+.title-pw {
+  flex: 1; /* 자식 요소들을 동일한 너비로 설정 */
+  text-align: center; /* 가운데 정렬 */
+  font-size: 3rem;
+}
+
+.title-pw a {
+  color: grey; /* 기본 텍스트 색상을 회색으로 설정 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+}
+
+.title-pw hr {
+  border: 0.2vh solid rgba(0, 0, 0, 0.303); /* 경계선을 설정 */
+  border-radius: 10vh;
+}
+
+.title-pw.hover a {
+  color: blue; /* hover 시 텍스트 색상을 파란색으로 변경 */
+}
+
+.title-pw.hover hr {
+  border-color: blue; /* hover 시 hr 경계선 색상을 파란색으로 변경 */
+}
+
+.boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh; /* vh 단위로 변경 */
+  width: 100%;
+  max-width: 1000px; /* 더 넓게 조정 */
+  margin-bottom: 8vh;
+}
+
+.nickname-box,
+.email-box {
+  display: flex;
+  align-items: center; /* 수평 정렬 */
+  gap: 0.25rem; /* 닉네임과 별표 사이의 간격 설정 */
+}
+
+.input-field {
+  flex: 1; /* 입력 필드가 남은 공간을 차지하도록 설정 */
+  padding: 1.2vh; /* 패딩 값을 줄임 */
+  border: 1px solid #ccc;
+  border-radius: 0.5vh;
+  margin-top: 1vh;
+  box-sizing: border-box; /* 전체 너비를 포함 */
+  margin-left: 1.5vh;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px; /* 버튼 컨테이너의 너비 설정 */
+}
+
+.next-btn,
+.login-btn {
+  flex: 1; /* 버튼들을 동일한 너비로 설정 */
+}
+
+/* 다음 버튼 스타일 */
+.next-button {
+  width: 100%; /* 버튼의 너비를 부모 요소에 맞춤 */
+  padding: 1.5vh 3vw; /* vh와 vw 단위로 변경 */
+  background-color: white;
+  color: #017c1e;
+  border: 1px solid #017c1e67;
+  border-radius: 0.5vh; /* vh 단위로 변경 */
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background-color: #218838;
+  color: white; /* 텍스트 색상 반전 */
+}
+
+/* 로그인 버튼 스타일 */
+.login-button {
+  width: 100%; /* 버튼의 너비를 부모 요소에 맞춤 */
+  padding: 1.5vh 3vw; /* vh와 vw 단위로 변경 */
+  background-color: white;
+  color: #007bff;
+  border: 1px solid #007bff6c;
+  border-radius: 0.5vh; /* vh 단위로 변경 */
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+  color: white; /* 텍스트 색상 반전 */
+}
+
+.required {
+  color: red;
+  margin-left: 0.25rem; /* 4px를 rem 단위로 변환 */
+}

@@ -18,9 +18,12 @@ jobs:
         with:
           node-version: "20.14.0"
 
-      - name: Install dependencies
-        working-directory: ./client # client 폴더로 이동
-        run: npm install
+    - name: Clean install dependencies # 단계 이름 변경
+      working-directory: ./client
+      run: |
+        rm -rf node_modules # node_modules 폴더 삭제
+        rm -f package-lock.json # package-lock.json 파일 삭제
+        npm install # 종속성 다시 설치
 
       - name: Build project
         working-directory: ./client
