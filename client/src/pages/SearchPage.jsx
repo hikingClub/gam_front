@@ -1,5 +1,6 @@
-import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
+import SearchNav from "../components/SearchNav";
 import "../styles/SearchPage.css";
 
 const SearchPage = () => {
@@ -20,28 +21,41 @@ const SearchPage = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="search categories"
-      >
-        <Tab label="전체" />
-        <Tab label="고전" />
-        <Tab label="기록물" />
-        <Tab label="논문" />
-        <Tab label="도서" />
-        <Tab label="멀티미디어" />
-        <Tab label="법령" />
-        <Tab label="보고서" />
-        <Tab label="신문/잡지" />
-        <Tab label="용어정보" />
-        <Tab label="인물정보" />
-        <Tab label="특허" />
-      </Tabs>
-      <Typography variant="h6" className="result-summary">
-        "기상" 검색결과 95,808건
-      </Typography>
+    <>
+      {/* 상단1 */}
+      <Box style={{ width: "100%", marginTop: "120px" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="search categories"
+          variant="scrollable"
+          scrollButtons="auto"
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "#2196f3", // 파란색 인디케이터
+              height: "4px", // 인디케이터의 두께를 5px로 설정
+            },
+          }}
+          style={{ width: "100%" }} // Tabs 컴포넌트를 가로 전체로 확장
+        >
+          <Tab label={<span className="neon-tab">전체</span>} />
+          <Tab label={<span className="neon-tab">고전</span>} />
+          <Tab label={<span className="neon-tab">기록물</span>} />
+          <Tab label={<span className="neon-tab">논문</span>} />
+          <Tab label={<span className="neon-tab">도서</span>} />
+          <Tab label={<span className="neon-tab">멀티미디어</span>} />
+          <Tab label={<span className="neon-tab">법령</span>} />
+          <Tab label={<span className="neon-tab">보고서</span>} />
+          <Tab label={<span className="neon-tab">신문/잡지</span>} />
+          <Tab label={<span className="neon-tab">용어정보</span>} />
+          <Tab label={<span className="neon-tab">인물정보</span>} />
+          <Tab label={<span className="neon-tab">특허</span>} />
+        </Tabs>
+      </Box>
+      {/* 상단2 */}
+      <Box style={{ width: "100%", marginTop: "100px" }}>
+        <SearchNav />
+      </Box>
       {searchResults.map((result, index) => (
         <Box key={index} className="search-result">
           <Typography variant="h6" className="result-title">
@@ -58,7 +72,7 @@ const SearchPage = () => {
           </Typography>
         </Box>
       ))}
-    </Container>
+    </>
   );
 };
 

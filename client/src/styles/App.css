@@ -1,8 +1,9 @@
-#root {
-  max-width: 1280px;
-  margin: -12rem auto 0 auto; /* 가운데 root태그 위치 조정 */
-  padding: 2rem;
-  text-align: center;
+.main-content-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 60px); /* Navbar 높이를 제외한 전체 화면 높이 */
+  margin-top: -50px; /* 화면 중앙에서 위로 이동 */
 }
 
 .main-content {

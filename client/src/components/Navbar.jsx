@@ -62,15 +62,15 @@ const Navbar = () => {
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "#6a11cb", // 테두리 색상 설정
-                  borderWidth: "2.5px", // 테두리 두께 설정
+                  borderWidth: "2.3px", // 테두리 두께 설정
                 },
                 "&:hover fieldset": {
                   borderColor: "#2575fc", // 호버 시
-                  borderWidth: "2.5px",
+                  borderWidth: "2.3px",
                 },
                 "&.Mui-focused fieldset": {
                   borderColor: "#6a11cb", // 포커스 시
-                  borderWidth: "2.5px",
+                  borderWidth: "2.3px",
                 },
               },
             }} // 검색바의 너비와 높이를 조정
