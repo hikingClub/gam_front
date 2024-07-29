@@ -1,0 +1,48 @@
+/* MainContent.css */
+.main-content-container {
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%; /* 부모 요소의 높이를 모두 차지하도록 설정 */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.logo-container {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 18rem; /* 적절한 크기로 조정 */
+  height: auto; /* 자동으로 높이 조정 */
+  display: block;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #4c51bf; /* 보라색으로 변경 */
+  margin-bottom: 1rem; /* 여백 조정 */
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: #6b46c1; /* 연한 보라색으로 변경 */
+  margin-bottom: 2rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px; /* 살짝 올라가게 */
+}
+
+.icon {
+  color: rgb(115, 58, 129); /* 아이콘 색상 변경 - 사이즈는 여기서 안바뀌더라; */
+}

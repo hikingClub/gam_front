@@ -1,21 +1,19 @@
-/* App.css */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.main-content-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: calc(100vh - 60px); /* Navbar 높이를 제외한 전체 화면 높이 */
+  margin-top: -50px; /* 화면 중앙에서 위로 이동 */
 }
 
-#root {
-  width: 100%;
+.main-content {
+  flex: 1; /* 메인 콘텐츠가 차지하는 공간을 유연하게 설정 */
+  padding-top: 60px; /* Navbar 높이만큼 패딩 추가 */
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  background-color: #f0f0f0; /* 배경색을 "밝은 회색"으로 설정 */
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-
-.login {
-  margin-bottom: 100px;
+  justify-content: center;
 }
