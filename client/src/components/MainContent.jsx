@@ -15,14 +15,10 @@ const MainContent = () => {
           <img src={logo} alt="Logo" className="logo" />{" "}
         </div>
         {/* 2,3. 사이트제목 및 부제목(설명)  */}
-        <h1 className="title text-4xl font-bold mb-4 text-purple-800">
-          디지털 규장각
-        </h1>
-        <p className="subtitle text-xl text-purple-600 mb-8">
-          전 국민 지식 플랫폼
-        </p>
+        <h1 className="home-title">디지털 규장각</h1>
+        <p className="home-subtitle">전 국민 지식 플랫폼</p>
         {/* 4. 검색창 */}
-        <div className="search-container">
+        <div>
           <Input
             placeholder="궁금한 것을 검색해주세요."
             className="search-input"

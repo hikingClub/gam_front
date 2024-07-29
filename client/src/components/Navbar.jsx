@@ -85,6 +85,15 @@ const Navbar = () => {
               boxShadow: "0 2.3px 4px 1px rgba(106, 17, 203, .3)",
               color: "white",
               padding: "0 15px",
+              "&:hover": {
+                background:
+                  "linear-gradient(45deg, rgba(106, 17, 203, 0.85) 30%, rgba(37, 117, 252, 0.85) 90%)",
+                borderColor: "#646cff",
+              },
+              "&:focus": {
+                outline: "none",
+                boxShadow: "none",
+              },
             }}
           >
             상세검색

@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ModernLogin.css";
-import { loginHandler } from "../components/LoginHandler";
+import googleLogo from "../assets/google.png";
 import kakaoLogo from "../assets/kakao.png";
 import naverLogo from "../assets/naver.png";
-import googleLogo from "../assets/google.png";
+import { loginHandler } from "../components/LoginHandler";
+import "../styles/ModernLogin.css";
+
+const modernLoginStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "100vh",
+  background: "linear-gradient(140deg, #002d4a, rgb(255, 255, 255), #371046)",
+  margin: 0,
+  overflowY: "auto",
+};
 
 const ModernLogin = () => {
   const navigate = useNavigate();
@@ -15,7 +26,7 @@ const ModernLogin = () => {
   };
 
   return (
-    <div className="log-container">
+    <div className="log-container" style={modernLoginStyle}>
       <div className="inner-container">
         <div
           className="login-section"

@@ -24,14 +24,14 @@
 .navbar-left {
   display: flex;
   gap: 20px;
-  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
 }
 
 .navbar-left a {
   text-decoration: none;
   color: #646cff !important; /* 링크 색상 */
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold; /* 링크 텍스트를 진하게 설정 */
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
   padding: 0.6em 1.2em;
   background-color: white;
   border-radius: 25px;
