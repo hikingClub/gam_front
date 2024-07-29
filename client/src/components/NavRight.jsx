@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/NavRight.css";
 
 const NavRight = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
-  const userName = "marioahn";
+  // const userName = "marioahn";
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -65,7 +66,7 @@ const NavRight = () => {
             )}
           </div>
           <button className="user-toggle-button" onClick={toggleDropdown}>
-            <span className="username">{userName}님</span>
+            {/* <span className="username">님</span> */}
             <span className="dropdown-toggle">
               {showDropdown ? (
                 <svg
@@ -118,25 +119,27 @@ const NavRight = () => {
           )}
         </>
       ) : (
-        <button className="button" onClick={handleLogin}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-log-in"
-          >
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-            <polyline points="10 17 15 12 10 7"></polyline>
-            <line x1="15" y1="12" x2="3" y2="12"></line>
-          </svg>
-          로그인
-        </button>
+        <Link to="/ModernLogin">
+          <button className="button" onClick={handleLogin}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-log-in"
+            >
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            로그인
+          </button>
+        </Link>
       )}
     </div>
   );
