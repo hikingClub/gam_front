@@ -1,16 +1,16 @@
 // App.jsx
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./styles/App.css";
 // import Login from "./pages/Login";
 // import Login from "./components/Login";
-import SignupTos from "./components/SignupTos";
-import SignupForm from "./components/SignupForm";
 import Home from "./components/Home";
 import KakaoRedirect from "./components/KakaoRedirect";
+import ModernLogin from "./components/ModernLogin";
 import SearchID from "./components/SearchID";
 import SearchPW from "./components/SearchPW";
-import ModernLogin from "./components/ModernLogin";
+import SignupForm from "./components/SignupForm";
+import SignupTos from "./components/SignupTos";
 
 function App() {
   return (
