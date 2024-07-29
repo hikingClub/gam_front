@@ -4,14 +4,6 @@ body {
   font-family: "Noto Sans KR", sans-serif;
 }
 
-.MuiContainer-root {
-  width: 100%;
-}
-
-.MuiTab-root {
-  width: 100%;
-}
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -79,4 +71,9 @@ body {
   ); /* 선택된 탭 배경 색상 */
   box-shadow: 0 4px 15px rgba(171, 71, 188, 0.75); /* 선택된 탭 그림자 효과 */
   color: #6a1b9a; /* 선택된 탭 텍스트 색상 */
+}
+
+/* Center align the Tabs container */
+.MuiTabs-flexContainer {
+  justify-content: center;
 }

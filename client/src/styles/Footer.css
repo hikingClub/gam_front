@@ -3,9 +3,13 @@ footer {
   padding: 20px;
   text-align: center;
   width: 100%;
-  position: fixed;
+  position: relative; /* 고정 해제 - 아래에선 fixed(footer.jsx에서 조건부 렌더링) */
   bottom: 0;
   left: 0;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .footer-content {
