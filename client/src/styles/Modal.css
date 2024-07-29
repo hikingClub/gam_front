@@ -1,0 +1,114 @@
+/* 모달 창 기본 스타일 */
+.modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    128,
+    128,
+    128,
+    0.4
+  ); /* 모달 창 바깥 회색 반투명 배경 */
+  overflow: hidden;
+}
+
+.modal-content {
+  background-color: #fff;
+  position: relative; /* 모달 콘텐츠에 상대적 위치 설정 */
+  margin: 2rem;
+  padding: 2rem;
+  border: 1px solid #888;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  max-width: 50vw;
+  max-height: 70vh;
+  overflow: hidden; /* 콘텐츠가 모달 창을 넘지 않도록 설정 */
+  text-align: left;
+}
+
+.modal-content h2 {
+  position: sticky;
+  top: 0; /* 제목의 최상단 위치 설정 */
+  background-color: #fff;
+  padding: 1rem;
+  margin: 0;
+  z-index: 9; /* close 버튼보다 낮게 설정 */
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-body {
+  white-space: pre-line; /* 줄바꿈 유지 */
+  max-height: 60vh;
+  overflow-y: auto; /* 세로 스크롤 설정 */
+  text-align: left;
+}
+
+.modal-body h3,
+.modal-body strong {
+  font-weight: bold;
+}
+
+/* 스크롤바 스타일 */
+.modal-body::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background-color: #dbdbdb;
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #94b6ef;
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #3d62a3;
+}
+
+/* 닫기 버튼 스타일 */
+.close {
+  color: #aaa;
+  position: absolute; /* 절대 위치 설정 */
+  top: 1rem; /* 상단 여백 */
+  right: 1rem; /* 오른쪽 여백 */
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 10; /* 제목보다 높게 설정 */
+}
+
+.close:hover,
+.close:focus {
+  color: #ff0000;
+  text-decoration: none;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 90vw;
+    max-height: 80vh;
+  }
+  .modal-body {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+  .modal-body {
+    max-height: 55vh;
+  }
+}
