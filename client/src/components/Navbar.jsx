@@ -19,8 +19,8 @@ const Navbar = () => {
     <nav className="navbar">
       {/* 1. left */}
       <div className="navbar-left">
-        <Link to="/intro">디지털집현전이 처음이에요</Link>
-        <Link to="/about">디지털집현전 소개</Link>
+        <Link to="/intro">디지털규장각이 처음이에요</Link>
+        <Link to="/about">디지털규장각 소개</Link>
         <Link to="/notice">공지사항</Link>
         <HomeIcon
           sx={{ fontSize: 40, color: "#646cff", cursor: "pointer" }}
@@ -28,7 +28,7 @@ const Navbar = () => {
         />
       </div>
       {/* 2. middle(조건부) */}
-      {location.pathname === "/search" && (
+      {location.pathname.startsWith("/search") && (
         <Box
           sx={{
             display: "flex",

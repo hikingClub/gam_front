@@ -1,6 +1,7 @@
-/* MainContent.css */
 .main-content-container {
-  background-color: #f0f0f0;
+  /* background: linear-gradient(to right, #e9e4f0, #d3cce3); */
+  /* background: linear-gradient(to right, #e0eafc, #cfdef3); */
+  background: linear-gradient(to bottom, #d2d2ff02, #d2d2ff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,8 +53,8 @@
 }
 
 .home-searchInput:focus-within {
-  border-color: #bb71c4; /* 포커스 시 테두리 색상 변경 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 포커스 시 박스 쉐도우 강화 */
+  border-color: #c47171; /* 포커스 시 테두리 색상 변경 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 포커스 시 박스 쉐도우 강화 */
 }
 
 .home-MuiInput-underline:after {
@@ -64,6 +65,13 @@
   position: relative; /* 가상 요소가 기준으로 삼을 수 있도록 설정 */
   border: none; /* 기본 테두리 제거 */
   outline: none; /* 포커스 시 기본 아웃라인 제거 */
+  border-radius: 6px; /* 둥근 모서리 추가 */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* 약간의 투명도를 가진 흰색 배경 */
 }
 
 .home-searchInput::after {
@@ -76,13 +84,17 @@
   height: 4px;
   background: linear-gradient(
     90deg,
-    #e1bee7,
-    #d1c4e9,
-    #bbdefb
+    #2c3e50,
+    #bdc3c7,
+    #8e44ad
   ); /* 연한 색상 그라데이션 */
   background-size: 200% 100%;
   animation: gradient-underline 3s linear infinite;
 }
+
+/* #8e44ad,
+    #3498db,
+    #8e44ad */
 
 @keyframes gradient-underline {
   0% {

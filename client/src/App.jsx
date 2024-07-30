@@ -29,14 +29,15 @@ const AppContent = () => {
       <Navbar />
       {renderMainContent && (
         <div className="main-content">
-          <Routes>
-            <Route path="/" element={<MainContent />} />
-          </Routes>
+          <Routes></Routes>
         </div>
       )}
       <Routes>
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/" element={<MainContent />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search/media" element={<SearchPage />} />
+
         <Route path="/ModernLogin" element={<ModernLogin />} />
         <Route path="/signuptos" element={<SignupTos />} />
         <Route path="/signupform" element={<SignupForm />} />

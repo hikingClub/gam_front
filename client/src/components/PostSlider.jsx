@@ -6,8 +6,8 @@ import {
   CardContent,
   CardMedia,
   IconButton,
-  Typography,
   styled,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
@@ -131,11 +131,15 @@ const PostSlider = ({ posts = [] }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: "80%", overflow: "hidden", px: 1, mx: "auto" }}>
       <Slider {...settings}>
         {currentPosts.map((post, index) => (
-          <Box key={index} p={2}>
-            <NeonCardWrapper>
+          <Box key={index} p={1} mx={1}>
+            {" "}
+            {/* 카드 간격 조정 */}
+            <NeonCardWrapper sx={{ width: "80%" }}>
+              {" "}
+              {/* 카드 가로 길이 조정 */}
               <NeonBorder />
               <NeonCard>
                 <CardMedia

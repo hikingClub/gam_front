@@ -1,7 +1,9 @@
-import { Box, Container, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Tab, Tabs } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
+import PostSlider from "../components/PostSlider";
 import SearchNav from "../components/SearchNav";
 import "../styles/Pagination.css";
 import "../styles/SearchPage.css";
@@ -135,10 +137,23 @@ const postSliders = [
 const SearchPage = () => {
   const [value, setValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
   const postsPerPage = 3;
+
+  useEffect(() => {
+    if (location.pathname === "/search/media") {
+      setValue(5); // 멀티미디어 탭 인덱스 설정
+    }
+  }, [location.pathname]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if (newValue === 5) {
+      navigate("/search/media");
+    } else {
+      navigate("/search");
+    }
   };
 
   const handlePageClick = ({ selected }) => {
@@ -168,8 +183,7 @@ const SearchPage = () => {
           scrollButtons="auto"
           TabIndicatorProps={{
             style: {
-              backgroundColor: "#2196f3", // 파란색 인디케이터
-              height: "4px", // 인디케이터의 두께를 5px로 설정
+              height: "4px", // 인디케이터의 두께
             },
           }}
           style={{ width: "100%" }} // Tabs 컴포넌트를 가로 전체로 확장
@@ -191,32 +205,39 @@ const SearchPage = () => {
       {/* 상단2 */}
       <SearchNav />
       {/* 하단 카드 */}
-      <Container maxWidth="md">
+      <Box sx={{ width: "90%" }}>
         <Box mt={4}>
-          {postCards.map((post, index) => (
-            <PostCard key={index} post={post} />
-          ))}
+          {value === 5 ? (
+            <PostSlider posts={postSliders} />
+          ) : (
+            currentPosts.map((post, index) => (
+              <PostCard key={index} post={post} />
+            ))
+          )}
         </Box>
-        <ReactPaginate
-          previousLabel={"«"}
-          nextLabel={"»"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
-      </Container>
+        {value !== 5 && (
+          <ReactPaginate
+            previousLabel={"«"}
+            nextLabel={"»"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        )}
+      </Box>
     </>
   );
 };
 
 export default SearchPage;
 
+// 백업 코드
 {
   /* <Container maxWidth="md">
         <Box mt={4}>

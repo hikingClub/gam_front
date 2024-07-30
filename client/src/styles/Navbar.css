@@ -8,17 +8,10 @@
   align-items: center;
   padding: 28px 25px; /* 세로 패딩 값을 20px로 증가 */
   background-color: white !important; /* 배경 색상 강제 적용 */
-  border-bottom: 2px solid transparent; /* 투명한 border-bottom */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  border-bottom: 3px #6a11cb; /* 투명한 border-bottom */
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
   z-index: 1000; /* 다른 요소들보다 앞에 위치 */
   box-sizing: border-box; /* 패딩과 경계 포함 */
-  background-image: linear-gradient(
-    to bottom,
-    white,
-    white 98%,
-    lightblue 100%
-  ); /* 그라데이션 배경 */
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; /* 폰트 적용 */
 }
 
 .navbar-left {
