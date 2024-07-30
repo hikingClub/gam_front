@@ -9,10 +9,10 @@ import "../styles/MainContent.css";
 const MainContent = () => {
   return (
     <div className="main-content-container">
-      <div className="text-center">
+      <div className="home-center">
         {/* 1. 로고 이미지 */}
         <div className="logo-container mb-8">
-          <img src={logo} alt="Logo" className="logo" />{" "}
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         {/* 2,3. 사이트제목 및 부제목(설명)  */}
         <h1 className="home-title">디지털 규장각</h1>
@@ -21,23 +21,28 @@ const MainContent = () => {
         <div>
           <Input
             placeholder="궁금한 것을 검색해주세요."
-            className="search-input"
+            className="home-searchInput home-MuiInput-underline"
             fullWidth
-            startAdornment={
-              <Link to="/search">
-                <SearchIcon className="icon" sx={{ fontSize: "1.4em" }} />
-              </Link>
-            }
             endAdornment={
-              <Link to="/test">
-                <MicIcon className="icon" sx={{ fontSize: "1.4em" }} />
-              </Link>
+              <>
+                <Link to="/search">
+                  <SearchIcon
+                    className="home-icon"
+                    sx={{ fontSize: "1.45em" }}
+                  />
+                </Link>
+                <Link to="/test">
+                  <MicIcon className="home-icon" sx={{ fontSize: "1.45em" }} />
+                </Link>
+              </>
             }
             sx={{
               width: "400px",
               height: "50px",
               padding: "10px",
+              paddingLeft: "15px", // placeholder 위치
               fontSize: "1.2em",
+              fontFamily: '"Noto Sans KR", sans-serif',
             }}
           />
         </div>
