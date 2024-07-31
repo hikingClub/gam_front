@@ -103,7 +103,7 @@ const NavRight = () => {
           </button>
           {showDropdown && (
             <div className="dropdown-menu">
-              <a href="#" className="dropdown-link">
+              <a href="/mypagemenu" className="dropdown-link">
                 마이페이지
               </a>
               <a href="#" className="dropdown-link">
