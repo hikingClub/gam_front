@@ -44,10 +44,6 @@
   margin-bottom: 2rem;
 }
 
-.home-icon {
-  margin-left: 5px; /* 원하는 간격으로 조정 */
-}
-
 .home-searchInput:hover {
   border-color: #9657a2; /* 호버 시 테두리 색상 변경 */
 }

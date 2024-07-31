@@ -1,11 +1,11 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
 
-const SearchNav = () => {
+const SearchNav = ({ searchKeyword, resultCount }) => {
   const [year, setYear] = React.useState("최근 2년");
   const [language, setLanguage] = React.useState("모든 언어");
   const [sort, setSort] = React.useState("정확도순");
-  const [view, setView] = React.useState("20개 보기");
+  const [view, setView] = React.useState("10개 보기");
 
   const commonBoxStyles = {
     bgcolor: "#f9f9f9",
@@ -35,7 +35,7 @@ const SearchNav = () => {
           color="primary"
           style={{ ...commonFontStyles, marginRight: "8px" }}
         >
-          "검색"
+          "{searchKeyword}"
         </Typography>
         <Typography
           variant="body2"
@@ -50,7 +50,7 @@ const SearchNav = () => {
           variant="body2"
           style={{ ...commonFontStyles, marginRight: "8px" }}
         >
-          13,779건
+          {resultCount}건
         </Typography>
       </Box>
       {/* 좌측 마진 추가 ml={xx} */}
