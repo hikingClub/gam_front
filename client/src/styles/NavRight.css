@@ -40,6 +40,13 @@ body {
   transform: translateY(-2px);
 }
 
+.button:focus,
+.button:active {
+  outline: none;
+  box-shadow: none;
+  background-color: rgba(83, 91, 242, 0.7); /* 클릭 및 포커스 시 배경색 변경 */
+}
+
 .button svg {
   width: 20px; /* 알람 아이콘 크기를 줄임 */
   height: 20px;

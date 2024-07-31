@@ -12,47 +12,52 @@ const SearchID = () => {
   };
 
   return (
-    <div className="search-container">
-      <div className="title">
-        <div
-          className="title-id"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <a href="/search-id">아이디 찾기!</a>
-          <hr />
+    <div className="id-container-main">
+      <div className="id-container">
+        <div className="id-container-back"></div>
+        <div className="id-title">
+          <div
+            className="id-title-id"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <a href="/search-id">
+              <strong>아이디 찾기</strong>
+            </a>
+            <hr />
+          </div>
+          <div className={`id-title-pw ${hovered ? "hover" : ""}`}>
+            <a href="/search-pw">비밀번호 찾기</a>
+            <hr />
+          </div>
         </div>
-        <div className={`title-pw ${hovered ? "hover" : ""}`}>
-          <a href="/search-pw">비밀번호 찾기!</a>
-          <hr />
+        <div className="id-input-boxes">
+          <div className="id-nickname-box">
+            닉네임<span className="required">*</span>
+            <input
+              type="text"
+              placeholder="닉네임을 입력하세요."
+              className="id-input-field"
+            />
+          </div>
+          <div className="id-email-box">
+            이메일<span className="id-required">*</span>
+            <input
+              type="text"
+              placeholder="이메일을 입력하세요."
+              className="id-input-field"
+            />
+          </div>
         </div>
-      </div>
-      <div className="boxes">
-        <div className="nickname-box">
-          닉네임<span className="required">*</span>
-          <input
-            type="text"
-            placeholder="닉네임을 입력하세요."
-            className="input-field"
-          />
-        </div>
-        <div className="email-box">
-          이메일<span className="required">*</span>
-          <input
-            type="text"
-            placeholder="이메일을 입력하세요."
-            className="input-field"
-          />
-        </div>
-      </div>
-      <div className="btns">
-        <div className="next-btn">
-          <button className="next-button">다음</button>
-        </div>
-        <div className="login-btn">
-          <button className="login-button" onClick={handleLoginClick}>
-            로그인
-          </button>
+        <div className="id-btns">
+          <div className="id-next-btn">
+            <button className="id-next-button">다음</button>
+          </div>
+          <div className="id-login-btn">
+            <button className="id-login-button" onClick={handleLoginClick}>
+              로그인
+            </button>
+          </div>
         </div>
       </div>
     </div>
