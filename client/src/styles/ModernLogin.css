@@ -1,78 +1,76 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+/* ModernLogin.css */
 
-body {
+/* 부모 요소에 적용  */
+.log-container-back {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  margin: auto;
+  background-color: #f5f5f5;
   height: 100vh;
-  background: linear-gradient(140deg, #002d4a, rgb(255, 255, 255), #371046);
-  margin: 0;
-  overflow-y: auto; /* 세로 스크롤 가능 */
-}
-
-.log-container {
-  display: flex;
-  width: 95vw;
-  max-width: 80rem;
-  background: rgba(255, 255, 255, 0.242);
-  margin: 5vh;
 }
 
 .inner-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 70vh; /* 최소 높이 설정 */
-  border-radius: 1rem;
-  overflow: hidden;
+  width: 80%; /* 추가 */
   flex-direction: row;
-  gap: 1rem;
-  padding: 0.5rem;
+  padding: 2.1rem;
+  margin-left: 5.8rem;
+  margin-right: 5.8rem;
+  padding-left: 17rem;
+  padding-right: 17rem;
+  background-color: #e5eaf2;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem 0.3rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  height: 68vh;
+  overflow: hidden;
 }
 
 .login-section,
 .welcome-section {
   flex: 1;
-  padding-top: 3rem;
-  padding-bottom: 2rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
-  height: 30rem;
   background: #ffffff;
   color: black;
-  border: 7px double rgba(130, 130, 130, 0.653);
+  border: 7px double rgba(130, 130, 130, 0.32);
   border-radius: 1rem;
+  margin: 0 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수직 정렬을 중앙으로 */
 }
 
-.welcome-section.hovered {
-  background: black;
-  color: white;
-}
-
-.welcome-section.hovered .welcome-text {
-  display: none;
-}
-
-.welcome-section.hovered .hover-text {
-  display: block;
-}
+/* .welcome-section.hovered {
+    background: black;
+    color: white;
+  }
+  
+  .welcome-section.hovered .welcome-text {
+    display: none;
+  }
+  
+  .welcome-section.hovered .hover-text {
+    display: block;
+  } */
 
 .heading-xl {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 3rem;
 }
 
 .sns-text {
   margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.signup-link {
+  color: #434d5b;
+  font-size: 1.1rem;
+  margin-top: 3.9rem;
 }
 
 .social-login {
@@ -89,26 +87,49 @@ body {
 }
 
 .sns-icon img {
-  width: 5rem;
-  height: auto;
+  width: 8vh;
+  height: 8vh;
+  border: 1px solid black;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
-.input-field {
-  width: 100%;
+.ilban-inputbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  gap: 0.1rem;
+  margin-bottom: 1rem;
+}
+
+.input-fieldbox {
+  width: 20.5rem;
+  max-width: 370px;
   padding: 1rem;
-  border: 0.1rem solid #ccc;
+  border: none;
+  border: 0.1rem solid gray;
   border-radius: 0.5rem;
-  margin: 0.5rem 0;
+  background: white;
+  color: #434d5b;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: bold;
 }
 
 .checkbox-container {
   display: flex;
-  align-items: center;
-  margin: 1rem 0;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin-bottom: 4.2rem;
+  width: 80%; /* 부모의 너비에 맞춤 */
+  max-width: 350px;
 }
 
 .checkbox-container input {
   margin-right: 0.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .links {
@@ -116,7 +137,7 @@ body {
 }
 
 .links a {
-  color: #007bff;
+  color: rgb(49, 49, 49);
   text-decoration: none;
 }
 
@@ -127,19 +148,23 @@ body {
 .sign-in-btn,
 .sign-up-btn {
   width: 100%;
-  padding: 0.75rem;
+  max-width: 370px;
+  padding: 1rem;
   border: none;
   border-radius: 0.5rem;
-  background: #9b59b6;
-  color: white;
+  background: #d2d2ff;
+  color: #434d5b;
   font-size: 1rem;
   cursor: pointer;
   margin-top: 1rem;
+  font-weight: bold;
 }
 
 .sign-in-btn:hover,
 .sign-up-btn:hover {
-  background: #8e44ad;
+  background: #8282ff;
+  color: white;
+  font-weight: normal;
 }
 
 .hover-text {
@@ -149,7 +174,7 @@ body {
 @media (max-width: 768px) {
   .inner-container {
     flex-direction: column;
-    height: auto; /* 작은 화면에서는 높이를 자동으로 설정 */
+    height: auto;
     padding: 1rem;
     margin: 1rem;
   }
@@ -157,5 +182,28 @@ body {
   .login-section,
   .welcome-section {
     padding: 2rem;
+    margin: 0;
+    overflow: hidden;
   }
+}
+
+.title-id a,
+.title-pw a {
+  color: grey;
+  text-decoration: none;
+}
+
+.title-id a:visited,
+.title-pw a:visited {
+  color: red; /* 이전에 방문한 링크도 기본 색상으로 유지 */
+}
+
+.title-id:hover a,
+.title-pw:hover a {
+  color: rgba(9, 8, 59, 0.585);
+}
+
+.title-id:hover hr,
+.title-pw:hover hr {
+  border-color: rgba(9, 8, 59, 0.585);
 }

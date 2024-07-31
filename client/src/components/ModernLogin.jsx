@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ModernLogin.css";
-import { loginHandler } from "../components/LoginHandler";
+import googleLogo from "../assets/google.png";
 import kakaoLogo from "../assets/kakao.png";
 import naverLogo from "../assets/naver.png";
-import googleLogo from "../assets/google.png";
+import { loginHandler } from "../components/LoginHandler";
+import "../styles/ModernLogin.css";
 
 const ModernLogin = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const ModernLogin = () => {
   };
 
   return (
-    <div className="log-container">
+    <div className="log-container-back">
       <div className="inner-container">
         <div
           className="login-section"
@@ -69,16 +69,18 @@ const ModernLogin = () => {
         <div className={`welcome-section ${isHovered ? "hovered" : ""}`}>
           <h2 className="heading-xl welcome-text">일반 로그인</h2>
           <h2 className="heading-xl hover-text">SNS LOGIN</h2>
-          <input
-            type="text"
-            placeholder="아이디를 입력하세요."
-            className="input-field"
-          />
-          <input
-            type="password"
-            placeholder="비밀번호를 입력하세요."
-            className="input-field"
-          />
+          <div className="ilban-inputbox">
+            <input
+              type="text"
+              placeholder="아이디를 입력하세요."
+              className="input-fieldbox"
+            />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력하세요."
+              className="input-fieldbox"
+            />
+          </div>
           <div className="checkbox-container">
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">아이디저장</label>

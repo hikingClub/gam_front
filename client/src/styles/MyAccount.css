@@ -1,0 +1,13 @@
+.mysymhis {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100%; /* 부모 컨테이너의 전체 높이를 차지 */
+}
+
+.smile {
+  width: 150px; /* 원하는 너비 */
+  height: 150px; /* 원하는 높이 */
+  object-fit: cover; /* 이미지가 컨테이너에 맞게 조정됨 */
+  border-radius: 50%; /* 원형 이미지 */
+}
