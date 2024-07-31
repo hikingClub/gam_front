@@ -4,14 +4,6 @@ body {
   font-family: "Noto Sans KR", sans-serif;
 }
 
-.MuiContainer-root {
-  width: 100%;
-}
-
-.MuiTab-root {
-  width: 100%;
-}
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -53,30 +45,19 @@ body {
   letter-spacing: 2px;
   font-size: 16px;
   font-weight: bold; /* 볼드체 적용 */
-  transition:
-    color 0.3s,
-    background 0.3s; /* 색상 변화에 대한 트랜지션 추가 */
   margin: 0 2px; /* 탭 간격을 줄이기 위해 마진 조정 */
   font-family: "Noto Sans KR", sans-serif; /* 폰트 적용 */
 }
 
 .neon-tab:hover,
 .MuiTab-root.Mui-selected {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 15px Drgba(171, 71, 188, 0.75); */
+  box-shadow: 0 2px 4px rgba(255, 2, 2, 0.2);
   color: #6a1b9a; /* 호버 및 선택된 탭의 텍스트 색상 변경 */
-  background: linear-gradient(
-    145deg,
-    #e0d4f0,
-    #f0e4ff
-  ); /* 호버 및 선택된 탭의 배경 색상 변경 */
+  background: transparent; /* 배경색을 투명하게 설정 */
 }
 
-.MuiTab-root.Mui-selected {
-  background: linear-gradient(
-    145deg,
-    #d3c4e8,
-    #e1d1ff
-  ); /* 선택된 탭 배경 색상 */
-  box-shadow: 0 4px 15px rgba(171, 71, 188, 0.75); /* 선택된 탭 그림자 효과 */
-  color: #6a1b9a; /* 선택된 탭 텍스트 색상 */
+/* Center align the Tabs container */
+.MuiTabs-flexContainer {
+  justify-content: center;
 }

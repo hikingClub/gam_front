@@ -1,9 +1,14 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "../styles/Footer.css";
 
 const Footer = () => {
+  const location = useLocation();
+  const isMainPage = location.pathname === "/";
+
   return (
-    <footer>
+    // 홈에서만 fixed! - css에서 2개 적어놨음
+    <footer className={isMainPage ? "footer fixed" : "footer"}>
       <div className="footer-content">
         <a href="#">이용약관</a>
         <a href="#">개인정보처리방침</a>

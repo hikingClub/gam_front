@@ -19,8 +19,8 @@ const Navbar = () => {
     <nav className="navbar">
       {/* 1. left */}
       <div className="navbar-left">
-        <Link to="/intro">디지털집현전이 처음이에요</Link>
-        <Link to="/about">디지털집현전 소개</Link>
+        <Link to="/intro">디지털규장각이 처음이에요</Link>
+        <Link to="/about">디지털규장각 소개</Link>
         <Link to="/notice">공지사항</Link>
         <HomeIcon
           sx={{ fontSize: 40, color: "#646cff", cursor: "pointer" }}
@@ -28,7 +28,7 @@ const Navbar = () => {
         />
       </div>
       {/* 2. middle(조건부) */}
-      {location.pathname === "/search" && (
+      {location.pathname.startsWith("/search") && (
         <Box
           sx={{
             display: "flex",
@@ -85,6 +85,15 @@ const Navbar = () => {
               boxShadow: "0 2.3px 4px 1px rgba(106, 17, 203, .3)",
               color: "white",
               padding: "0 15px",
+              "&:hover": {
+                background:
+                  "linear-gradient(45deg, rgba(106, 17, 203, 0.85) 30%, rgba(37, 117, 252, 0.85) 90%)",
+                borderColor: "#646cff",
+              },
+              "&:focus": {
+                outline: "none",
+                boxShadow: "none",
+              },
             }}
           >
             상세검색
