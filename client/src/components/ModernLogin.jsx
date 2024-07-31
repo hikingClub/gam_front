@@ -6,17 +6,6 @@ import naverLogo from "../assets/naver.png";
 import { loginHandler } from "../components/LoginHandler";
 import "../styles/ModernLogin.css";
 
-const modernLoginStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "100vh",
-  background: "linear-gradient(140deg, #002d4a, rgb(255, 255, 255), #371046)",
-  margin: 0,
-  overflowY: "auto",
-};
-
 const ModernLogin = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
@@ -26,7 +15,7 @@ const ModernLogin = () => {
   };
 
   return (
-    <div className="log-container" style={modernLoginStyle}>
+    <div className="log-container-back">
       <div className="inner-container">
         <div
           className="login-section"
@@ -80,16 +69,18 @@ const ModernLogin = () => {
         <div className={`welcome-section ${isHovered ? "hovered" : ""}`}>
           <h2 className="heading-xl welcome-text">일반 로그인</h2>
           <h2 className="heading-xl hover-text">SNS LOGIN</h2>
-          <input
-            type="text"
-            placeholder="아이디를 입력하세요."
-            className="input-field"
-          />
-          <input
-            type="password"
-            placeholder="비밀번호를 입력하세요."
-            className="input-field"
-          />
+          <div className="ilban-inputbox">
+            <input
+              type="text"
+              placeholder="아이디를 입력하세요."
+              className="input-fieldbox"
+            />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력하세요."
+              className="input-fieldbox"
+            />
+          </div>
           <div className="checkbox-container">
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">아이디저장</label>

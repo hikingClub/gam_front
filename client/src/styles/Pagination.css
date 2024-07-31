@@ -1,40 +1,36 @@
 .pagination {
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
   list-style: none;
-  padding: 30px;
+  padding: 0;
 }
 
 .pagination li {
-  display: inline;
-  margin: 0 10px; /* 마진을 늘려서 페이지네이션 아이템 간 간격을 키움 */
+  display: inline-block;
+  margin: 0 0.25rem;
 }
 
 .pagination a {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  cursor: pointer;
   text-decoration: none;
-  color: #333;
-  font-size: 1.1rem; /* 폰트 크기를 키움 */
-  padding: 4px 5px; /* 패딩을 추가하여 클릭 가능한 영역을 넓힘 */
-  border-radius: 4px; /* 경계 반경을 추가하여 둥근 모서리를 만듦 */
-}
-
-.pagination a:hover {
-  background-color: #e0e0e0; /* 호버 시 배경색을 변경 */
 }
 
 .pagination .active a {
-  font-weight: bold;
-  color: #2196f3;
-  background-color: #f0f0f0; /* 활성화된 페이지의 배경색을 추가 */
-  border-radius: 4px; /* 경계 반경을 추가하여 둥근 모서리를 만듦 */
-  padding: 4px 5px; /* 패딩을 추가하여 클릭 가능한 영역을 넓힘 */
+  background-color: #d2d2ff56;
+  color: #a0a0ff;
+  border-color: #7878ff;
 }
 
-/* << 및 >> 화살표 크기를 키우기 위한 추가 스타일 */
-.pagination .previous a,
-.pagination .next a {
-  font-size: 1.2rem; /* 화살표 크기를 키움 */
-  font-weight: bold;
-  padding: 4px 5px; /* 패딩을 추가하여 클릭 가능한 영역을 넓힘 */
-  border-radius: 4px; /* 경계 반경을 추가하여 둥근 모서리를 만듦 */
+.pagination a:hover {
+  background-color: #7878ff;
+  color: #fff;
+}
+
+.pagination a:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
 }
