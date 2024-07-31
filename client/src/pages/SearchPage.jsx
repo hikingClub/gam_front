@@ -7,6 +7,7 @@ import PostSlider from "../components/PostSlider";
 import SearchNav from "../components/SearchNav";
 import "../styles/Pagination.css";
 import "../styles/SearchPage.css";
+import { fetchData } from "../utils/searchAPI"; // fetchData 함수 임포트
 
 const postCards = [
   {
@@ -23,87 +24,6 @@ const postCards = [
     category: "고전",
     type: "인문 > 역사",
     title: "1617년 상전대(上典宅) 기상명문(記上明文)",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "송천필담 v1(松泉筆談 v1) 정첩의 풍모와 기상",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  // 추가 더미 데이터
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "유정승택(柳政丞宅) 기상명문(記上明文)",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "1617년 상전대(上典宅) 기상명문(記上明文)",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "송천필담 v1(松泉筆談 v1) 정첩의 풍모와 기상",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "유정승택(柳政丞宅) 기상명문(記上明文)",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "1617년 상전대(上典宅) 기상명문(記上明文)",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "송천필담 v1(松泉筆談 v1) 정첩의 풍모와 기상",
-    date: "2022-09-26",
-    institution: "한국학중앙연구원 장서각",
-    description:
-      "출원인: 위본스 주식회사, 발명자: 강남호, 대리인: 특허법인해인",
-    relatedInfo: "디지털 장서각",
-  },
-  {
-    category: "고전",
-    type: "인문 > 역사",
-    title: "송천필담 v1(松泉筆談 v1) 정첩의 풍모와 기상",
     date: "2022-09-26",
     institution: "한국학중앙연구원 장서각",
     description:
@@ -137,6 +57,8 @@ const postSliders = [
 const SearchPage = () => {
   const [value, setValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const postsPerPage = 3;
@@ -145,7 +67,23 @@ const SearchPage = () => {
     if (location.pathname === "/search/media") {
       setValue(5); // 멀티미디어 탭 인덱스 설정
     }
-  }, [location.pathname]);
+
+    const params = new URLSearchParams(location.search);
+    const keyword = params.get("keyword");
+    if (keyword) {
+      handleFetchData(keyword);
+    }
+  }, [location.pathname, location.search]);
+
+  const handleFetchData = async keyword => {
+    try {
+      const data = await fetchData(keyword, "100"); // pagePer일단 100개!
+      console.log("먼저!", data); // 여기가 안 뜨는데?
+      setResults(data.result || []); // 응답 데이터에서 'result' 필드 추출
+    } catch (error) {
+      setError("Error fetching data");
+    }
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -161,8 +99,9 @@ const SearchPage = () => {
   };
 
   const offset = currentPage * postsPerPage;
-  const currentPosts = postCards.slice(offset, offset + postsPerPage);
-  const pageCount = Math.ceil(postCards.length / postsPerPage);
+  console.log("결과!", results);
+  const currentPosts = results.slice(offset, offset + postsPerPage); // results에서 현재 페이지의 포스트 추출
+  const pageCount = Math.ceil(results.length / postsPerPage); // 전체 페이지 수 계산
 
   return (
     <>
@@ -236,22 +175,3 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
-
-// 백업 코드
-{
-  /* <Container maxWidth="md">
-        <Box mt={4}>
-          {postCards.map((post, index) => (
-            <PostCard key={index} post={post} />
-          ))}
-        </Box>
-      </Container> */
-}
-
-{
-  /* <Container maxWidth="lg">
-        <Box mt={4}>
-          <PostSlider posts={postSliders} />
-        </Box>
-      </Container> */
-}

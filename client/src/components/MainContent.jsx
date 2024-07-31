@@ -1,12 +1,23 @@
 import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Input } from "@mui/material";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
 
 const MainContent = () => {
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputChange = e => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const getSearchLink = () => {
+    return `/search?keyword=${encodeURIComponent(searchKeyword)}`;
+  };
+
   return (
     <div className="main-content-container">
       <div className="home-center">
@@ -25,7 +36,7 @@ const MainContent = () => {
             fullWidth
             endAdornment={
               <>
-                <Link to="/search">
+                <Link to={getSearchLink()}>
                   <SearchIcon
                     className="home-icon"
                     sx={{ fontSize: "1.45em" }}
@@ -44,6 +55,8 @@ const MainContent = () => {
               fontSize: "1.2em",
               fontFamily: '"Noto Sans KR", sans-serif',
             }}
+            value={searchKeyword} // 입력된 값을 상태와 연결
+            onChange={handleInputChange} // 입력 변경 시 상태 업데이트
           />
         </div>
       </div>

@@ -23,8 +23,8 @@ const outerPostBox = {
 const PostCard = ({ post }) => {
   const {
     category,
-    registration,
-    link,
+    map_path,
+    company_name,
     title,
     description,
     date,
@@ -43,10 +43,8 @@ const PostCard = ({ post }) => {
               color="primary"
               sx={{ backgroundColor: "#f44336", color: "white" }}
             />
-            <Chip label={registration} sx={{ backgroundColor: "#e0e0e0" }} />
-            <Typography variant="body2" color="primary">
-              {link}
-            </Typography>
+            <Chip label={map_path} sx={{ backgroundColor: "#e0e0e0" }} />
+            <Chip label={company_name} />
           </Box>
           <Typography
             variant="h6"
