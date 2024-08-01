@@ -1,0 +1,52 @@
+footer {
+  background-color: #d6d4d4;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative; /* 고정 해제 - 아래에선 fixed(footer.jsx에서 조건부 렌더링) */
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 -5px 8px rgba(0, 0, 0, 0.1); /* 윗줄 그림자 추가 */
+}
+
+.fixed {
+  position: fixed;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 5px;
+}
+
+.footer-content a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  display: flex;
+  justify-content: space-between; /* 양 끝 정렬 */
+  align-items: center;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: left; /* 왼쪽 정렬로 변경 */
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 패밀리 설정 */
+  position: relative;
+}
+
+.cert-mark {
+  height: 80px; /* 이미지 높이를 적절히 설정 */
+  margin-left: 20px; /* 텍스트와 이미지 사이 간격 설정 */
+  position: absolute;
+  right: 30px; /* 오른쪽 끝에서 20px 떨어지게 설정 */
+  top: -43px;
+}

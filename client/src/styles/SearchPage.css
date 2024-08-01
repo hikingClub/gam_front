@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"); /* Noto Sans KR 폰트 임포트 */
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.search-button {
+  margin-left: 10px;
+}
+
+.result-summary {
+  margin: 20px 0;
+}
+
+.result-options {
+  margin: 10px 0;
+}
+
+.search-result {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.result-title {
+  font-weight: bold;
+}
+
+.result-description,
+.result-date,
+.result-type {
+  margin-top: 5px;
+}
+
+.neon-tab {
+  color: #666; /* 기본 텍스트 색상 */
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-size: 16px;
+  font-weight: bold; /* 볼드체 적용 */
+  margin: 0 2px; /* 탭 간격을 줄이기 위해 마진 조정 */
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 적용 */
+}
+
+.neon-tab:hover,
+.MuiTab-root.Mui-selected {
+  /* box-shadow: 0 4px 15px Drgba(171, 71, 188, 0.75); */
+  box-shadow: 0 2px 4px rgba(255, 2, 2, 0.2);
+  color: #6a1b9a; /* 호버 및 선택된 탭의 텍스트 색상 변경 */
+  background: transparent; /* 배경색을 투명하게 설정 */
+}
+
+/* Center align the Tabs container */
+.MuiTabs-flexContainer {
+  justify-content: center;
+}
+
+.tmp-container.multimedia-margin {
+  margin-bottom: 200px; /* Footer를 밀어내기 위한 마진 추가 */
+}

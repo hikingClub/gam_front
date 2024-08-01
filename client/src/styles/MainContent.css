@@ -1,0 +1,102 @@
+.main-content-container {
+  /* background: linear-gradient(to right, #e9e4f0, #d3cce3); */
+  /* background: linear-gradient(to right, #e0eafc, #cfdef3); */
+  background: linear-gradient(to bottom, #d2d2ff02, #d2d2ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%; /* 부모 요소의 높이를 모두 차지하도록 설정 */
+}
+
+.home-center {
+  position: absolute; /* 이게 있어야 top이 먹힘 */
+  top: 25%; /* 상단에서 25% 위치 */
+  text-align: center;
+}
+
+.logo-container {
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 18rem; /* 적절한 크기로 조정 */
+  height: auto; /* 자동으로 높이 조정 */
+  display: block;
+  margin: 0 auto;
+}
+
+.home-title {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: #4c51bf; /* 보라색으로 변경 */
+  margin: 0; /* 여백 제거 */
+  padding: 0; /* 패딩 제거 */
+  margin-top: 0rem; /* 하단 여백 조정 */
+  margin-bottom: 0rem; /* 하단 여백 조정 */
+}
+
+.home-subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6b46c1; /* 연한 보라색으로 변경 */
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.home-searchInput:hover {
+  border-color: #9657a2; /* 호버 시 테두리 색상 변경 */
+}
+
+.home-searchInput:focus-within {
+  border-color: #c47171; /* 포커스 시 테두리 색상 변경 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 포커스 시 박스 쉐도우 강화 */
+}
+
+.home-MuiInput-underline:after {
+  border-bottom: 0px solid #6eb18c !important; /* 포커스 시 밑줄 두께 및 색상 변경 */
+}
+
+.home-searchInput {
+  position: relative; /* 가상 요소가 기준으로 삼을 수 있도록 설정 */
+  border: none; /* 기본 테두리 제거 */
+  outline: none; /* 포커스 시 기본 아웃라인 제거 */
+  border-radius: 6px; /* 둥근 모서리 추가 */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* 약간의 투명도를 가진 흰색 배경 */
+}
+
+.home-searchInput::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #2c3e50,
+    #bdc3c7,
+    #8e44ad
+  ); /* 연한 색상 그라데이션 */
+  background-size: 200% 100%;
+  animation: gradient-underline 3s linear infinite;
+}
+
+/* #8e44ad,
+    #3498db,
+    #8e44ad */
+
+@keyframes gradient-underline {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
