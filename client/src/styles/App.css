@@ -1,9 +1,22 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main-content-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: calc(100vh - 60px); /* Navbar 높이를 제외한 전체 화면 높이 */
-  margin-top: -50px; /* 화면 중앙에서 위로 이동 */
+  margin-top: -20px; /* 화면 중앙에서 위로 이동 */
 }
 
 .main-content {
