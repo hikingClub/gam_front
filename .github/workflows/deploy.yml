@@ -27,6 +27,10 @@ jobs:
 
     - name: Build project
       working-directory: ./client
+      env:
+        VITE_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
+        VITE_KAKAO_CLIENT_SECRET: ${{ secrets.VITE_KAKAO_CLIENT_SECRET }}
+        # VITE_APP_API_URL는 백엔드 배포하면 적기
       run: npm run build
 
     - name: Configure AWS credentials
