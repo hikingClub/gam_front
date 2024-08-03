@@ -1,3 +1,4 @@
+// App.jsx
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
@@ -11,14 +12,12 @@ import SearchPW from "./components/SearchPW";
 import SignupForm from "./components/SignupForm";
 import SignupTos from "./components/SignupTos";
 import SearchPage from "./pages/SearchPage";
-import TestPage from "./pages/TestPage";
 import "./styles/App.css";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* 검색관련 */}
-      <Route path="/test" element={<TestPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/media" element={<SearchPage />} />
       {/* 로그인 및 회원가입 관련 */}
@@ -29,7 +28,7 @@ const AppRoutes = () => {
       <Route path="/search-pw" element={<SearchPW />} />
       <Route path="/auto/kakao/callback" element={<KakaoRedirect />} />
       {/* 마이페이지 관련 */}
-      <Route path="/mypagemenu" element={<MyPageMenu />} />{" "}
+      <Route path="/mypagemenu" element={<MyPageMenu />} />
     </Routes>
   );
 };

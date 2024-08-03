@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const API_ENDPOINT = "/api";
+const API_BASE_URL = import.meta.env.VITE_APP_SPRING_API_URL; // '/api'에서 이걸로 수정
+
 // 2.0ver: pagePer추가
 export const fetchData = async (searchKeyword, pagePer) => {
   try {
-    const response = await axios.get(`${API_ENDPOINT}/search/keyword`, {
+    const response = await axios.get(`${API_BASE_URL}/search/keyword`, {
       params: {
         searchKeyword: searchKeyword,
         pagePer: pagePer,
@@ -17,19 +18,3 @@ export const fetchData = async (searchKeyword, pagePer) => {
     throw error;
   }
 };
-
-// * 백업 - 1.0ver: 20개씩만 가져와짐ㅇㅇ.
-// export const fetchData = async searchKeyword => {
-//   try {
-//     const response = await axios.get(`${API_ENDPOINT}/search/keyword`, {
-//       params: {
-//         searchKeyword: searchKeyword,
-//       },
-//     });
-//     console.log("응답결과", response);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     throw error;
-//   }
-// };
