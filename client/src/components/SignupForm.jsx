@@ -1,6 +1,6 @@
+import axios from "axios"; // axios 임포트
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // axios 임포트
 import "../styles/SignupForm.css";
 
 const SignupForm = () => {

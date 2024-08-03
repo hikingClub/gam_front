@@ -74,7 +74,7 @@ const SearchPage = () => {
 
   const handleFetchData = async keyword => {
     try {
-      const data = await fetchData(keyword, "10000"); // pagePer일단 100개!
+      const data = await fetchData(keyword, "100"); // pagePer일단 100개!
       setAllResults(data.result || []); // 모든 데이터를 저장 - for caching
 
       // 각 탭별로 데이터를 분류하여 filteredResults 객체에 저장
