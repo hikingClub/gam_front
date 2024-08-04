@@ -92,7 +92,7 @@ const MyRecommend = () => {
     } else if (field === "문화") {
       subFieldOptions = [
         "미술",
-        "방송·미디어 ",
+        "방송·미디어",
         "공예",
         "게임·오락",
         "축제·전시",
@@ -205,10 +205,18 @@ const MyRecommend = () => {
               </div>
             </div>
             <div className="recommend-selection-summary-first">
-              <div className="summary-title-first">선택 분야</div>
+              <div className="summary-title-first">
+                선택
+                <br />
+                분야
+              </div>
               <div className="selected-fields-display-first">
                 {selectedSubFields.map((field, index) => (
-                  <span key={index} className="selected-field">
+                  <span
+                    key={index}
+                    className="selected-field"
+                    onClick={() => handleSubFieldClick(field)} // 클릭 시 선택 해제
+                  >
                     {field}
                   </span>
                 ))}
@@ -318,10 +326,18 @@ const MyRecommend = () => {
             </button>
           </div>
           <div className="recommend-selection-summary-second">
-            <div className="summary-title-second">선택 항목</div>
+            <div className="summary-title-second">
+              선택
+              <br />
+              항목
+            </div>
             <div className="selected-fields-display-second">
               {selectedInterestTypes.map((type, index) => (
-                <span key={index} className="selected-field">
+                <span
+                  key={index}
+                  className="selected-field"
+                  onClick={() => handleInterestTypeClick(type)} // 클릭 시 선택 해제
+                >
                   {type}
                 </span>
               ))}
@@ -337,7 +353,7 @@ const MyRecommend = () => {
           <div className="additional-info">
             <div className="info-item">
               <label>연령대</label>
-              <select>
+              <select className="additional-info-select">
                 <option>10대 미만</option>
                 <option>10대</option>
                 <option>20대</option>
@@ -350,7 +366,7 @@ const MyRecommend = () => {
             </div>
             <div className="info-item">
               <label>직업군</label>
-              <select>
+              <select className="additional-info-select">
                 <option>사무직</option>
                 <option>연구직</option>
                 <option>공학기술직</option>
@@ -373,6 +389,7 @@ const MyRecommend = () => {
           </div>
         </div>
       </div>
+      <div className="reco-submit-button">저장하기</div>
     </div>
   );
 };

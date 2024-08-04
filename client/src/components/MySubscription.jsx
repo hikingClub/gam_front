@@ -1,7 +1,9 @@
 import React from "react";
 
 const MySubscription = () => {
-  return <div>구독설정</div>;
+  <div className="my-subscribe-container">
+    <h1>tagify 확인 할 것</h1>
+  </div>;
 };
 
 export default MySubscription;
