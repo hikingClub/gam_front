@@ -9,25 +9,27 @@ import "../styles/Pagination.css";
 import "../styles/SearchPage.css";
 import { fetchData } from "../utils/searchAPI"; // fetchData 함수 임포트
 
+import myImage1 from "../assets/tmpSlider1.jpg";
+import myImage2 from "../assets/tmpSlider2.jpg";
+import myImage3 from "../assets/tmpSlider3.png";
+import myImage4 from "../assets/tmpSlider4.png";
+
 const postSliders = [
   {
-    title: "DogeGod",
-    image:
-      "https://i1.sndcdn.com/artworks-8hUNunJfPf7jLpzY-jYmGvg-t500x500.jpg",
+    title: "기사 - 청주13402",
+    image: myImage1,
   },
   {
-    title: "GeneralDoge",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8l2a2lP8gxw1qH1tQRnn4zBmzlYIayHdtOA&s",
+    title: "한-GCC FTA 제5차 공식 협상",
+    image: myImage2,
   },
   {
-    title: "Mayday - 890's victim ",
-    image: "https://img.hankyung.com/photo/202106/01.26703829.1.jpg",
+    title: "2023학년도 새 학기 학교 방역지침",
+    image: myImage3,
   },
   {
-    title: "KingDoge",
-    image:
-      "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/419/4c9f3e41a1f1560f868d97c494db5425_res.jpeg",
+    title: "데이터로 배우는 통계학",
+    image: myImage4,
   },
 ];
 
@@ -109,12 +111,18 @@ const SearchPage = () => {
     setCurrentPage(selected);
   };
 
+  // tmp: 멀티미디어 탭에서만 margin-bottom 적용
+  const isMultimediaTab =
+    new URLSearchParams(location.search).get("tab") === "멀티미디어";
+
   const offset = currentPage * postsPerPage;
   const currentPosts = results.slice(offset, offset + postsPerPage); // results에서 현재 페이지의 포스트 추출
   const pageCount = Math.ceil(results.length / postsPerPage); // 전체 페이지 수 계산
 
   return (
-    <>
+    <div
+      className={`tmp-container ${isMultimediaTab ? "multimedia-margin" : ""}`}
+    >
       {/* 상단1 */}
       <Box
         style={{
@@ -170,7 +178,7 @@ const SearchPage = () => {
           />
         )}
       </Box>
-    </>
+    </div>
   );
 };
 

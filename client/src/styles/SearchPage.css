@@ -61,3 +61,7 @@ body {
 .MuiTabs-flexContainer {
   justify-content: center;
 }
+
+.tmp-container.multimedia-margin {
+  margin-bottom: 200px; /* Footer를 밀어내기 위한 마진 추가 */
+}

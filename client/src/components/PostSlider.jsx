@@ -31,19 +31,51 @@ const NeonBorder = styled(Box)`
   bottom: 0;
   border-radius: 16px;
   border: 4px solid;
-  border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) 1;
+  border-image: linear-gradient(
+      45deg,
+      #87ceeb,
+      #ffffff,
+      #000000,
+      #ffffff,
+      #add8e6
+    )
+    1;
   animation: neon-border 3s infinite;
   pointer-events: none; /* 클릭 이벤트를 막기 위해 */
 
   @keyframes neon-border {
     0% {
-      border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) 1;
+      border-image: linear-gradient(
+          45deg,
+          #87ceeb,
+          #ffffff,
+          #000000,
+          #ffffff,
+          #add8e6
+        )
+        1;
     }
     50% {
-      border-image: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff) 1;
+      border-image: linear-gradient(
+          45deg,
+          #add8e6,
+          #ffffff,
+          #000000,
+          #ffffff,
+          #87ceeb
+        )
+        1;
     }
     100% {
-      border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) 1;
+      border-image: linear-gradient(
+          45deg,
+          #87ceeb,
+          #ffffff,
+          #000000,
+          #ffffff,
+          #add8e6
+        )
+        1;
     }
   }
 `;
@@ -93,7 +125,7 @@ const PrevArrow = props => {
 
 const PostSlider = ({ posts = [] }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const postsPerPage = 3;
+  const postsPerPage = 4;
   const offset = currentPage * postsPerPage;
   const currentPosts = posts.slice(offset, offset + postsPerPage);
   const pageCount = Math.ceil(posts.length / postsPerPage);
@@ -114,7 +146,7 @@ const PostSlider = ({ posts = [] }) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -131,7 +163,14 @@ const PostSlider = ({ posts = [] }) => {
   };
 
   return (
-    <Box sx={{ width: "80%", overflow: "hidden", px: 1, mx: "auto" }}>
+    <Box
+      sx={{
+        width: "80%",
+        overflow: "hidden",
+        px: 1,
+        mx: "auto",
+      }}
+    >
       <Slider {...settings}>
         {currentPosts.map((post, index) => (
           <Box key={index} p={1} mx={1}>

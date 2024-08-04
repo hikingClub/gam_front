@@ -1,7 +1,13 @@
 .main-content-container {
   /* background: linear-gradient(to right, #e9e4f0, #d3cce3); */
   /* background: linear-gradient(to right, #e0eafc, #cfdef3); */
-  background: linear-gradient(to bottom, #d2d2ff02, #d2d2ff);
+  background: linear-gradient(
+    to bottom,
+    rgb(250, 250, 255),
+    rgb(220, 235, 255),
+    rgb(180, 210, 255)
+  );
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +17,7 @@
 
 .home-center {
   position: absolute; /* 이게 있어야 top이 먹힘 */
-  top: 25%; /* 상단에서 25% 위치 */
+  top: 20%; /* 상단에서 20% 위치 */
   text-align: center;
 }
 
@@ -88,10 +94,6 @@
   animation: gradient-underline 3s linear infinite;
 }
 
-/* #8e44ad,
-    #3498db,
-    #8e44ad */
-
 @keyframes gradient-underline {
   0% {
     background-position: 200% 0;
@@ -99,4 +101,39 @@
   100% {
     background-position: -200% 0;
   }
+}
+
+.autocomplete-suggestions {
+  position: absolute;
+  z-index: 1000;
+  width: 400px;
+  background: white;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  left: 0; /* 왼쪽 정렬 */
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  justify-content: flex-start; /* 내용 왼쪽 정렬 */
+}
+
+.search-icon {
+  margin-right: 8px;
+  font-size: 16px; /* 아이콘 크기 조정 */
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f9f9f9;
 }

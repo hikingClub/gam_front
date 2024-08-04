@@ -27,6 +27,11 @@ jobs:
 
     - name: Build project
       working-directory: ./client
+      env:
+        VITE_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
+        VITE_KAKAO_CLIENT_SECRET: ${{ secrets.VITE_KAKAO_CLIENT_SECRET }}
+        VITE_APP_SPRING_API_URL: ${{ secrets.VITE_APP_SPRING_API_URL }}
+        VITE_APP_FLASK_API_URL: ${{ secrets.VITE_APP_FLASK_API_URL }}
       run: npm run build
 
     - name: Configure AWS credentials
