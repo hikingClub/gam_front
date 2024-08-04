@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/MyPageMenu.css";
 import { styled } from "@mui/system";
 import {
@@ -17,17 +17,17 @@ import MySubscription from "./MySubscription";
 import MyAccessReq from "./MyAccessReq";
 import MyAccount from "./MyAccount";
 
-const purple = {
-  50: "#D2D2FF",
-  100: "#C8C8FF",
-  200: "#B4B4FF",
-  300: "#A0A0FF",
-  400: "#8C8FF",
-  500: "#8282FF",
-  600: "#7878FF",
-  700: "#6E6EFF",
-  800: "#6464FF",
-  900: "#5A5AFF",
+const blue = {
+  50: "#0037581a", // rgb(0, 55, 88, 0.1)
+  100: "#00375833", // rgb(0, 55, 88, 0.2)
+  200: "#0037584d", // rgb(0, 55, 88, 0.3)
+  300: "#00375866", // rgb(0, 55, 88, 0.4)
+  400: "#00375880", // rgb(0, 55, 88, 0.5)
+  500: "#00375899", // rgb(0, 55, 88, 0.6)
+  600: "#003758b3", // rgb(0, 55, 88, 0.7)
+  700: "#003758cc", // rgb(0, 55, 88, 0.8)
+  800: "#003758e6", // rgb(0, 55, 88, 0.9)
+  900: "#003758", // rgb(0, 55, 88)
 };
 
 const grey = {
@@ -58,17 +58,18 @@ const StyledTab = styled(Tab)`
   justify-content: center;
 
   &:hover {
-    background-color: ${purple[500]};
+    background-color: ${blue[300]};
+    color: white;
   }
 
   &:focus {
     color: #fff;
-    outline: 3px solid ${purple[500]};
+    outline: 3px solid ${blue[800]};
   }
 
   &.${tabClasses.selected} {
     background-color: #fff;
-    color: ${purple[700]};
+    color: ${blue[800]};
   }
 
   &.${buttonClasses.disabled} {
@@ -79,21 +80,29 @@ const StyledTab = styled(Tab)`
 
 const StyledTabPanel = styled(TabPanel)`
   display: flex;
-  height: 51vh;
+  height: 60vh;
   font-size: 0.975rem;
-  padding: 0.2rem;
+  padding: 1rem;
   background: ${({ theme }) =>
     theme.palette.mode === "dark" ? grey[900] : "#fff"};
-  border: none; /* 경계선 제거 */
+  border: none;
   border-radius: 0.5rem;
-  display: ${({ hidden }) => (hidden ? "none" : "flex")}; /* 가로 배치 적용 */
+  display: ${({ hidden }) => (hidden ? "none" : "flex")};
   gap: 1rem;
-  overflow: hidden; /* 넘치는 내용을 숨김 */
+  overflow: hidden;
+
+  /* high-zoom 상태에서의 스타일 조정 */
+  .high-zoom & {
+    height: auto; /* 높이를 자동으로 조정 */
+    flex: 1; /* 가용 공간을 모두 차지 */
+    max-height: 90vh; /* 최대 높이 설정 */
+    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+  }
 `;
 
 const StyledTabsList = styled(TabsList)`
   min-width: 200px;
-  background-color: ${purple[100]};
+  background-color: ${blue[100]};
   border-radius: 0.5rem;
   margin-bottom: 10px;
   display: flex;
@@ -106,8 +115,31 @@ const StyledTabsList = styled(TabsList)`
 
 const MyPageMenu = () => {
   const [tabValue, setTabValue] = useState(0);
-  const name = "정연주";
-  const email = "jyj022580@gmail.com";
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    try {
+      const storedNickname = localStorage.getItem("nickname");
+      const storedEmail = localStorage.getItem("email");
+
+      if (storedNickname) {
+        setNickname(storedNickname);
+      } else {
+        setNickname("알 수 없음"); // 기본값 설정
+      }
+
+      if (storedEmail) {
+        setEmail(storedEmail);
+      } else {
+        setEmail("알 수 없음"); // 기본값 설정
+      }
+    } catch (error) {
+      console.error("로컬 스토리지 접근 에러:", error);
+      setNickname("에러 발생");
+      setEmail("에러 발생");
+    }
+  }, []);
 
   return (
     <div className="mymenubar-container">
@@ -125,7 +157,8 @@ const MyPageMenu = () => {
           </div>
           <div style={{ textAlign: "right" }}>
             <p>
-              <strong>{name}</strong>&nbsp;님&nbsp;&nbsp;/&nbsp;&nbsp;{email}
+              <strong>{nickname}</strong>&nbsp;님&nbsp;&nbsp;/&nbsp;&nbsp;
+              {email}
             </p>
           </div>
         </div>

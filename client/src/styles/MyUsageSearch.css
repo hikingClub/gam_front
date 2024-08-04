@@ -1,7 +1,7 @@
 .usage-search {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
@@ -23,7 +23,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  margin-bottom: 2rem;
+  /* overflow-y: auto; */
   max-height: 400px;
 }
 
@@ -42,7 +43,7 @@
 }
 
 .search-history-thead th {
-  background-color: #d2d2ff74;
+  background-color: #0037581a;
 }
 
 .search-history-th:nth-child(1) {
@@ -60,9 +61,11 @@
 .pagination-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  align-items: center;
+  margin-top: 2rem; /* 위쪽에 여백 추가 */
+  margin-bottom: 1rem; /* 아래쪽에 여백 추가 */
 }
-
+/* 
 .pagination {
   display: flex;
   list-style: none;
@@ -82,14 +85,14 @@
 
 .pagination li a.active,
 .pagination li a:hover {
-  background-color: #7878ff;
+  background-color: #003758e6;
   color: #fff;
 }
 
 .pagination li a.disabled {
   background-color: #ddd;
   cursor: not-allowed;
-}
+} */
 
 /* MyUsageSearch.css */
 

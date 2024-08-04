@@ -3,17 +3,17 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 96.4%;
+  width: 96.9%;
 }
 
 .mysymhis-inner-container {
   width: 100%;
   overflow-x: hidden;
-  padding: 0.7rem;
+  padding: 0.5rem;
   box-sizing: border-box;
-  border: 1px solid #9da8b7;
+  border: 0.1rem solid rgb(0, 55, 88, 0.3);
   border-radius: 0.5rem;
-  height: 47.5vh;
+  height: 50vh;
   font-size: 0.8rem;
 }
 

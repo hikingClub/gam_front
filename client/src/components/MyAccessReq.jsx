@@ -1,7 +1,7 @@
 import React from "react";
 
 const MyAccessReq = () => {
-  return <div>데이터 개방신청 내용</div>;
+  return <div>준비중입니다</div>;
 };
 
 export default MyAccessReq;
