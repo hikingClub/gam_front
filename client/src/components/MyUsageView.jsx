@@ -8,10 +8,6 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const viewHistoryData = [
   { term: "자바프로그래밍", timestamp: "2024.07.30 05:45:12" },
-  {
-    term: "애미야 국이 짜다 니 바닷물로 국 끄륳냐아",
-    timestamp: "2024.07.24 16:05:28",
-  },
   { term: "딥러닝", timestamp: "2024.07.24 12:18:56" },
   { term: "사회에 쓸모있는 존재가 되자", timestamp: "2024.07.23 15:53:34" },
   {
@@ -36,7 +32,7 @@ const MyUsageView = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
