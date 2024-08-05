@@ -18,10 +18,3 @@ export const loginHandler = (provider, options) => {
     console.log("지원하지 않는 로그인 제공자:", provider);
   }
 };
-
-//   } else if (provider === "naver") {
-//     const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${naverClientId}&redirect_uri=${options.redirectUri}&response_type=code&state=STATE_STRING`;
-//     window.location.href = naverAuthUrl;
-//   } else if (provider === "google") {
-//     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${options.redirectUri}&response_type=code&scope=email%20profile`;
-//     window.location.href = googleAuthUrl;

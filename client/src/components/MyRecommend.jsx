@@ -10,100 +10,100 @@ const MyRecommend = () => {
     let subFieldOptions = [];
     if (field === "과학") {
       subFieldOptions = [
-        "수학",
-        "통계학",
-        "물리학",
-        "천문학",
-        "화학",
-        "생물학",
-        "지구과학",
-        "지질학",
-        "대기과학",
-        "생활과학",
+        { id: 1, name: "수학" },
+        { id: 2, name: "통계학" },
+        { id: 3, name: "물리학" },
+        { id: 4, name: "천문학" },
+        { id: 5, name: "화학" },
+        { id: 6, name: "생물학" },
+        { id: 7, name: "지구과학" },
+        { id: 8, name: "지질학" },
+        { id: 9, name: "대기과학" },
+        { id: 10, name: "생활과학" },
       ];
     } else if (field === "기술") {
       subFieldOptions = [
-        "기계공학",
-        "재료공학",
-        "화학공학",
-        "전기·전자",
-        "정보·통신",
-        "인공지능·컴퓨팅",
-        "에너지·자원",
-        "원자력",
-        "환경공학",
-        "토목·건설·교통",
-        "도시공학",
-        "항공우주공학",
-        "조선·해양",
+        { id: 11, name: "기계공학" },
+        { id: 12, name: "재료공학" },
+        { id: 13, name: "화학공학" },
+        { id: 14, name: "전기·전자" },
+        { id: 15, name: "정보·통신" },
+        { id: 16, name: "인공지능·컴퓨팅" },
+        { id: 17, name: "에너지·자원" },
+        { id: 18, name: "원자력" },
+        { id: 19, name: "환경공학" },
+        { id: 20, name: "토목·건설·교통" },
+        { id: 21, name: "도시공학" },
+        { id: 22, name: "항공우주공학" },
+        { id: 23, name: "조선·해양" },
       ];
     } else if (field === "인문") {
       subFieldOptions = [
-        "문학",
-        "언어",
-        "철학",
-        "종교",
-        "심리",
-        "역사",
-        "지리",
+        { id: 24, name: "문학" },
+        { id: 25, name: "언어" },
+        { id: 26, name: "철학" },
+        { id: 27, name: "종교" },
+        { id: 28, name: "심리" },
+        { id: 29, name: "역사" },
+        { id: 30, name: "지리" },
       ];
     } else if (field === "사회") {
       subFieldOptions = [
-        "공공질서·안전",
-        "복지",
-        "사회문제",
-        "인권",
-        "국토·지역개발",
-        "일반공공행정",
-        "외교",
-        "안보국방",
-        "경제·경영",
-        "산업",
-        "정치",
+        { id: 31, name: "공공질서·안전" },
+        { id: 32, name: "복지" },
+        { id: 33, name: "사회문제" },
+        { id: 34, name: "인권" },
+        { id: 35, name: "국토·지역개발" },
+        { id: 36, name: "일반공공행정" },
+        { id: 37, name: "외교" },
+        { id: 38, name: "안보국방" },
+        { id: 39, name: "경제·경영" },
+        { id: 40, name: "산업" },
+        { id: 41, name: "정치" },
       ];
     } else if (field === "교육") {
       subFieldOptions = [
-        "유아",
-        "초등학교",
-        "중학교",
-        "고등학교",
-        "고등(대학)",
-        "해외유학",
-        "특수교육",
-        "직업·평생",
-        "자격",
-        "교양",
+        { id: 42, name: "유아" },
+        { id: 43, name: "초등학교" },
+        { id: 44, name: "중학교" },
+        { id: 45, name: "고등학교" },
+        { id: 46, name: "고등(대학)" },
+        { id: 47, name: "해외유학" },
+        { id: 48, name: "특수교육" },
+        { id: 49, name: "직업·평생" },
+        { id: 50, name: "자격" },
+        { id: 51, name: "교양" },
       ];
     } else if (field === "의료") {
       subFieldOptions = [
-        "의학",
-        "치의학",
-        "한의학",
-        "약학",
-        "간호학",
-        "공중보건",
-        "질병관리",
-        "건강검진",
-        "재활",
-        "요양",
-        "의료공학",
-        "의약품",
+        { id: 52, name: "의학" },
+        { id: 53, name: "치의학" },
+        { id: 54, name: "한의학" },
+        { id: 55, name: "약학" },
+        { id: 56, name: "간호학" },
+        { id: 57, name: "공중보건" },
+        { id: 58, name: "질병관리" },
+        { id: 59, name: "건강검진" },
+        { id: 60, name: "재활" },
+        { id: 61, name: "요양" },
+        { id: 62, name: "의료공학" },
+        { id: 63, name: "의약품" },
       ];
     } else if (field === "문화") {
       subFieldOptions = [
-        "미술",
-        "방송·미디어",
-        "공예",
-        "게임·오락",
-        "축제·전시",
-        "연극",
-        "무용",
-        "영상·영화",
-        "음악",
-        "디자인",
-        "사진",
-        "만화",
-        "스포츠",
+        { id: 64, name: "미술" },
+        { id: 65, name: "방송·미디어" },
+        { id: 66, name: "공예" },
+        { id: 67, name: "게임·오락" },
+        { id: 68, name: "축제·전시" },
+        { id: 69, name: "연극" },
+        { id: 70, name: "무용" },
+        { id: 71, name: "영상·영화" },
+        { id: 72, name: "음악" },
+        { id: 73, name: "디자인" },
+        { id: 74, name: "사진" },
+        { id: 75, name: "만화" },
+        { id: 76, name: "스포츠" },
       ];
     }
 
@@ -191,15 +191,15 @@ const MyRecommend = () => {
                 <hr />
               </div>
               <div className="selected-fields-content">
-                {subFields.map((field, index) => (
+                {subFields.map(field => (
                   <button
-                    key={index}
-                    onClick={() => handleSubFieldClick(field)}
+                    key={field.id} // 객체의 고유 id를 키로 사용
+                    onClick={() => handleSubFieldClick(field.name)} // 객체의 name 속성만 전달
                     className={
-                      selectedSubFields.includes(field) ? "selected" : ""
+                      selectedSubFields.includes(field.name) ? "selected" : ""
                     }
                   >
-                    {field}
+                    {field.name}
                   </button>
                 ))}
               </div>
