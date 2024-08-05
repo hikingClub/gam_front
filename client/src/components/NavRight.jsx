@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/NavRight.css";
 
 const NavRight = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
-  // const userName = "marioahn";
+  const userName = "marioahn";
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 세션 스토리지에서 로그인 상태 확인_yj
+    const storedLoggedInState = sessionStorage.getItem("isLoggedIn");
+    if (storedLoggedInState === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    sessionStorage.setItem("isLoggedIn", "true"); // 로그인 상태를 세션에 저장시킴_yj
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setShowDropdown(false);
+    sessionStorage.removeItem("isLoggedIn"); // 로그아웃 시 세션에서도 삭제_yj
+    window.location.href = "/"; // 로그아웃 시 메인 화면으로 리디렉션
   };
 
   const toggleDropdown = () => {
@@ -29,6 +40,9 @@ const NavRight = () => {
     <div className="button-container">
       {isLoggedIn ? (
         <>
+          <div className="welcome-message">
+            {/* <strong>{userName}</strong> 님 환영합니다 */}
+          </div>
           <div className="notification-container">
             <button
               className="button notification-button"

@@ -50,6 +50,7 @@ const KakaoRedirect = () => {
           grant_type: "authorization_code",
           client_id: import.meta.env.VITE_KAKAO_CLIENT_ID,
           redirect_uri: "http://localhost:5173/auto/kakao/callback",
+          //   https://cdn.kyujanggak.com/auto/kakao/callback
           code: code,
           client_secret: import.meta.env.VITE_KAKAO_CLIENT_SECRET,
         }),

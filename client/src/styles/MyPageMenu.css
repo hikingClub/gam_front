@@ -109,21 +109,3 @@
 .mymenubar-title::-webkit-scrollbar {
   width: 12px;
 }
-
-/* 스크롤바 트랙 (배경) */
-.mymenubar-title::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 0.5vh;
-  border: 0.1vh solid black;
-}
-
-/* 스크롤바 슬라이더 (드래그 가능한 부분) */
-.mymenubar-title::-webkit-scrollbar-thumb {
-  background: #8c90ff57;
-  border-radius: 0.5vh;
-}
-
-/* 슬라이더에 호버할 때 */
-.mymenubar-title::-webkit-scrollbar-thumb:hover {
-  background: #8c90ff9a;
-}

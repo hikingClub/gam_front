@@ -11,6 +11,7 @@ const KakaoLogin = ({ onLogin }) => {
   const handleLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri: "http://localhost:5173/auto/kakao/callback",
+      //   https://cdn.kyujanggak.com/auto/kakao/callback
     });
   };
 
