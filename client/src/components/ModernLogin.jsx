@@ -24,27 +24,6 @@ const ModernLogin = () => {
   };
 
   const handleLoginClick = async () => {
-    // try {
-    //   const response = await axios.post("http://localhost:8080/member/login", {
-    //     uid: credentials.uid,
-    //     password: credentials.password,
-    //   });
-    //   if (response.status === 200) {
-    //     const { nickname, email } = response.data;
-    //     localStorage.setItem("nickname", nickname);
-    //     localStorage.setItem("email", email);
-    //     alert("로그인 성공: " + nickname + "님 환영합니다!");
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   if (error.response && error.response.status === 401) {
-    //     alert("로그인 실패: " + error.response.data);
-    //   } else {
-    //     console.error("로그인 요청 에러:", error);
-    //     alert("로그인 중 오류가 발생했습니다.");
-    //   }
-    // }
-
     try {
       const response = await axios.post("http://localhost:8080/member/login", {
         uid: credentials.uid,
@@ -60,7 +39,7 @@ const ModernLogin = () => {
 
         if (seqMatch && seqMatch[1]) {
           const seq = seqMatch[1];
-          localStorage.setItem("memberSeq", seq);
+          sessionStorage.setItem("loggedInUserSeq", seq); // 수정된 부분
           alert("로그인 성공! SEQ: " + seq);
           navigate("/");
         } else {
@@ -69,7 +48,7 @@ const ModernLogin = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert("로그인 실패: " + error.response.data);
+        alert("로그인 실패\n\n" + error.response.data);
       } else {
         console.error("로그인 요청 에러:", error);
         alert("로그인 중 오류가 발생했습니다.");
@@ -95,6 +74,7 @@ const ModernLogin = () => {
               onClick={() =>
                 loginHandler("kakao", {
                   redirectUri: "http://localhost:5173/auto/kakao/callback",
+                  // https://cdn.kyujanggak.com/auto/kakao/callback
                 })
               }
             >

@@ -12,6 +12,7 @@ import SearchPW from "./components/SearchPW";
 import SignupForm from "./components/SignupForm";
 import SignupTos from "./components/SignupTos";
 import SearchPage from "./pages/SearchPage";
+import MyUsageSearch from "./components/MyUsageSearch";
 import "./styles/App.css";
 
 const AppRoutes = () => {
@@ -29,6 +30,8 @@ const AppRoutes = () => {
       <Route path="/auto/kakao/callback" element={<KakaoRedirect />} />
       {/* 마이페이지 관련 */}
       <Route path="/mypagemenu" element={<MyPageMenu />} />
+      {/* 마이페이지 검색기록 불러오기 */}
+      <Route path="/myusagesearch" element={<MyUsageSearch />} />
     </Routes>
   );
 };

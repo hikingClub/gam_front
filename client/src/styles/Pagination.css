@@ -4,6 +4,7 @@
   margin-top: 2rem;
   list-style: none;
   padding: 0;
+  margin-bottom: 32px; /* Footer바에 달라붙어서 추가함 */
 }
 
 .pagination li {

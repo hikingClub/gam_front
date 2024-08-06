@@ -1,13 +1,221 @@
-.mysymhis {
-  display: flex;
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  height: 100%; /* 부모 컨테이너의 전체 높이를 차지 */
+/* 기본 레이아웃 */
+.MyAccount-main-container {
+  flex: 1;
+  justify-content: center;
+  margin: 0 0.45rem;
+  flex-direction: row;
+  position: relative;
 }
 
-.smile {
-  width: 150px; /* 원하는 너비 */
-  height: 150px; /* 원하는 높이 */
-  object-fit: cover; /* 이미지가 컨테이너에 맞게 조정됨 */
-  border-radius: 50%; /* 원형 이미지 */
+.MyAccount-inner-container {
+  display: flex;
+  flex-direction: row;
+  height: 86%;
+  width: 100%;
+  margin-top: 0.55rem;
+  overflow-x: hidden;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 0.1rem solid rgb(0, 55, 88, 0.3);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  gap: 1rem;
+}
+
+.account-section {
+  flex: 1;
+  min-width: 20rem;
+  background: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.account-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.625rem;
+}
+
+.account-info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.account-info-label {
+  width: 9.375rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-info-value {
+  flex: 1;
+  padding: 0.3125rem 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.account-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+  margin-left: 0.625rem;
+}
+
+.account-btn:hover {
+  background-color: #0056b3;
+}
+
+.account-note {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 0.625rem;
+}
+
+.account-note a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.account-note a:hover {
+  text-decoration: underline;
+}
+
+.account-social-login {
+  margin-top: 1.25rem;
+}
+
+.account-social-icons {
+  display: flex;
+  justify-content: center;
+  margin: 3rem auto;
+  gap: 3rem;
+}
+
+.account-icon-naver,
+.account-icon-kakao,
+.account-icon-google {
+  width: 5rem;
+  height: 2.5rem;
+  background-color: #ddd;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.account-icon-naver {
+  background-color: #03c75a;
+}
+
+.account-icon-kakao {
+  background-color: #fee500;
+  color: #3c1e1e;
+}
+
+.account-icon-google {
+  background-color: #db4437;
+}
+
+.account-subscription-options {
+  margin-top: 1rem;
+}
+
+.account-option {
+  margin-bottom: 2rem;
+}
+
+.account-option label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.account-option p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0rem;
+}
+
+.account-radio,
+.account-radio-group-section {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.account-radio input[type="radio"],
+.account-radio-group-section input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.account-radio label,
+.account-radio-group-section label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* 반응형 디자인 적용 */
+@media (max-width: 1280px) {
+  .MyAccount-main-container {
+    height: auto;
+    overflow-y: auto;
+  }
+  .MyAccount-main-container::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .MyAccount-main-container::-webkit-scrollbar-thumb {
+    background-color: #003758;
+    border-radius: 6px;
+    border: 2px solid #e5eaf2;
+  }
+
+  .MyAccount-main-container::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+  }
+
+  .MyAccount-inner-container {
+    flex-direction: column;
+    height: auto;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .account-section {
+    margin-bottom: 1rem;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .account-section h2 {
+    font-size: 1.25rem;
+  }
+
+  .account-info-label,
+  .account-info-value {
+    font-size: 0.9rem;
+  }
+
+  .account-icon-naver,
+  .account-icon-kakao,
+  .account-icon-google {
+    width: 4rem;
+    height: 2rem;
+  }
+
+  .account-note {
+    font-size: 0.875rem;
+  }
 }

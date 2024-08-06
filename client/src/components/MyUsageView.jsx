@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "../styles/MyUsageView.css";
 import "../styles/Pagination.css";
@@ -6,31 +6,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Chip, Stack } from "@mui/material";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const viewHistoryData = [
-  { term: "자바프로그래밍", timestamp: "2024.07.30 05:45:12" },
-  { term: "딥러닝", timestamp: "2024.07.24 12:18:56" },
-  { term: "사회에 쓸모있는 존재가 되자", timestamp: "2024.07.23 15:53:34" },
-  {
-    term: "에어컨 좀 틀어주세요 더워죽겠어요 정말이지 진짜 너무 더워서 치약이라도 바르고 싶어요",
-    timestamp: "2024.07.23 11:33:09",
-  },
-  { term: "와이파이", timestamp: "2024.07.24 16:05:28" },
-  { term: "딥러닝", timestamp: "2024.07.24 12:18:56" },
-  { term: "사회", timestamp: "2024.07.23 15:53:34" },
-  { term: "데이터", timestamp: "2024.07.23 11:33:09" },
-  { term: "이클립스", timestamp: "2024.07.23 11:31:15" },
-  { term: "몬스터", timestamp: "2024.07.23 11:29:46" },
-  { term: "유산균", timestamp: "2024.07.23 11:29:37" },
-  { term: "에너지드링크", timestamp: "2024.07.23 11:29:27" },
-  { term: "물티슈 한 장만 꺼내줘", timestamp: "2024.07.23 11:29:25" },
-  { term: "데이터프레임", timestamp: "2024.07.22 11:31:15" },
-  { term: "몬스터", timestamp: "2024.07.21 10:29:46" },
-  { term: "각성 효과", timestamp: "2024.07.20 09:29:37" },
-];
-
-const MyUsageView = () => {
+const MyUsageView = ({ searchHistory = [] }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [viewHistoryData, setViewHistoryData] = useState([]);
+
+  // searchHistory가 변경될 때만 viewHistoryData를 업데이트
+  useEffect(() => {
+    if (searchHistory.length > 0) {
+      setViewHistoryData(searchHistory);
+    }
+  }, [searchHistory]);
 
   const itemsPerPage = 10;
 
@@ -39,10 +24,13 @@ const MyUsageView = () => {
   };
 
   const getPaginatedData = () => {
+    if (!viewHistoryData || viewHistoryData.length === 0) return [];
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return viewHistoryData.slice(startIndex, endIndex);
   };
+
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = event => {
     if (event.target.checked) {
@@ -70,11 +58,8 @@ const MyUsageView = () => {
       ...remainingItems,
       ...viewHistoryData.slice((currentPage + 1) * itemsPerPage),
     ];
-    setSelectedItems([]);
-    // Update the data with the new array after deletion
-    // This line assumes you are storing the data in a state
-    // setViewHistoryData(updatedData);
-    // Or if you are using a database, send the updated data to your backend server
+    setViewHistoryData(updatedData); // Update the state with the new data
+    setSelectedItems([]); // Clear the selected items
   };
 
   const renderEmptyRows = () => {

@@ -12,26 +12,25 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 8vh 0 10vh;
-  padding: 0 4vh;
+  margin: 0 5vw;
+  padding: 0 2vw;
   background-color: #e5eaf2;
-  border-radius: 0.5vh;
-  box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.8rem 1rem 0.3rem rgba(0, 0, 0, 0.1);
   height: 80vh;
   max-height: 80vh;
-  overflow-y: scroll;
   box-sizing: border-box;
 }
 
 .signup-form-inner {
-  margin-left: 20rem;
-  margin-right: 20rem;
-  padding: 0 20vh;
+  margin: 0 auto;
+  padding: 0 5vw;
   border: 0.1rem solid gray;
   background-color: white;
   border-radius: 0.5rem;
-  overflow: hidden;
+  overflow-y: scroll;
   height: 96%;
+  max-width: 60rem;
 }
 
 .signup-form-title {
@@ -70,13 +69,13 @@
   border-radius: 4px;
   box-sizing: border-box;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   margin-bottom: 0.1rem;
 }
 
 .signup-form .form-button,
 .signup-form .emailcheck-timer {
-  width: 120px; /* 버튼과 타이머의 너비를 동일하게 설정 */
+  width: 7.5rem;
   height: 2rem;
   display: flex;
   align-items: center;
@@ -101,7 +100,7 @@
   text-align: center;
   color: #333;
   font-weight: bold;
-  line-height: 2.3rem; /* 타이머의 높이를 버튼과 맞춤 */
+  line-height: 2.3rem;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -112,7 +111,6 @@
   height: 1rem;
   margin-top: 0.7rem;
   margin-right: 0.5rem;
-  /* background-color: #7f13d117; */
   border: 0.1rem solid #00375880;
   border-radius: 50%;
   cursor: pointer;
@@ -141,11 +139,13 @@
 .signup-form input[type="radio"]:checked::before {
   transform: translate(-50%, -50%) scale(1);
 }
+
 .radios-select {
   display: flex;
   flex-direction: row;
-  gap: 6rem;
+  gap: 3rem;
 }
+
 .radio-group {
   display: flex;
   flex-direction: row;
@@ -162,6 +162,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  height: 60%;
+  width: 90%;
+  border: 0.1rem solid gray;
+  border-radius: 0.5rem;
+  justify-content: center;
 }
 
 .signup-success h2 {
@@ -171,15 +177,17 @@
 .signup-success button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  background-color: #003758cc;
-  color: #fff;
+  background-color: #00365829;
+  color: black;
+  font-weight: bold;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 
 .signup-success button:hover {
-  background-color: #003758cc;
+  background-color: #003658fd;
+  color: #fff;
 }
 
 .form-sections {
@@ -208,21 +216,37 @@
 .submit-button-gayip {
   position: relative;
   height: 10%;
-  /* background-color: red; */
 }
 
 .form-button-submit-button {
   position: absolute;
   font-weight: bold;
-  width: 120px;
-  right: 1px;
-  bottom: 10px;
+  width: 7.5rem;
+  right: 0.1rem;
+  bottom: 0.5rem;
   padding: 0.3rem 1rem;
   background-color: #0037581a;
   border: 0.1rem solid #003758cc;
   cursor: pointer;
 }
+
 .form-button-submit-button:hover {
   background-color: #003758;
   color: white;
+}
+
+/* 스크롤바 스타일 */
+.signup-form-inner::-webkit-scrollbar {
+  width: 12px;
+}
+
+.signup-form-inner::-webkit-scrollbar-thumb {
+  background-color: #003758cc;
+  border-radius: 6px;
+  border: 2px solid #e5eaf2;
+}
+
+.signup-form-inner::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 6px;
 }

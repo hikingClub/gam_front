@@ -1,37 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "../styles/MyUsageSearch.css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const searchHistoryData = [
-  { seq: 1, term: "500", timestamp: "2024.07.30 05:45:12" },
-  {
-    seq: 2,
-    term: "혹시 검색어가 길어질 경우 '...'으로 표시 되도록 설정 중이에요 정말이지 진짜 너무 더워서 치약이라도 바르고 싶어요",
-    timestamp: "2024.07.24 16:05:28",
-  },
-  { seq: 3, term: "404에러", timestamp: "2024.07.24 12:18:56" },
-  { seq: 4, term: "사회", timestamp: "2024.07.23 15:53:34" },
-  { seq: 5, term: "데이터", timestamp: "2024.07.23 11:33:09" },
-  { seq: 6, term: "이클립스", timestamp: "2024.07.23 11:31:15" },
-  { seq: 7, term: "몬스터", timestamp: "2024.07.23 11:29:46" },
-  { seq: 8, term: "유산균", timestamp: "2024.07.23 11:29:37" },
-  { seq: 9, term: "에너지드링크", timestamp: "2024.07.23 11:29:27" },
-  { seq: 10, term: "물티슈 한 장만 꺼내줘", timestamp: "2024.07.23 11:29:25" },
-  { seq: 11, term: "데이터프레임", timestamp: "2024.07.22 11:31:15" },
-  { seq: 12, term: "몬스터", timestamp: "2024.07.21 10:29:46" },
-  { seq: 13, term: "각성 효과", timestamp: "2024.07.20 09:29:37" },
-  { seq: 14, term: "에너지드링크", timestamp: "2024.07.20 20:29:27" },
-  { seq: 15, term: "와이파이", timestamp: "2024.07.24 16:05:28" },
-  { seq: 16, term: "딥러닝", timestamp: "2024.07.24 12:18:56" },
-  { seq: 17, term: "사회", timestamp: "2024.07.23 15:53:34" },
-  { seq: 18, term: "데이터", timestamp: "2024.07.23 11:33:09" },
-  { seq: 19, term: "물티슈 한 장만 꺼내줘", timestamp: "2024.07.20 01:29:25" },
-];
-
 const MyUsageSearch = () => {
+  const [searchHistory, setSearchHistory] = useState([]); // 빈 배열로 초기화
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
+
+  // 사용자의 seq를 세션 스토리지에서 가져오기
+  const loggedInUserSeq = sessionStorage.getItem("loggedInUserSeq");
+  console.log("로그인된 사용자 번호:", loggedInUserSeq);
+
+  useEffect(() => {
+    console.log("useEffect 실행됨");
+    const fetchSearchHistory = async () => {
+      console.log("fetchSearchHistory 실행됨");
+      try {
+        console.log("try 실행됨");
+        const params = {
+          pageNum: currentPage + 1,
+          pagePer: itemsPerPage,
+          userSeq: loggedInUserSeq,
+        };
+
+        console.log("Sending request with params:", params);
+
+        const response = await axios.get(
+          "http://localhost:8080/mypage/kwdhistory",
+          { params }
+        );
+
+        console.log("응답 데이터:", response.data);
+        const result = Array.isArray(response.data) ? response.data : [];
+        setSearchHistory(result);
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchSearchHistory();
+  }, [currentPage]);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
@@ -40,7 +50,7 @@ const MyUsageSearch = () => {
   const getPaginatedData = () => {
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return searchHistoryData.slice(startIndex, endIndex);
+    return searchHistory.slice(startIndex, endIndex);
   };
 
   const renderEmptyRows = () => {
@@ -75,22 +85,24 @@ const MyUsageSearch = () => {
           <tbody className="search-history-tbody">
             {getPaginatedData().map((item, index) => (
               <tr key={index} className="search-history-tr">
-                <td className="search-history-td">{item.seq}</td>
-                <td className="search-history-td" title={item.term}>
-                  {item.term}
+                <td className="search-history-td">
+                  {currentPage * itemsPerPage + index + 1}
                 </td>
-                <td className="search-history-td">{item.timestamp}</td>
+                <td className="search-history-td" title={item.keyword}>
+                  {item.keyword}
+                </td>
+                <td className="search-history-td">{item.keywordTime}</td>
               </tr>
             ))}
             {renderEmptyRows()}
           </tbody>
         </table>
       </div>
-      <div className="pagination-container">
+      <div className="mysearch-pagination-container">
         <ReactPaginate
           previousLabel={<FaArrowLeft />}
           nextLabel={<FaArrowRight />}
-          pageCount={Math.ceil(searchHistoryData.length / itemsPerPage)}
+          pageCount={Math.ceil(searchHistory.length / itemsPerPage)}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
           onPageChange={handlePageChange}

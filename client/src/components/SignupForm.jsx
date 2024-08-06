@@ -77,6 +77,17 @@ const SignupForm = () => {
 
   const handleEmailCheck = async () => {
     try {
+      // 이메일 중복 확인
+      const checkResponse = await axios.post(
+        `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
+      );
+      if (checkResponse.data) {
+        // 중복된 이메일이면 경고 메시지 표시
+        alert("이미 사용 중인 이메일입니다.");
+        return;
+      }
+
+      // 이메일 중복이 아닌 경우 인증 메일 발송
       const response = await axios.post(
         `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
       );
@@ -90,6 +101,7 @@ const SignupForm = () => {
         "이메일 중복 확인 에러:",
         error.response ? error.response.data : error.message
       );
+      alert("이메일 확인 중 오류가 발생했습니다.");
     }
   };
 
@@ -117,7 +129,7 @@ const SignupForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     if (!form.nickname) {
-      alert("닉네임을 입력하세요.");
+      alert("이름을 입력하세요.");
       return;
     }
 
