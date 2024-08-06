@@ -2,15 +2,39 @@ import HomeIcon from "@mui/icons-material/Home";
 import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import NavRight from "./NavRight";
 
 const Navbar = () => {
+  const [searchKeyword, setSearchKeyword] = useState(""); // 검색 키워드 상태 추가
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    // URL에서 검색어 파라미터 읽기
+    const query = new URLSearchParams(location.search).get("keyword");
+    setSearchKeyword(query || ""); // 검색어가 없는 경우 빈 문자열로 초기화
+  }, [location.search]); // location.search가 변경될 때마다 효과 실행
+
+  const handleSearchSubmit = () => {
+    if (searchKeyword.trim() !== "") {
+      navigate(`/search?keyword=${encodeURIComponent(searchKeyword)}`);
+    }
+  };
+
+  const handleInputChange = event => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === "Enter") {
+      handleSearchSubmit();
+    }
+  };
+
+  // 홈버튼
   const handleHomeClick = () => {
     navigate("/");
   };
@@ -36,18 +60,20 @@ const Navbar = () => {
             gap: 2,
             flex: 1,
             maxWidth: "700px",
-            marginLeft: "20px",
-            marginRight: "100px",
+            marginLeft: "-300px",
           }}
         >
           <TextField
             variant="outlined"
             fullWidth
             placeholder="새로운 검색어를 입력하세요!"
+            value={searchKeyword}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             InputProps={{
               endAdornment: (
                 <>
-                  <IconButton>
+                  <IconButton onClick={handleSearchSubmit}>
                     <SearchIcon />
                   </IconButton>
                   <IconButton>

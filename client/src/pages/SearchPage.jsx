@@ -51,6 +51,7 @@ const tabPaths = [
 const SearchPage = () => {
   const [value, setValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage, setPostsPerPage] = useState(10); // 동적으로 페이지당 게시물 수 설정
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색 키워드 상태 추가
   const [error, setError] = useState("");
   const [allResults, setAllResults] = useState([]); // 검색 시 담기는 초기의 모든 posts
@@ -58,7 +59,6 @@ const SearchPage = () => {
   const [results, setResults] = useState([]); // 현재 선택된 탭의 게시글들을 저장할 상태
   const navigate = useNavigate();
   const location = useLocation();
-  const postsPerPage = 10;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -111,6 +111,35 @@ const SearchPage = () => {
     setCurrentPage(selected);
   };
 
+  // 정렬1: 날짜 정렬
+  const handleYearFilterChange = selectedYear => {
+    if (selectedYear === "전체") {
+      setResults(allResults); // "전체"가 선택되면 모든 결과를 보여줍니다.
+    } else {
+      const numberOfYears = Number(
+        selectedYear.replace("최근 ", "").replace("년", "")
+      );
+      const pastYearDate = new Date(
+        new Date().setFullYear(new Date().getFullYear() - numberOfYears)
+      );
+
+      const filteredByDate = allResults.filter(post => {
+        const postDate = new Date(post.date);
+        return postDate >= pastYearDate;
+      });
+
+      setResults(filteredByDate);
+    }
+  };
+
+  // 정렬2: 개수 정렬(10~40개)
+  const handleViewChange = newView => {
+    const numberPerPage = parseInt(newView);
+    if (!isNaN(numberPerPage) && numberPerPage > 0) {
+      setPostsPerPage(numberPerPage); // 올바른 숫자가 추출되면 상태 업데이트
+    }
+  };
+
   // tmp: 멀티미디어 탭에서만 margin-bottom 적용
   const isMultimediaTab =
     new URLSearchParams(location.search).get("tab") === "멀티미디어";
@@ -150,7 +179,12 @@ const SearchPage = () => {
         </Tabs>
       </Box>
       {/* 상단2 */}
-      <SearchNav searchKeyword={searchKeyword} resultCount={results.length} />
+      <SearchNav
+        searchKeyword={searchKeyword}
+        resultCount={results.length}
+        onYearChange={handleYearFilterChange} // 콜백함수를 prop으로 전달
+        onViewChange={handleViewChange} // SearchNav에 새로운 prop 전달
+      />
       {/* 하단 카드 */}
       <Box sx={{ width: "90%" }}>
         <Box mt={4}>
