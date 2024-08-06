@@ -144,8 +144,12 @@ const MainContent = () => {
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // 화면 상단 중앙에 위치
-        sx={{ top: "15%" }} // 위치 및 크기 조정
+        sx={{
+          position: "fixed", // 위치 고정
+          top: "50%", // 화면의 수직 중앙
+          transform: "translate(340%, -50%)", // 정 중앙으로 조정
+          width: "auto", // 너비 자동 조정
+        }}
       >
         <Alert
           onClose={handleCloseSnackbar}

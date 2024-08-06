@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   Chip,
+  Collapse,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -42,7 +43,14 @@ const PostCard = ({ post }) => {
     author_affiliation,
     date,
     publisher,
+    url,
+    summary,
+    summary_alt,
   } = post;
+
+  // 텍스트가 축약된 상태인지 전체가 표시된 상태인지 관리
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
   // 색상을 조건에 따라 설정하는 예시
   const getChipColor = type => {
@@ -74,14 +82,18 @@ const PostCard = ({ post }) => {
     }
   };
 
-  // 텍스트가 축약된 상태인지 전체가 표시된 상태인지 관리
-  const [isExpanded, setIsExpanded] = useState(false);
-
   // 일정 길이 이상의 텍스트를 축약
   const truncatedAuthorAffiliation =
     author_affiliation.length > 30
       ? `${author_affiliation.substring(0, 30)}...`
       : author_affiliation;
+
+  const handleToggleSummary = () => {
+    setShowSummary(!showSummary);
+  };
+
+  // 요약이 없는 경우 대체 텍스트를 사용
+  const summary2 = summary || summary_alt || "설명 없음";
 
   return (
     <Box style={outerPostBox}>
@@ -141,7 +153,12 @@ const PostCard = ({ post }) => {
             </Typography>
           </Box>
           <Box display="flex" gap={1} sx={{ mt: 2 }}>
-            <Button variant="outlined" size="small" sx={buttonStyle}>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={buttonStyle}
+              onClick={handleToggleSummary}
+            >
               설명
             </Button>
             <Button variant="outlined" size="small" sx={buttonStyle}>
@@ -150,10 +167,24 @@ const PostCard = ({ post }) => {
             <Button variant="outlined" size="small" sx={buttonStyle}>
               상세 보기
             </Button>
-            <Button variant="outlined" size="small" sx={buttonStyle}>
-              출처 바로가기
+            <Button
+              variant="outlined"
+              size="small"
+              component="a" // 버튼을 링크로 사용
+              href={url} // post의 url을 href로 설정
+              sx={buttonStyle}
+              target="_blank" // 새 탭에서 링크 열기
+              rel="noopener noreferrer" // 보안과 관련된 속성 추가
+            >
+              집현전 바로가기
             </Button>
           </Box>
+          {/* Collapse 컴포넌트를 사용하여 설명 텍스트를 토글 */}
+          <Collapse in={showSummary}>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              {summary2}
+            </Typography>
+          </Collapse>
         </CardContent>
       </Card>
     </Box>
