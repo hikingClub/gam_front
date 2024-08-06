@@ -1,12 +1,17 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
 
-const SearchNav = ({ searchKeyword, resultCount }) => {
-  const [year, setYear] = React.useState("최근 2년");
-  const [language, setLanguage] = React.useState("모든 언어");
+const SearchNav = ({
+  searchKeyword,
+  resultCount,
+  onYearChange,
+  onViewChange,
+}) => {
+  const [year, setYear] = React.useState("전체");
   const [sort, setSort] = React.useState("정확도순");
   const [view, setView] = React.useState("10개 보기");
 
+  // css
   const commonBoxStyles = {
     bgcolor: "#f9f9f9",
     display: "flex",
@@ -15,16 +20,20 @@ const SearchNav = ({ searchKeyword, resultCount }) => {
     padding: 1,
     width: "100%",
   };
-
   const commonFontStyles = {
     fontFamily: "'Noto Sans KR', sans-serif",
     fontWeight: "bold",
     fontSize: "1.05rem",
   };
-
   const rightFontStyles = {
     fontFamily: "'Noto Sans KR', sans-serif",
-    marginRight: "8px",
+    marginRight: "20px",
+  };
+
+  // view 값 변경 시 SearchPage로 전달
+  const handleViewChange = event => {
+    setView(event.target.value);
+    onViewChange(event.target.value);
   };
 
   return (
@@ -48,7 +57,7 @@ const SearchNav = ({ searchKeyword, resultCount }) => {
         </Typography>
         <Typography
           variant="body2"
-          style={{ ...commonFontStyles, marginRight: "8px" }}
+          style={{ ...commonFontStyles, marginRight: "100px" }}
         >
           {resultCount}건
         </Typography>
@@ -58,23 +67,16 @@ const SearchNav = ({ searchKeyword, resultCount }) => {
         <Select
           variant="standard"
           value={year}
-          onChange={e => setYear(e.target.value)}
+          onChange={e => {
+            setYear(e.target.value);
+            onYearChange(e.target.value); // SearchPage로 변경된 값을 알림
+          }}
           style={{ ...rightFontStyles }}
         >
+          <MenuItem value="전체">전체</MenuItem>
           <MenuItem value="최근 2년">최근 2년</MenuItem>
           <MenuItem value="최근 5년">최근 5년</MenuItem>
           <MenuItem value="최근 10년">최근 10년</MenuItem>
-          <MenuItem value="전체">전체</MenuItem>
-        </Select>
-        <Select
-          variant="standard"
-          value={language}
-          onChange={e => setLanguage(e.target.value)}
-          style={{ ...rightFontStyles }}
-        >
-          <MenuItem value="모든 언어">모든 언어</MenuItem>
-          <MenuItem value="국문">국문</MenuItem>
-          <MenuItem value="영어">영어</MenuItem>
         </Select>
         <Select
           variant="standard"
@@ -90,7 +92,7 @@ const SearchNav = ({ searchKeyword, resultCount }) => {
         <Select
           variant="standard"
           value={view}
-          onChange={e => setView(e.target.value)}
+          onChange={handleViewChange}
           style={{ ...rightFontStyles }}
         >
           <MenuItem value="10개 보기">10개 보기</MenuItem>
