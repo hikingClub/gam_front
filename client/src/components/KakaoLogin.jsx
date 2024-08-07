@@ -1,3 +1,4 @@
+// KakaoLogin.js
 import React, { useEffect } from "react";
 import kakaoLogo from "../assets/kakao.png";
 
@@ -9,9 +10,12 @@ const KakaoLogin = ({ onLogin }) => {
   }, []);
 
   const handleLogin = () => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init("2acd6511c9ba3a8086adbbf0e5322117");
+    }
+
     window.Kakao.Auth.authorize({
-      redirectUri: "http://localhost:5173/auto/kakao/callback",
-      //   https://cdn.kyujanggak.com/auto/kakao/callback
+      redirectUri: "http://localhost:5173/oauth/kakao/callback", // 로컬 환경용
     });
   };
 

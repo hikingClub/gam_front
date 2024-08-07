@@ -1,48 +1,61 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import "../styles/NavRight.css";
 
 const NavRight = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout, userData } = useAuth(); // userData를 추가로 가져옴
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
-  const userName = "marioahn";
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 세션 스토리지에서 로그인 상태 확인_yj
-    const storedLoggedInState = sessionStorage.getItem("isLoggedIn");
-    if (storedLoggedInState === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    sessionStorage.setItem("isLoggedIn", "true"); // 로그인 상태를 세션에 저장시킴_yj
-  };
+    console.log("isLoggedIn 상태 변경:", isLoggedIn);
+    console.log("UserData:", userData); // userData를 확인하는 콘솔 로그
+  }, [isLoggedIn, userData]);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setShowDropdown(false);
-    sessionStorage.removeItem("isLoggedIn"); // 로그아웃 시 세션에서도 삭제_yj
-    window.location.href = "/"; // 로그아웃 시 메인 화면으로 리디렉션
+    setShowAlarmDropdown(false);
+    navigate("/");
   };
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    if (isLoggedIn) {
+      setShowDropdown(prev => !prev);
+    }
   };
 
   const toggleAlarmDropdown = () => {
-    setShowAlarmDropdown(!showAlarmDropdown);
+    if (isLoggedIn) {
+      setShowAlarmDropdown(prev => !prev);
+    }
   };
+
+  const uid = userData?.uid;
+  const name = userData?.name;
+
+  console.log("uid: ", uid);
+  // displayName 결정 로직
+  const displayName = userData
+    ? userData.name
+      ? name || id // 소셜 로그인 사용자는 name이 있으면 표시, 없으면 uid
+      : userData // 일반 로그인 사용자는 전체 userData 객체를 문자열로 변환하여 표시
+    : "사용자";
 
   return (
     <div className="button-container">
       {isLoggedIn ? (
         <>
-          <div className="welcome-message">
-            {/* <strong>{userName}</strong> 님 환영합니다 */}
-          </div>
+          <span className="welcome-message">
+            <strong>
+              {userData.isSocialLogin
+                ? displayName
+                : JSON.stringify(displayName)}
+            </strong>{" "}
+            님 환영합니다
+          </span>
           <div className="notification-container">
             <button
               className="button notification-button"
@@ -80,7 +93,6 @@ const NavRight = () => {
             )}
           </div>
           <button className="user-toggle-button" onClick={toggleDropdown}>
-            {/* <span className="username">님</span> */}
             <span className="dropdown-toggle">
               {showDropdown ? (
                 <svg
@@ -134,7 +146,7 @@ const NavRight = () => {
         </>
       ) : (
         <Link to="/ModernLogin">
-          <button className="button" onClick={handleLogin}>
+          <button className="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
