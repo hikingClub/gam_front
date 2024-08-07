@@ -16,18 +16,19 @@ import MyRecommend from "./MyRecommend";
 import MySubscription from "./MySubscription";
 import MyAccessReq from "./MyAccessReq";
 import MyAccount from "./MyAccount";
+import { useAuth } from "./AuthContext";
 
 const blue = {
-  50: "#0037581a", // rgb(0, 55, 88, 0.1)
-  100: "#00375833", // rgb(0, 55, 88, 0.2)
-  200: "#0037584d", // rgb(0, 55, 88, 0.3)
-  300: "#00375866", // rgb(0, 55, 88, 0.4)
-  400: "#00375880", // rgb(0, 55, 88, 0.5)
-  500: "#00375899", // rgb(0, 55, 88, 0.6)
-  600: "#003758b3", // rgb(0, 55, 88, 0.7)
-  700: "#003758cc", // rgb(0, 55, 88, 0.8)
-  800: "#003758e6", // rgb(0, 55, 88, 0.9)
-  900: "#003758", // rgb(0, 55, 88)
+  50: "#0037581a",
+  100: "#00375833",
+  200: "#0037584d",
+  300: "#00375866",
+  400: "#00375880",
+  500: "#00375899",
+  600: "#003758b3",
+  700: "#003758cc",
+  800: "#003758e6",
+  900: "#003758",
 };
 
 const grey = {
@@ -91,12 +92,11 @@ const StyledTabPanel = styled(TabPanel)`
   gap: 1rem;
   overflow: hidden;
 
-  /* high-zoom 상태에서의 스타일 조정 */
   .high-zoom & {
-    height: auto; /* 높이를 자동으로 조정 */
-    flex: 1; /* 가용 공간을 모두 차지 */
-    max-height: 90vh; /* 최대 높이 설정 */
-    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+    height: auto;
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 `;
 
@@ -115,31 +115,22 @@ const StyledTabsList = styled(TabsList)`
 
 const MyPageMenu = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
+  const { isLoggedIn, userData } = useAuth();
 
   useEffect(() => {
-    try {
-      const storedNickname = localStorage.getItem("nickname");
-      const storedEmail = localStorage.getItem("email");
+    console.log("userData:", userData);
+  }, [userData]);
 
-      if (storedNickname) {
-        setNickname(storedNickname);
-      } else {
-        setNickname("알 수 없음"); // 기본값 설정
-      }
+  // userData에서 필요한 속성 추출
+  const uid = userData?.uid;
+  const name = userData?.name;
 
-      if (storedEmail) {
-        setEmail(storedEmail);
-      } else {
-        setEmail("알 수 없음"); // 기본값 설정
-      }
-    } catch (error) {
-      console.error("로컬 스토리지 접근 에러:", error);
-      setNickname("에러 발생");
-      setEmail("에러 발생");
-    }
-  }, []);
+  // displayName 결정 로직
+  const displayName = userData
+    ? userData.name
+      ? name || uid // 소셜 로그인 사용자는 name이 있으면 표시, 없으면 uid
+      : JSON.stringify(userData) // 일반 로그인 사용자는 전체 userData 객체를 문자열로 변환하여 표시
+    : "사용자";
 
   return (
     <div className="mymenubar-container">
@@ -157,8 +148,7 @@ const MyPageMenu = () => {
           </div>
           <div style={{ textAlign: "right" }}>
             <p>
-              <strong>{nickname}</strong>&nbsp;님&nbsp;&nbsp;/&nbsp;&nbsp;
-              {email}
+              <strong>{displayName}</strong> 님
             </p>
           </div>
         </div>

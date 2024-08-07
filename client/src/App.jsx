@@ -1,8 +1,8 @@
-// App.jsx
+// src/App.jsx
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
-import KakaoRedirect from "./components/KakaoRedirect";
+import OAuthCallback from "./components/OAuthCallback"; // 변경
 import MainContent from "./components/MainContent";
 import ModernLogin from "./components/ModernLogin";
 import MyPageMenu from "./components/MyPageMenu";
@@ -13,12 +13,15 @@ import SignupForm from "./components/SignupForm";
 import SignupTos from "./components/SignupTos";
 import SearchPage from "./pages/SearchPage";
 import MyUsageSearch from "./components/MyUsageSearch";
+import { AuthProvider } from "./components/AuthContext";
 import "./styles/App.css";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* 검색관련 */}
+      {/* 메인 페이지 */}
+      <Route path="/" element={<MainContent />} />
+      {/* 검색 관련 */}
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/media" element={<SearchPage />} />
       {/* 로그인 및 회원가입 관련 */}
@@ -27,7 +30,8 @@ const AppRoutes = () => {
       <Route path="/signupform" element={<SignupForm />} />
       <Route path="/search-id" element={<SearchID />} />
       <Route path="/search-pw" element={<SearchPW />} />
-      <Route path="/auto/kakao/callback" element={<KakaoRedirect />} />
+      {/* OAuth 콜백 처리 */}
+      <Route path="/oauth/kakao/callback" element={<OAuthCallback />} />
       {/* 마이페이지 관련 */}
       <Route path="/mypagemenu" element={<MyPageMenu />} />
       {/* 마이페이지 검색기록 불러오기 */}
@@ -38,16 +42,15 @@ const AppRoutes = () => {
 
 const App = () => {
   return (
-    <Router>
-      <>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<MainContent />} />
-          <Route path="/*" element={<AppRoutes />} />
-        </Routes>
-        <Footer />
-      </>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <>
+          <Navbar />
+          <AppRoutes />
+          <Footer />
+        </>
+      </Router>
+    </AuthProvider>
   );
 };
 

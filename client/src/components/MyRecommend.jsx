@@ -1,10 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../styles/MyRecommend.css";
 
 const MyRecommend = () => {
-  const [subFields, setSubFields] = useState([]);
-  const [selectedSubFields, setSelectedSubFields] = useState([]);
-  const [selectedInterestTypes, setSelectedInterestTypes] = useState([]);
+  const [subFields, setSubFields] = useState([]); // 대분류 상태
+  const [selectedSubFields, setSelectedSubFields] = useState([]); // 선택된 중분류 상태 (이름과 ID를 함께 저장)
+  const [selectedInterestTypes, setSelectedInterestTypes] = useState([]); // 관심유형 상태
+  const [ageRange, setageRange] = useState(""); // 연령대 상태
+  const [jobRange, setjobRange] = useState(""); // 직업군 상태
+
+  // 서버에서 기존 설정 값을 가져오는 함수
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/mypage/getRecommendSetting",
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+
+        const data = response.data;
+        console.log("응답받은 데이터: ", data); // 전체 응답 데이터 확인
+
+        if (data.message === "성공") {
+          if (
+            Array.isArray(data.recommendFieldList) &&
+            data.recommendFieldList.length > 0
+          ) {
+            console.log("recommendFieldList: ", data.recommendFieldList); // 확인
+
+            const extractedFields = data.recommendFieldList.map(item => {
+              const parts = item.split(">");
+              return parts.length > 1 ? parts[1].trim() : item;
+            });
+
+            console.log("추출된 중분류들: ", extractedFields); // 추출된 데이터 확인
+
+            setSelectedSubFields(
+              extractedFields.map(name => {
+                const field = subFields.find(field => field.name === name);
+                return field
+                  ? { id: field.id, name: field.name }
+                  : { id: null, name };
+              })
+            );
+          }
+
+          if (data.interest) {
+            setSelectedInterestTypes(data.interest.split(","));
+          }
+
+          if (data.ageRange) {
+            setageRange(data.ageRange);
+          }
+
+          if (data.jobRange) {
+            setjobRange(data.jobRange);
+          }
+        } else {
+          // 여기에서 기존 데이터가 없을 때 별도의 alert를 띄우지 않음
+          console.warn(
+            "설정을 불러오는 중 문제가 발생했습니다: " + data.message
+          );
+        }
+      } catch (error) {
+        console.error("설정을 불러오는 중 오류가 발생했습니다:", error);
+        alert("설정을 불러오는 중 오류가 발생했습니다.");
+      }
+    };
+
+    fetchData();
+  }, [subFields]);
 
   const handleMainFieldClick = field => {
     let subFieldOptions = [];
@@ -106,16 +174,31 @@ const MyRecommend = () => {
         { id: 76, name: "스포츠" },
       ];
     }
-
+    // 대분류를 변경했을 때도 기존에 선택한 중분류 항목들을 유지하도록 함
     setSubFields(subFieldOptions);
-  };
 
+    // 현재 대분류에서 선택된 항목들을 추가
+    const updatedSelectedSubFields = [...selectedSubFields];
+
+    // 새로운 중분류 옵션 중 현재 선택된 중분류 항목을 추가 (중복 방지)
+    subFieldOptions.forEach(option => {
+      if (
+        selectedSubFields.some(selected => selected.id === option.id) &&
+        !updatedSelectedSubFields.some(selected => selected.id === option.id)
+      ) {
+        updatedSelectedSubFields.push(option);
+      }
+    });
+
+    setSelectedSubFields(updatedSelectedSubFields);
+  };
+  // 중분류 항목 선택 시 이름과 ID 값을 상태에 저장하는 함수
   const handleSubFieldClick = subField => {
     setSelectedSubFields(prev => {
-      if (prev.includes(subField)) {
-        return prev.filter(field => field !== subField);
+      if (prev.some(selected => selected.id === subField.id)) {
+        return prev.filter(selected => selected.id !== subField.id);
       } else if (prev.length < 5) {
-        return [...prev, subField];
+        return [...prev, { id: subField.id, name: subField.name }];
       } else {
         alert("최대 5개까지 선택 가능합니다.");
         return prev;
@@ -123,6 +206,7 @@ const MyRecommend = () => {
     });
   };
 
+  // 관심유형 항목 선택 시 처리하는 함수
   const handleInterestTypeClick = type => {
     setSelectedInterestTypes(prev => {
       if (prev.includes(type)) {
@@ -136,12 +220,54 @@ const MyRecommend = () => {
     });
   };
 
+  // 선택된 중분류 항목을 초기화하는 함수
   const resetSelectedSubFields = () => {
     setSelectedSubFields([]);
   };
 
+  // 선택된 관심유형 항목을 초기화하는 함수
   const resetSelectedInterestTypes = () => {
     setSelectedInterestTypes([]);
+  };
+
+  // 저장 버튼 클릭 시 데이터를 서버로 전송하는 함수
+  const handleSave = async () => {
+    // 선택된 중분류 ID를 쉼표로 구분된 문자열로 변환
+    const selectedSubFieldIds = selectedSubFields
+      .map(field => field.id)
+      .join(",");
+    // 선택된 관심유형을 쉼표로 구분된 문자열로 변환
+    const selectedInterestTypeNames = selectedInterestTypes.join(",");
+
+    const data = {
+      recIndexes: selectedSubFieldIds, // 중분류 ID를 문자열로 전송
+      interest: selectedInterestTypeNames, // 관심유형을 문자열로 전송
+      ageRange,
+      jobRange,
+    };
+
+    console.log("저장된 데이터들 :", {
+      selectedSubFields: selectedSubFieldIds, // ID들 문자열로 변환
+      selectedInterestTypes: selectedInterestTypeNames, // 관심유형들 문자열로 변환
+      ageRange,
+      jobRange,
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/mypage/setRecommendSetting",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      alert("저장되었습니다: " + response.data);
+    } catch (error) {
+      alert("저장 중 오류가 발생했습니다: " + error.message);
+    }
   };
 
   return (
@@ -193,13 +319,17 @@ const MyRecommend = () => {
               <div className="selected-fields-content">
                 {subFields.map(field => (
                   <button
-                    key={field.id} // 객체의 고유 id를 키로 사용
-                    onClick={() => handleSubFieldClick(field.name)} // 객체의 name 속성만 전달
+                    key={field.id}
+                    onClick={() => handleSubFieldClick(field)} // 전체 field 객체를 전달
                     className={
-                      selectedSubFields.includes(field.name) ? "selected" : ""
+                      selectedSubFields.some(
+                        selected => selected.name === field.name
+                      )
+                        ? "selected"
+                        : ""
                     }
                   >
-                    {field.name}
+                    {field.name} {/* 버튼에 표시되는 텍스트는 name */}
                   </button>
                 ))}
               </div>
@@ -215,9 +345,9 @@ const MyRecommend = () => {
                   <span
                     key={index}
                     className="selected-field"
-                    onClick={() => handleSubFieldClick(field)} // 클릭 시 선택 해제
+                    onClick={() => handleSubFieldClick(field)}
                   >
-                    {field}
+                    {field.name}
                   </span>
                 ))}
               </div>
@@ -237,12 +367,12 @@ const MyRecommend = () => {
           <p>최대 5개까지 선택 가능합니다.</p>
           <div className="interest-types">
             <button
-              onClick={() => handleInterestTypeClick("교전")}
+              onClick={() => handleInterestTypeClick("고전")}
               className={
-                selectedInterestTypes.includes("교전") ? "selected" : ""
+                selectedInterestTypes.includes("고전") ? "selected" : ""
               }
             >
-              교전
+              고전
             </button>
             <button
               onClick={() => handleInterestTypeClick("기록물")}
@@ -353,7 +483,12 @@ const MyRecommend = () => {
           <div className="additional-info">
             <div className="info-item">
               <label>연령대</label>
-              <select className="additional-info-select">
+              <select
+                className="additional-info-select"
+                value={ageRange}
+                onChange={e => setageRange(e.target.value)}
+              >
+                <option value="">선택하세요</option>
                 <option>10대 미만</option>
                 <option>10대</option>
                 <option>20대</option>
@@ -366,7 +501,12 @@ const MyRecommend = () => {
             </div>
             <div className="info-item">
               <label>직업군</label>
-              <select className="additional-info-select">
+              <select
+                className="additional-info-select"
+                value={jobRange}
+                onChange={e => setjobRange(e.target.value)}
+              >
+                <option value="">선택하세요</option>
                 <option>사무직</option>
                 <option>연구직</option>
                 <option>공학기술직</option>
@@ -389,7 +529,9 @@ const MyRecommend = () => {
           </div>
         </div>
       </div>
-      <div className="reco-submit-button">저장하기</div>
+      <div className="reco-submit-button" onClick={handleSave}>
+        저장하기
+      </div>
     </div>
   );
 };
