@@ -1,3 +1,5 @@
+import DescriptionIcon from "@mui/icons-material/Description";
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   Button,
@@ -34,7 +36,7 @@ const buttonStyle = {
   },
 };
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, showSummary, onToggleSummary }) => {
   const {
     type_name,
     map_path,
@@ -50,7 +52,6 @@ const PostCard = ({ post }) => {
 
   // 텍스트가 축약된 상태인지 전체가 표시된 상태인지 관리
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showSummary, setShowSummary] = useState(false);
 
   // 색상을 조건에 따라 설정하는 예시
   const getChipColor = type => {
@@ -87,10 +88,6 @@ const PostCard = ({ post }) => {
     author_affiliation.length > 30
       ? `${author_affiliation.substring(0, 30)}...`
       : author_affiliation;
-
-  const handleToggleSummary = () => {
-    setShowSummary(!showSummary);
-  };
 
   // 요약이 없는 경우 대체 텍스트를 사용
   const summary2 = summary || summary_alt || "설명 없음";
@@ -157,7 +154,7 @@ const PostCard = ({ post }) => {
               variant="outlined"
               size="small"
               sx={buttonStyle}
-              onClick={handleToggleSummary}
+              onClick={onToggleSummary}
             >
               설명
             </Button>
@@ -181,9 +178,40 @@ const PostCard = ({ post }) => {
           </Box>
           {/* Collapse 컴포넌트를 사용하여 설명 텍스트를 토글 */}
           <Collapse in={showSummary}>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              {summary2}
-            </Typography>
+            <Box
+              sx={{
+                mt: 2,
+                p: 2,
+                borderRadius: 2,
+                border: "1px solid #e0e0e0",
+                backgroundColor:
+                  summary2 === "설명 없음" ? "#fff3e0" : "#f9f9f9",
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontFamily: '"Noto Sans KR", sans-serif',
+                  color: summary2 === "설명 없음" ? "#d32f2f" : "inherit",
+                  fontWeight: summary2 === "설명 없음" ? "bold" : "600", // 조정된 폰트 무게
+                  opacity: summary2 === "설명 없음" ? 1 : 0.9,
+                }}
+              >
+                {summary2 === "설명 없음" ? (
+                  <>
+                    <InfoIcon sx={{ mr: 1, color: "#d32f2f" }} />
+                    <strong>{summary2}</strong>
+                  </>
+                ) : (
+                  <>
+                    <DescriptionIcon sx={{ mr: 1 }} />
+                    {summary2}
+                  </>
+                )}
+              </Typography>
+            </Box>
           </Collapse>
         </CardContent>
       </Card>

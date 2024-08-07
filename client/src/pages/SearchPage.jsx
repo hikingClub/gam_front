@@ -57,6 +57,7 @@ const SearchPage = () => {
   const [allResults, setAllResults] = useState([]); // 검색 시 담기는 초기의 모든 posts
   const [filteredResults, setFilteredResults] = useState({}); // 각 탭별로 필터링된 결과를 저장할 객체
   const [results, setResults] = useState([]); // 현재 선택된 탭의 게시글들을 저장할 상태
+  const [summaryToggles, setSummaryToggles] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -71,6 +72,18 @@ const SearchPage = () => {
     }
     setValue(tabPaths.indexOf(tab));
   }, [location.search]);
+
+  // 페이지나 검색 결과가 변경될 때 설명 토글 상태를 리셋
+  useEffect(() => {
+    setSummaryToggles(Array(results.length).fill(false));
+  }, [results, currentPage]);
+
+  // 설명 토글 함수를 PostCard에 전달
+  const toggleSummary = index => {
+    const newToggles = [...summaryToggles];
+    newToggles[index] = !newToggles[index];
+    setSummaryToggles(newToggles);
+  };
 
   const handleFetchData = async keyword => {
     try {
@@ -192,7 +205,14 @@ const SearchPage = () => {
             <PostSlider posts={postSliders} />
           ) : (
             currentPosts.map((post, index) => (
-              <PostCard key={index} post={post} />
+              <PostCard
+                key={index}
+                post={post}
+                showSummary={summaryToggles[currentPage * postsPerPage + index]}
+                onToggleSummary={() =>
+                  toggleSummary(currentPage * postsPerPage + index)
+                }
+              />
             ))
           )}
         </Box>
