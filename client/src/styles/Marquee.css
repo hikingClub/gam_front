@@ -1,0 +1,86 @@
+.marquee {
+  width: 100%; /* 전체 너비를 화면에 맞춤 */
+  height: 45px; /* 세로 높이 */
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative; /* 위치를 상대적으로 설정 */
+  top: 10.8vh; /* Navbar 아래로 위치 조정 */
+  background-color: rgba(0, 0, 0, 0.7); /* 투명한 검은색 배경 */
+  color: yellow; /* 노란색 글씨 */
+  z-index: 10;
+  display: flex;
+  justify-content: space-between; /* 텍스트와 날짜 사이 공간 분배 */
+  align-items: center;
+  font-weight: bold; /* 전체 텍스트를 더 진하게 */
+  border-top: 3px solid #646cff; /* 상단에 보라색 구분선 추가 */
+  border-bottom: 5px solid #646cff; /* 하단에 보라색 구분선 추가 */
+}
+
+.marquee-content {
+  flex: 1; /* 텍스트 영역을 유동적으로 조절 */
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+
+.new-data {
+  color: #4caf50;
+  margin-right: 35px;
+}
+.new-data strong {
+  font-size: 1.3em;
+  color: #4caf50;
+  text-decoration: underline; /* 텍스트에 밑줄 추가 */
+}
+
+.updated-data {
+  color: #ffc107;
+  margin-right: 35px;
+}
+.updated-data strong {
+  font-size: 1.3em;
+  color: #ffc107;
+  text-decoration: underline; /* 텍스트에 밑줄 추가 */
+}
+
+.deleted-data {
+  color: #f44336;
+}
+.deleted-data strong {
+  font-size: 1.3em;
+  color: #f44336;
+  text-decoration: underline; /* 텍스트에 밑줄 추가 */
+}
+
+.new-data::after,
+.updated-data::after {
+  content: "|"; /* 짝대기 표시 */
+  right: -16px; /* 오른쪽에서 16px 외곽으로 */
+  top: 0; /* 위쪽 정렬 */
+  color: #ddd; /* 연한 회색으로 변경 */
+  font-size: 1.1em; /* 폰트 크기 */
+  padding-left: 30px; /* 왼쪽 패딩 추가로 텍스트와 짝대기 사이 거리 조절 */
+}
+
+.marquee-date {
+  padding-right: 20px;
+  font-size: 0.8em;
+  color: lightgray;
+}
+.marquee-date i {
+  margin-right: 5px; /* 아이콘과 텍스트 사이의 간격 */
+  color: #ccc;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(70%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}

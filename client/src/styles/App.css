@@ -9,6 +9,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden; /* 루트 레벨에서 스크롤바 생성 방지 */
+}
+
+.navbar {
+  flex-shrink: 0; /* 축소되지 않도록 설정 */
 }
 
 .main-content-container {

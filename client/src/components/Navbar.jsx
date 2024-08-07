@@ -43,9 +43,10 @@ const Navbar = () => {
     <nav className="navbar">
       {/* 1. left */}
       <div className="navbar-left">
-        <Link to="/intro">디지털규장각이 처음이에요</Link>
-        <Link to="/about">디지털규장각 소개</Link>
-        <Link to="/notice">공지사항</Link>
+        <Link to="/">디지털규장각이 처음이에요</Link>
+        <Link to="/">디지털규장각 소개</Link>
+        <Link to="/">공지사항</Link>
+        <Link to="/updated">업데이트 내역</Link>
         <HomeIcon
           sx={{ fontSize: 40, color: "#646cff", cursor: "pointer" }}
           onClick={handleHomeClick}
