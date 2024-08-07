@@ -174,13 +174,10 @@ const MyRecommend = () => {
         { id: 76, name: "스포츠" },
       ];
     }
-    // 대분류를 변경했을 때도 기존에 선택한 중분류 항목들을 유지하도록 함
     setSubFields(subFieldOptions);
-
-    // 현재 대분류에서 선택된 항목들을 추가
+    // 기존에 선택된 중분류 항목을 유지하고 중복 선택을 방지
     const updatedSelectedSubFields = [...selectedSubFields];
 
-    // 새로운 중분류 옵션 중 현재 선택된 중분류 항목을 추가 (중복 방지)
     subFieldOptions.forEach(option => {
       if (
         selectedSubFields.some(selected => selected.id === option.id) &&
@@ -190,8 +187,11 @@ const MyRecommend = () => {
       }
     });
 
+    // 현재 선택된 대분류와 관련된 중분류만 추가하기
+    setSubFields(subFieldOptions);
     setSelectedSubFields(updatedSelectedSubFields);
   };
+
   // 중분류 항목 선택 시 이름과 ID 값을 상태에 저장하는 함수
   const handleSubFieldClick = subField => {
     setSelectedSubFields(prev => {

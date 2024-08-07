@@ -9,6 +9,7 @@ const MyAccount = () => {
   const [email, setEmail] = useState(""); // 사용자의 이메일을 저장하는 상태
   const [emailAlert, setEmailAlert] = useState("no");
   const [mainAlert, setMainAlert] = useState("no");
+  const [password, setPassword] = useState(""); // 기존 비밀번호
 
   const { logout } = useAuth(); // useAuth 훅에서 로그아웃 함수 가져오기
 
@@ -29,6 +30,7 @@ const MyAccount = () => {
         setName(response.data.nickname); // 사용자 이름 설정
         setUserId(response.data.uid); // 사용자 아이디 설정
         setEmail(response.data.email); // 사용자 이메일 설정
+        setPassword(response.data.password); // 사용자 비밀번호 설정
       } catch (error) {
         console.error("설정 정보를 가져오는 중 오류 발생:", error);
       }
@@ -37,11 +39,85 @@ const MyAccount = () => {
     fetchUserSettings(); // 컴포넌트 마운트 시 데이터 가져오기
   }, []);
 
-  const handleEmailChange = () => {
-    // 이메일 변경 로직을 여기에 추가
-    const newEmail = prompt("새 이메일을 입력하세요:", email);
-    if (newEmail) {
-      setEmail(newEmail);
+  const handlePasswordChange = async () => {
+    const oldPassword = prompt("기존 비밀번호를 입력해주세요.");
+    if (oldPassword === null) {
+      // 사용자가 취소 버튼을 누르면 함수 종료
+      return;
+    }
+
+    if (oldPassword && oldPassword.trim() !== "") {
+      let newPassword = "";
+      let confirmPassword = "";
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+=-])[a-zA-Z\d!@#$%^&*+=-]{8,16}$/;
+
+      // 새로운 비밀번호가 유효한지 확인
+      while (!newPassword || !passwordRegex.test(newPassword)) {
+        newPassword = prompt(
+          "변경할 비밀번호를 입력해주세요 (8~16자의 영문자 + 숫자 + 특수문자 조합):"
+        );
+
+        if (newPassword === null) {
+          // 사용자가 취소 버튼을 누르면 함수 종료
+          return;
+        }
+
+        if (!newPassword || !passwordRegex.test(newPassword)) {
+          alert(
+            "비밀번호는 8~16자의 영문자, 숫자, 특수문자 조합이어야 합니다. 다시 입력해주세요."
+          );
+        }
+      }
+
+      // 비밀번호 확인을 입력받고 일치 여부 확인
+      while (newPassword !== confirmPassword) {
+        confirmPassword = prompt("변경할 비밀번호를 다시 한 번 입력해주세요.");
+
+        if (confirmPassword === null) {
+          // 사용자가 취소 버튼을 누르면 함수 종료
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          alert("두 비밀번호가 일치하지 않습니다. 다시 시도해 주세요.");
+        }
+      }
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/mypage/settings/password",
+          {
+            oldPassword, // 기존 비밀번호를 포함하여 백엔드로 전달
+            newPassword,
+          },
+          {
+            withCredentials: true, // 세션 쿠키를 포함하여 요청
+          }
+        );
+
+        if (response.status === 200) {
+          alert("비밀번호가 성공적으로 변경되었습니다.");
+          setPassword(newPassword); // 비밀번호 변경 후 새로운 비밀번호를 기존 비밀번호로 설정
+        }
+      } catch (error) {
+        // 여기서 실패한 이유를 콘솔에 출력
+        if (error.response) {
+          // 서버에서 응답이 온 경우
+          console.error("비밀번호 변경 실패:", error.response.data);
+          console.error("상태 코드:", error.response.status);
+          console.error("응답 헤더:", error.response.headers);
+        } else if (error.request) {
+          // 요청이 서버에 도달하지 못한 경우
+          console.error("서버 응답이 없습니다:", error.request);
+        } else {
+          // 다른 이유로 실패한 경우
+          console.error("비밀번호 변경 요청 중 오류 발생:", error.message);
+        }
+        alert("비밀번호 변경에 실패하였습니다. 다시 시도해 주세요.");
+      }
+    } else {
+      alert("기존 비밀번호를 입력해주세요.");
     }
   };
 
@@ -88,7 +164,16 @@ const MyAccount = () => {
           <div className="account-info-row">
             <div className="account-info-label">이메일</div>
             <div className="account-info-value">{email}</div>
-            <button className="account-btn" onClick={handleEmailChange}>
+          </div>
+          <div className="account-info-row">
+            <div className="account-info-label">비밀번호</div>
+            <input
+              type="password"
+              className="account-info-value-pw"
+              value={password}
+              readOnly
+            />
+            <button className="account-btn" onClick={handlePasswordChange}>
               변경
             </button>
           </div>

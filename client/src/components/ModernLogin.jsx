@@ -1,9 +1,5 @@
-// ModernLogin.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import googleLogo from "../assets/google.png";
-import kakaoLogo from "../assets/kakao.png";
-import naverLogo from "../assets/naver.png";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import "../styles/ModernLogin.css";
@@ -22,7 +18,10 @@ const ModernLogin = () => {
   useEffect(() => {
     const savedUserData = JSON.parse(sessionStorage.getItem("userCredentials"));
     if (savedUserData) {
-      setCredentials(savedUserData);
+      setCredentials({
+        uid: savedUserData.uid,
+        password: "", // 비밀번호는 지워야 함
+      });
       setRememberMe(true);
     }
   }, []);
@@ -67,9 +66,10 @@ const ModernLogin = () => {
             : undefined;
 
         if (rememberMe) {
+          // 비밀번호는 저장하지 않고 아이디만 저장
           sessionStorage.setItem(
             "userCredentials",
-            JSON.stringify(credentials)
+            JSON.stringify({ uid: credentials.uid })
           );
         } else {
           sessionStorage.removeItem("userCredentials");
@@ -79,7 +79,7 @@ const ModernLogin = () => {
 
         console.log("로그인 성공:", { uid: credentials.uid, seq });
 
-        alert("로그인 성공!");
+        alert("로그인 되었습니다.");
         navigate("/");
       }
     } catch (error) {

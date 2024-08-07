@@ -281,7 +281,7 @@ const SignupForm = () => {
                   />
                   {emailChecked ? (
                     <span className="emailcheck-timer">
-                      남은 시간: {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
+                      {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
                     </span>
                   ) : (
                     <button
