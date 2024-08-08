@@ -11,7 +11,7 @@
   width: 100%;
   margin-top: 0.55rem;
   overflow-x: hidden;
-  padding: 1rem;
+  padding: 0.6rem;
   box-sizing: border-box;
   border: 0.1rem solid rgb(0, 55, 88, 0.3);
   border-radius: 0.5rem;
@@ -37,7 +37,7 @@
 .favorites-list ul {
   list-style: none;
   padding-left: 20px;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .favorites-list .list-item {

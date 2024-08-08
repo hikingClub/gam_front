@@ -2,11 +2,15 @@ import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Button, Input, Snackbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
 import { fetchAutocompleteSuggestions } from "../utils/autoComplete"; // 유틸리티 함수 불러오기
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import "regenerator-runtime/runtime";
 
 const DetailedSearchButton = styled(Button)({
   marginLeft: "8px",
@@ -28,6 +32,27 @@ const MainContent = () => {
   const [suggestions, setSuggestions] = useState([]); // 자동완성 제안을 저장하는 상태
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (transcript) {
+      setSearchKeyword(transcript);
+
+      // 3초 뒤에 검색 이벤트 실행
+      const timer = setTimeout(() => {
+        handleSearchClick();
+      }, 3000);
+
+      // 클린업 함수: 다음 인식이 시작되기 전에 타이머 제거
+      return () => clearTimeout(timer);
+    }
+  }, [transcript]);
 
   const handleInputChange = async e => {
     const inputValue = e.target.value;
@@ -73,7 +98,15 @@ const MainContent = () => {
     setOpenSnackbar(false);
   };
 
-  const iconStyle = {
+  const startListening = () => {
+    SpeechRecognition.startListening({ language: "ko-KR" });
+  };
+
+  const handleMicClick = () => {
+    startListening();
+  };
+
+  const searchIconStyle = {
     fontSize: "1.45em",
     cursor: "pointer",
     color: "#3f51b5",
@@ -82,6 +115,20 @@ const MainContent = () => {
       color: "#8e24aa",
     },
   };
+
+  const micIconStyle = {
+    fontSize: "1.45em",
+    cursor: "pointer",
+    color: listening ? "red" : "#3f51b5", // 음성 인식 중이면 빨간색, 아니면 기본색
+    marginLeft: "5px", // 원하는 간격으로 조정
+    "&:hover": {
+      color: listening ? "darkred" : "#8e24aa", // 음성 인식 중이면 hover 시 어두운 빨간색, 아니면 보라색
+    },
+  };
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   return (
     <div className="main-content-container">
@@ -102,12 +149,10 @@ const MainContent = () => {
             endAdornment={
               <>
                 <SearchIcon
-                  sx={{ ...iconStyle, marginBottom: "5px" }}
+                  sx={{ ...searchIconStyle, marginBottom: "5px" }}
                   onClick={handleSearchClick}
                 />
-                <Link to="/test">
-                  <MicIcon sx={iconStyle} />
-                </Link>
+                <MicIcon sx={micIconStyle} onClick={handleMicClick} />
               </>
             }
             sx={{

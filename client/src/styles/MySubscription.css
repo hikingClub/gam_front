@@ -1,3 +1,50 @@
+/* 구독 알림 리스트 스타일링 */
+.alerts-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
+}
+
+.alert-item:nth-child(even) {
+  background-color: #eaf3ff; /* 짝수 항목에 배경색 적용 */
+}
+
+.alert-title {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.alert-time {
+  font-size: 0.8rem;
+  color: #777;
+  margin-right: 1rem;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.alert-close:hover {
+  color: #ff0000;
+}
+
+/* 구독 설정 기본 스타일 */
 .subscription-main-container {
   flex: 1;
   justify-content: center;
@@ -41,7 +88,7 @@
 
 .subs-section h2,
 .subs-section h3 {
-  font-size: 1.5rem; /* 폰트 크기를 rem 단위로 설정 */
+  font-size: 1.2rem; /* 폰트 크기를 rem 단위로 설정 */
   margin-bottom: 1rem; /* margin-bottom을 줄여 제목을 위로 올림 */
   color: #333;
   margin-top: 0; /* 상단 여백을 없앰 */
@@ -51,7 +98,7 @@
   display: block;
   margin-bottom: 1rem; /* margin을 rem 단위로 설정 */
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .subs-keyword-section input {
@@ -59,7 +106,7 @@
   padding: 0.8rem; /* 패딩을 rem 단위로 설정 */
   border: 1px solid #ccc;
   border-radius: 0.4rem; /* border-radius를 rem 단위로 설정 */
-  font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
+  font-size: 0.9rem; /* 폰트 크기를 rem 단위로 설정 */
 }
 
 .subs-keyword-list {
@@ -68,12 +115,12 @@
 
 .subs-keyword {
   display: inline-block;
-  background-color: #e0e0e0;
+  background-color: #e0e0e0ad;
   color: #333;
   padding: 0.5rem 1rem; /* 패딩을 rem 단위로 설정 */
   margin: 0.5rem; /* margin을 rem 단위로 설정 */
   border-radius: 2rem; /* border-radius를 rem 단위로 설정 */
-  font-size: 0.9rem; /* 폰트 크기를 rem 단위로 설정 */
+  font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
   position: relative;
 }
 
@@ -100,24 +147,13 @@
   background-color: #f1f1f1;
   margin-bottom: 1rem; /* margin을 rem 단위로 설정 */
   border-radius: 0.4rem; /* border-radius를 rem 단위로 설정 */
-  font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
+  font-size: 0.9rem; /* 폰트 크기를 rem 단위로 설정 */
   color: #333;
 }
 
 .subs-alerts-section p {
   color: #666;
-  font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
-}
-
-/* 구독 알림이 없는 경우 */
-.no-alerts {
-  color: #666;
-  font-size: 0.9rem; /* 기본 글자 크기 설정 */
-}
-
-.no-alerts div {
-  margin-bottom: 0.5rem; /* 문장 간격 조정 */
-  font-size: 0.9rem; /* 개별 문장 글자 크기 조정 */
+  font-size: 0.9rem; /* 폰트 크기를 rem 단위로 설정 */
 }
 
 /* 미디어 쿼리 추가 */
@@ -142,10 +178,4 @@
   .subs-keyword {
     font-size: 0.8rem; /* 폰트 크기를 rem 단위로 설정 */
   }
-}
-
-.input-message {
-  color: red;
-  margin-top: 8px;
-  font-size: 14px;
 }

@@ -28,13 +28,15 @@
   background: #fff;
   border-radius: 0.625rem;
   box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.1);
-  padding: 1.25rem;
+  padding-bottom: 1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .account-section h2 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 1.25rem;
   border-bottom: 1px solid #ddd;
   padding-bottom: 0.625rem;
@@ -62,16 +64,18 @@
   flex: 1;
   padding: 0.3125rem 0;
   border-bottom: 1px dotted #ccc;
-  border-radius: 0.5rem;
-  background-color: gray;
+  border-radius: 0.3rem;
+  background-color: rgba(128, 128, 128, 0.473);
 }
 
 .account-btn {
-  background-color: #007bff;
+  background-color: #007bffc5;
   color: #fff;
   border: none;
+  font-size: 0.8rem;
+  font-weight: bold;
   border-radius: 0.25rem;
-  padding: 0.375rem 0.75rem;
+  padding: 0.375rem 1rem;
   cursor: pointer;
   margin-left: 0.625rem;
 }
@@ -208,7 +212,7 @@
   }
 
   .account-section h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .account-info-label,
@@ -226,4 +230,33 @@
   .account-note {
     font-size: 0.875rem;
   }
+
+  .account-btn {
+    background-color: #007bffc5;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.275rem 0.3rem;
+    cursor: pointer;
+    margin-left: 0.625rem;
+  }
+}
+/* 기존 CSS 코드 */
+
+.social-icon-img {
+  width: 4rem; /* 원하는 너비로 설정 */
+  height: 4rem; /* 원하는 높이로 설정 */
+  object-fit: cover;
+  border: 0.1rem solid black;
+  border-radius: 0.5rem;
+}
+
+/* 기본 레이아웃 */
+.MyAccount-main-container {
+  flex: 1;
+  justify-content: center;
+  margin: 0 0.45rem;
+  flex-direction: row;
+  position: relative;
 }

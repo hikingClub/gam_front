@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthContext"; // AuthContext를 사용하기 위해 임포트
-import "../styles/MyAccount.css"; // 스타일을 위한 CSS 파일
+import { useAuth } from "./AuthContext";
+import "../styles/MyAccount.css";
+import kakaoLogo from "../assets/kakao.png";
+import naverLogo from "../assets/naver.png";
+import googleLogo from "../assets/google.png";
 
 const MyAccount = () => {
   const [name, setName] = useState(""); // 사용자의 이름을 저장하는 상태
@@ -9,7 +12,6 @@ const MyAccount = () => {
   const [email, setEmail] = useState(""); // 사용자의 이메일을 저장하는 상태
   const [emailAlert, setEmailAlert] = useState("no");
   const [mainAlert, setMainAlert] = useState("no");
-  const [password, setPassword] = useState(""); // 기존 비밀번호
 
   const { logout } = useAuth(); // useAuth 훅에서 로그아웃 함수 가져오기
 
@@ -30,7 +32,6 @@ const MyAccount = () => {
         setName(response.data.nickname); // 사용자 이름 설정
         setUserId(response.data.uid); // 사용자 아이디 설정
         setEmail(response.data.email); // 사용자 이메일 설정
-        setPassword(response.data.password); // 사용자 비밀번호 설정
       } catch (error) {
         console.error("설정 정보를 가져오는 중 오류 발생:", error);
       }
@@ -98,7 +99,6 @@ const MyAccount = () => {
 
         if (response.status === 200) {
           alert("비밀번호가 성공적으로 변경되었습니다.");
-          setPassword(newPassword); // 비밀번호 변경 후 새로운 비밀번호를 기존 비밀번호로 설정
         }
       } catch (error) {
         // 여기서 실패한 이유를 콘솔에 출력
@@ -170,7 +170,7 @@ const MyAccount = () => {
             <input
               type="password"
               className="account-info-value-pw"
-              value={password}
+              value="********" // 비밀번호는 입력하지 않음
               readOnly
             />
             <button className="account-btn" onClick={handlePasswordChange}>
@@ -190,9 +190,15 @@ const MyAccount = () => {
           <h2>간편로그인</h2>
           <div className="account-social-login">
             <div className="account-social-icons">
-              <div className="account-icon-kakao">카카오</div>
-              <div className="account-icon-naver">네이버</div>
-              <div className="account-icon-google">구글</div>
+              <div className="account-icon">
+                <img src={kakaoLogo} alt="카카오" className="social-icon-img" />
+              </div>
+              <div className="account-icon">
+                <img src={naverLogo} alt="네이버" className="social-icon-img" />
+              </div>
+              <div className="account-icon">
+                <img src={googleLogo} alt="구글" className="social-icon-img" />
+              </div>
             </div>
           </div>
           <p className="account-note">
@@ -232,7 +238,7 @@ const MyAccount = () => {
             <div className="account-option">
               <label>메인화면 구독알림 적용 (선택)</label>
               <p>
-                구독 알림 수신 시 디지털잡지현전에 새로운 정보가 업로드 되었을
+                구독 알림 수신 시 디지털 규장각에 새로운 정보가 업로드 되었을
                 경우 알림을 받으실 수 있습니다.
               </p>
               <div className="account-radio-group-section">
