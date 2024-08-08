@@ -13,15 +13,25 @@ import {
   TablePagination,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function UpdatedPage({ data }) {
   const [open, setOpen] = useState(null);
   const [pageInfo, setPageInfo] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDetail, setSelectedDetail] = useState("");
+  const [selectedDetail, setSelectedDetail] = useState({}); // 초기값을 빈 객체로 설정
 
   console.log("이게 카드여닫할때도 계속 출력됨-해결하기", data);
+
+  useEffect(() => {
+    // 각 데이터 카테고리에 대한 pageInfo 초기화
+    const initialPageInfo = {
+      1: { page: 0, rowsPerPage: 5 }, // 신규 데이터
+      2: { page: 0, rowsPerPage: 5 }, // 수정 데이터
+      3: { page: 0, rowsPerPage: 5 }, // 삭제 데이터
+    };
+    setPageInfo(initialPageInfo);
+  }, []);
 
   const handleOpenModal = detail => {
     setSelectedDetail(detail);
@@ -62,21 +72,45 @@ function UpdatedPage({ data }) {
       category: "신규 데이터",
       count: data.new.length,
       details: "새로 추가된 데이터 내역입니다",
-      moreDetails: data.new.map(item => item.title), // 예를 들어 각 항목의 제목
+      moreDetails: data.new.map(item => ({
+        title: item.title,
+        type: item.type,
+        classification: item.classification,
+        description: item.description,
+        publisher: item.publisher,
+        date: item.date,
+        identifier: item.identifier,
+      })),
     },
     {
       id: 2,
       category: "수정 데이터",
       count: data.updated.length,
       details: "기존 데이터에서 수정된 내역입니다",
-      moreDetails: data.updated.map(item => item.title),
+      moreDetails: data.updated.map(item => ({
+        title: item.title,
+        type: item.type,
+        classification: item.classification,
+        description: item.description,
+        publisher: item.publisher,
+        date: item.date,
+        identifier: item.identifier,
+      })),
     },
     {
       id: 3,
       category: "삭제 데이터",
       count: data.deleted.length,
       details: "삭제된 데이터 내역입니다",
-      moreDetails: data.deleted.map(item => item.title),
+      moreDetails: data.deleted.map(item => ({
+        title: item.title,
+        type: item.type,
+        classification: item.classification,
+        description: item.description,
+        publisher: item.publisher,
+        date: item.date,
+        identifier: item.identifier,
+      })),
     },
   ];
 
@@ -92,9 +126,9 @@ function UpdatedPage({ data }) {
           borderBottom: "2px solid #1976d2",
           maxWidth: "500px",
           paddingBottom: "8px",
-          marginLeft: "auto", // 왼쪽 마진을 auto로 설정
-          marginRight: "auto", // 오른쪽 마진을 auto로 설정
-          display: "block", // block 레벨 요소로 설정하여 중앙 정렬 가능
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
         }}
       >
         데이터 업데이트 현황
@@ -157,7 +191,7 @@ function UpdatedPage({ data }) {
                           button
                           onClick={() => handleOpenModal(detail)}
                         >
-                          <Typography variant="body2">{detail}</Typography>
+                          <Typography variant="body2">{`${index + 1 + (pageInfo[item.id]?.page || 0) * (pageInfo[item.id]?.rowsPerPage || 5)}. ${detail.title}`}</Typography>
                         </ListItem>
                         {index < item.moreDetails.length - 1 && <Divider />}
                       </React.Fragment>
@@ -208,7 +242,7 @@ function UpdatedPage({ data }) {
             상세 정보
           </Typography>
           <Typography id="modal-description" sx={{ mt: 2 }}>
-            <strong>유형:</strong> {selectedDetail}
+            <strong>유형:</strong> {selectedDetail.type}
             <br />
             <strong>분류:</strong> {selectedDetail.classification}
             <br />
