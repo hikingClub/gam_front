@@ -61,7 +61,7 @@ const Navbar = () => {
             gap: 2,
             flex: 1,
             maxWidth: "700px",
-            marginLeft: "-300px",
+            marginLeft: "-100px",
           }}
         >
           <TextField
@@ -124,7 +124,7 @@ const Navbar = () => {
               },
             }}
           >
-            상세검색
+            추천검색
           </Button>
         </Box>
       )}

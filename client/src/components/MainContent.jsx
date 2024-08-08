@@ -6,7 +6,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
-import { fetchAutocompleteSuggestions } from "../utils/autoComplete"; // 유틸리티 함수 불러오기
+import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
+import { fetchRecommendSearch } from "../utils/recommendSearch";
 
 const DetailedSearchButton = styled(Button)({
   marginLeft: "8px",
@@ -83,6 +84,14 @@ const MainContent = () => {
     },
   };
 
+  // 추천검색 결과 가져오기 함수
+  const handleFetchRecommendSearch = async () => {
+    const user_id = 4; // 테스트 유저 ID - seq(int)
+    const keyword = "전기"; // 테스트 키워드
+    const result = await fetchRecommendSearch({ user_id, keyword });
+    console.log(result);
+  };
+
   return (
     <div className="main-content-container">
       <div className="home-center">
@@ -123,7 +132,9 @@ const MainContent = () => {
             onKeyDown={handleKeyDown} // 엔터키 이벤트 핸들러 추가
           />
           {/* 추천검색 버튼 */}
-          <DetailedSearchButton>상세검색</DetailedSearchButton>
+          <DetailedSearchButton onClick={handleFetchRecommendSearch}>
+            추천검색
+          </DetailedSearchButton>
           {/* 자동완성 제안 목록 */}
           {suggestions.length > 0 && (
             <ul className="autocomplete-suggestions">

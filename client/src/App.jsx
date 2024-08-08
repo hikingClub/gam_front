@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext";
 import Footer from "./components/Footer";
 import MainContent from "./components/MainContent";
 import Marquee from "./components/Marquee";
@@ -98,13 +99,15 @@ const AppRoutes = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/*" element={<AppRoutes />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/*" element={<AppRoutes />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 };
 
