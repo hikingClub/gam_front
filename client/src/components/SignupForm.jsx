@@ -77,31 +77,35 @@ const SignupForm = () => {
 
   const handleEmailCheck = async () => {
     try {
-      // 이메일 중복 확인
-      const checkResponse = await axios.post(
-        `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
+      // 이메일 중복 확인 요청
+      const checkResponse = await axios.get(
+        `http://localhost:8080/member/checkEmail?email=${form.email}`
       );
+
       if (checkResponse.data) {
-        // 중복된 이메일이면 경고 메시지 표시
+        // 중복된 이메일인 경우
         alert("이미 사용 중인 이메일입니다.");
         return;
       }
 
-      // 이메일 중복이 아닌 경우 인증 메일 발송
-      const response = await axios.post(
+      // 중복이 아닌 경우, 인증 이메일 발송 요청
+      const sendResponse = await axios.post(
         `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
       );
-      if (response.status === 200) {
+
+      if (sendResponse.status === 200) {
         alert("인증 이메일이 발송되었습니다.");
         setEmailChecked(true);
         setIsTimerActive(true); // 타이머 시작
+      } else {
+        alert("인증 이메일 발송 실패: " + sendResponse.data);
       }
     } catch (error) {
       console.error(
-        "이메일 중복 확인 에러:",
+        "이메일 처리 중 오류 발생:",
         error.response ? error.response.data : error.message
       );
-      alert("이메일 확인 중 오류가 발생했습니다.");
+      alert("이메일 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -225,14 +229,14 @@ const SignupForm = () => {
 
             <div className="form-sections">
               <label className="text-indent">
-                닉네임<span className="required">*</span>
+                이름<span className="required">*</span>
                 <div className="form-group">
                   <input
                     type="text"
                     name="nickname"
                     value={form.nickname}
                     onChange={handleChange}
-                    placeholder="닉네임을 입력하세요."
+                    placeholder="이름을 입력하세요."
                     required
                     className="form-input"
                   />
@@ -277,7 +281,7 @@ const SignupForm = () => {
                   />
                   {emailChecked ? (
                     <span className="emailcheck-timer">
-                      남은 시간: {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
+                      {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
                     </span>
                   ) : (
                     <button

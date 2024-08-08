@@ -56,6 +56,14 @@
   flex: 1;
   padding: 0.3125rem 0;
   border-bottom: 1px dotted #ccc;
+  border-radius: 0.5rem;
+}
+.account-info-value-pw {
+  flex: 1;
+  padding: 0.3125rem 0;
+  border-bottom: 1px dotted #ccc;
+  border-radius: 0.5rem;
+  background-color: gray;
 }
 
 .account-btn {

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
-import KakaoRedirect from "./components/KakaoRedirect";
 import MainContent from "./components/MainContent";
 import Marquee from "./components/Marquee";
 import ModernLogin from "./components/ModernLogin";
 import MyPageMenu from "./components/MyPageMenu";
 import MyUsageSearch from "./components/MyUsageSearch";
 import Navbar from "./components/Navbar";
+import OAuthCallback from "./components/OAuthCallback"; // 변경
 import SearchID from "./components/SearchID";
 import SearchPW from "./components/SearchPW";
 import SignupForm from "./components/SignupForm";
@@ -86,7 +86,8 @@ const AppRoutes = () => {
       <Route path="/signupform" element={<SignupForm />} />
       <Route path="/search-id" element={<SearchID />} />
       <Route path="/search-pw" element={<SearchPW />} />
-      <Route path="/auto/kakao/callback" element={<KakaoRedirect />} />
+      {/* OAuth 콜백 처리 */}
+      <Route path="/oauth/kakao/callback" element={<OAuthCallback />} />
       {/* 마이페이지 관련 */}
       <Route path="/mypagemenu" element={<MyPageMenu />} />
       {/* 마이페이지 검색기록 불러오기 */}
