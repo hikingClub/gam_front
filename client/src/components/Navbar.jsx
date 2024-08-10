@@ -35,6 +35,29 @@ const Navbar = () => {
     }
   }, [finalTranscript, transcript]);
 
+  useEffect(() => {
+    // URL에서 검색어 파라미터 읽기
+    const query = new URLSearchParams(location.search).get("keyword");
+    setSearchKeyword(query || ""); // 검색어가 없는 경우 빈 문자열로 초기화
+  }, [location.search]); // location.search가 변경될 때마다 효과 실행
+
+  const handleSearchSubmit = () => {
+    if (searchKeyword.trim() !== "") {
+      navigate(`/search?keyword=${encodeURIComponent(searchKeyword)}`);
+    }
+  };
+
+  const handleInputChange = event => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === "Enter") {
+      handleSearchSubmit();
+    }
+  };
+
+  // 홈버튼
   const handleHomeClick = () => {
     navigate("/");
   };
@@ -49,10 +72,6 @@ const Navbar = () => {
     } else {
       console.error("Browser doesn't support speech recognition.");
     }
-  };
-
-  const handleInputChange = e => {
-    setSearchKeyword(e.target.value); // 상태 업데이트
   };
 
   const handleSearchClick = () => {
@@ -91,8 +110,7 @@ const Navbar = () => {
             gap: 2,
             flex: 1,
             maxWidth: "700px",
-            marginLeft: "20px",
-            marginRight: "100px",
+            marginLeft: "-300px",
           }}
         >
           <TextField
@@ -101,10 +119,11 @@ const Navbar = () => {
             placeholder="새로운 검색어를 입력하세요!"
             value={searchKeyword} // 상태를 value에 바인딩
             onChange={handleInputChange} // 입력 시 상태 업데이트
+            onKeyDown={handleKeyDown}
             InputProps={{
               endAdornment: (
                 <>
-                  <IconButton>
+                  <IconButton onClick={handleSearchSubmit}>
                     <SearchIcon />
                   </IconButton>
                   <IconButton onClick={handleMicClick}>

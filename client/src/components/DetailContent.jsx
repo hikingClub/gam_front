@@ -1,116 +1,138 @@
-import React from "react";
-import {
-  AiFillFileText,
-  AiFillHeart,
-  AiFillEye,
-  AiOutlineShareAlt,
-  AiOutlineWarning,
-} from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Box, Typography, Button, Chip } from "@mui/material";
 import "../styles/DetailContent.css";
-import SearchNav from "./SearchNav"; // SearchNav 컴포넌트 임포트
 
 const DetailContent = () => {
-  const searchKeyword = "디지털 트윈"; // 예시 키워드
-  const resultCount = 123; // 예시 결과 수
+  const location = useLocation();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // URL 파라미터에서 데이터 추출
+  const params = new URLSearchParams(location.search);
+  const title = params.get("title");
+  let date = params.get("date");
+  const docId = params.get("docId");
+
+  // 날짜 형식에 따른 변환 처리
+  if (date) {
+    if (date.length === 10) {
+      // 'YYYY-MM-DD' 형식인 경우
+      date = date.replace(/-/g, ""); // 'YYYYMMDD' 형식으로 변환
+    } else if (date.length === 7) {
+      // 'YYYY-MM' 형식인 경우
+      date = date.replace(/-/g, ""); // 'YYYYMM' 형식으로 변환
+    } else if (date.length === 4) {
+      // 'YYYY' 형식인 경우
+      // 이미 'YYYY' 형식이므로 추가 변환 필요 없음
+    } else {
+      console.error("Invalid date format"); // 형식이 맞지 않는 경우 로그에 오류 표시
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/detail?title=${encodeURIComponent(title)}&date=${date}&docId=${docId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch detail data");
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [title, date, docId]);
+
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (error) {
+    return <Typography>Error: {error}</Typography>;
+  }
+
+  if (!data) {
+    return <Typography>No data available</Typography>;
+  }
 
   return (
-    <div className="detail-background-container">
-      {/* SearchNav 컴포넌트 삽입 */}
-      <SearchNav searchKeyword={searchKeyword} resultCount={resultCount} />
-
-      <div className="detail-content-container">
-        <div className="detail-content-inner-container">
-          <header className="detail-header">
-            <div className="header-left">
-              <AiFillFileText className="header-icon" />
-              <span className="header-category">기술 &gt; 기계공학</span>
-            </div>
-            <h1 className="detail-title">
-              차량용 센서세트를 활용한 디지털트윈 생성 방법 및 장치
-            </h1>
-            <p className="detail-subtitle">
-              Method and apparatus for generating digital twin using vehicle
-              sensor set
-            </p>
-          </header>
-
-          <div className="detail-info-and-buttons">
-            <section className="detail-info">
-              <ul>
-                <li>
-                  저자: <span>주식회사 디지털안전기술단</span>
-                </li>
-                <li>
-                  날짜: <span>2023-01-25</span>
-                </li>
-                <li>
-                  발행기관: <span>특허청</span>
-                </li>
-                <li>
-                  출처: <span>KIPRIS</span>
-                </li>
-                <li>
-                  출원번호: <span>10-2023-0009328</span>
-                </li>
-                <li>
-                  공개번호: <span>-</span>
-                </li>
-              </ul>
-            </section>
-
-            <div className="detail-buttons">
-              <div className="info-buttons">
-                <button>
-                  <AiFillHeart /> 즐겨찾기
-                </button>
-                <button>
-                  <AiOutlineShareAlt /> 공유하기
-                </button>
-              </div>
-
-              <div className="info-stats">
-                <div>
-                  <AiFillEye /> 조회 2
-                </div>
-                <div>
-                  <AiFillHeart /> 공감 0
-                </div>
-                <div>
-                  <AiFillEye /> 방문 1
-                </div>
-              </div>
-              <button className="report-button">
-                <AiOutlineWarning /> 오류신고
-              </button>
-            </div>
+    <div className="detail-content-main-container">
+      <div className="detail-content-inner-container">
+        <div className="detail-content-wrapper">
+          <div className="detail-content-header">
+            <Typography variant="h4" className="detail-content-title">
+              {data.title}
+            </Typography>
+            <Typography variant="body1" className="detail-content-date">
+              {data.date}
+            </Typography>
           </div>
-
-          <section className="detail-tags">
-            <h3>주제어</h3>
-            <div className="tags">
-              <span>센서</span>
-              <span>차량용</span>
-              <span>운전자</span>
-            </div>
-          </section>
-
-          <section className="detail-description">
-            <h3>설명</h3>
-            <p>
-              본 발명은 디지털트윈의 생성 방법 및 장치에 관한 것으로서, 더욱
-              상세하게는 차량용 센서세트를 활용한 아라운드 센싱 시스템을 통하여
-              아라운드 가상 뷰를 생성함으로 차량의 작업환경 내에 접근하는 작업자
-              등의 위험을 감지하고 이를 차량의 운전자에게 알리기 위한 차량용
-              센서세트를 활용한 디지털트윈 생성 방법 및 장치에 관한 것이다.
-            </p>
-          </section>
-
-          <section className="related-knowledge">
-            <h3>연관 지식</h3>
-            <div className="related-loading">
-              <p>Loading...</p>
-            </div>
-          </section>
+          <div className="detail-content-info">
+            <Typography variant="body2" className="detail-content-company-name">
+              {data.company_name}
+            </Typography>
+            <Typography variant="body2" className="detail-content-summary">
+              {data.summary}
+            </Typography>
+            <Typography
+              variant="body2"
+              className="detail-content-author-affiliation"
+            >
+              {data.author_affiliation}
+            </Typography>
+            <Typography variant="body2" className="detail-content-publisher">
+              {data.publisher}
+            </Typography>
+            <Typography variant="body2" className="detail-content-org-code">
+              기관 코드: {data.orgn_code}
+            </Typography>
+            <Typography variant="body2" className="detail-content-org-name">
+              기관 이름: {data.orgn_name}
+            </Typography>
+            <Typography variant="body2" className="detail-content-doc-id">
+              문서 ID: {data.doc_id}
+            </Typography>
+            <Typography variant="body2" className="detail-content-type-name">
+              타입 이름: {data.type_name}
+            </Typography>
+            <Typography variant="body2" className="detail-content-url">
+              출처:{" "}
+              <a href={data.url} target="_blank" rel="noopener noreferrer">
+                {data.url}
+              </a>
+            </Typography>
+          </div>
+          <div className="detail-content-actions">
+            <Button variant="contained" color="primary">
+              공감
+            </Button>
+            <Button variant="outlined" color="primary">
+              즐겨찾기
+            </Button>
+            <Button variant="outlined" color="primary">
+              공유하기
+            </Button>
+            <Button variant="contained" color="secondary">
+              오류 신고
+            </Button>
+          </div>
+          <div className="detail-content-tags">
+            <Typography variant="body2">주제어:</Typography>
+            {data.map_path &&
+              data.map_path.map((tag, index) => (
+                <Chip key={index} label={tag} className="detail-content-tag" />
+              ))}
+          </div>
         </div>
       </div>
     </div>

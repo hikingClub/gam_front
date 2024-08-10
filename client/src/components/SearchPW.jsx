@@ -44,7 +44,7 @@ const SearchPW = () => {
         } else {
           // 둘 다 일치하는 경우 이메일 인증 요청
           const sendMailResponse = await axios.post(
-            "http://localhost:8080/sendVerificationMail",
+            "http://localhost:8080/member/sendVerificationMail",
             null,
             {
               params: { email },
