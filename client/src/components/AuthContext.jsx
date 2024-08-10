@@ -1,17 +1,28 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-// AuthContext.js
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({ uid: null, seq: null });
+  const [userData, setUserData] = useState(null);
+  const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
-    const storedUserData = JSON.parse(sessionStorage.getItem("user"));
-    if (storedUserData) {
-      setUserData(storedUserData);
-      setIsLoggedIn(true);
+    const storedUserData = sessionStorage.getItem("user");
+    const storedAuthToken = sessionStorage.getItem("authToken");
+
+    if (storedUserData && storedUserData !== "undefined") {
+      try {
+        const parsedUserData = JSON.parse(storedUserData);
+        setUserData(parsedUserData);
+        setIsLoggedIn(true);
+
+        if (storedAuthToken && storedAuthToken !== "undefined") {
+          setAuthToken(storedAuthToken);
+        }
+      } catch (error) {
+        console.error("Stored user data is not valid JSON:", error);
+      }
     }
   }, []);
 
@@ -26,10 +37,20 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("user");
     setUserData({ uid: null, seq: null });
     setIsLoggedIn(false);
+
+    console.log("로그아웃 성공");
   };
 
+  useEffect(() => {
+    console.log("현재 로그인 상태:", isLoggedIn);
+    console.log("현재 사용자 데이터:", userData);
+    console.log("현재 인증 토큰:", authToken);
+  }, [isLoggedIn, userData, authToken]);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userData, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, userData, authToken, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,38 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useAuth } from "./AuthContext";
 
-export const loginHandler = (provider, options) => {
-  const kakaoClientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
+const LoginHandler = ({ provider }) => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // useAuth 훅 사용
+  const code = new URL(window.location.href).searchParams.get("code");
+  const { login } = useAuth();
 
-  if (provider === "kakao") {
-    if (!kakaoClientId) {
-      console.error("카카오 클라이언트 ID가 정의되지 않았습니다.");
-      return;
-    }
-    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${options.redirectUri}&response_type=code`;
-    window.location.href = kakaoAuthUrl;
-  }
+  useEffect(() => {
+    const socialLogin = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_APP_SPRING_API_URL}/login/oauth2/callback/${provider}?code=${code}`,
+          {
+            headers: { "Content-Type": "application/json;charset=utf-8" },
+            withCredentials: true,
+          }
+        );
 
-  // 이후 리다이렉트된 페이지에서 아래 코드를 통해 카카오로부터 받은 데이터를 처리
-  // 이 코드는 콜백 페이지에서 실행되어야 합니다.
+        if (response.status === 200) {
+          // 서버로부터의 성공적인 응답 처리
+          const userInfo = { nickname: "사용자" }; // 백엔드에서 사용자 정보를 가져오도록 수정 가능
+          const token = null; // 토큰이 필요하지 않으면 null, 필요하면 실제 토큰 값 설정
 
-  const handleLoginClick = async () => {
-    try {
-      const response = await axios.post("http://localhost:8080/member/login", {
-        uid: credentials.uid,
-        password: credentials.password,
-      });
+          await login(userInfo, token); // 토큰이 있으면 전달, 없으면 null
 
-      if (response.status === 200) {
-        const seq = response.data.seq;
-        login(credentials.uid, seq); // 로그인 시 세션에 사용자 정보 저장
-        navigate("/");
+          alert("로그인 성공! 홈으로 이동합니다.");
+          navigate("/");
+        }
+      } catch (error) {
+        // 에러 발생 시 특별한 처리를 하지 않고 그냥 로그로 남김
+        console.error(`${provider} 로그인 중 오류 발생:`, error);
       }
-    } catch (error) {
-      console.error("로그인 요청 중 에러:", error);
+    };
+
+    if (code) {
+      socialLogin();
+    } else {
+      alert("로그인에 실패했습니다. 인가 코드가 없습니다.");
+      navigate("/");
     }
-  };
+  }, [code, navigate, provider, login]);
+
+  return (
+    <div className="LoginHandler">
+      <div className="notice">
+        <p>로그인 중입니다.</p>
+        <p>잠시만 기다려주세요.</p>
+        <div className="spinner"></div>
+      </div>
+    </div>
+  );
 };
+
+export default LoginHandler;

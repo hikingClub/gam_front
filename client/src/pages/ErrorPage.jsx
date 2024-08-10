@@ -21,7 +21,7 @@ const ErrorPage = () => {
             style={styles.button}
             onClick={() => (window.location.href = "/")}
           >
-            홈으로
+            홈으로 이동합니다
           </button>
         </div>
       </div>

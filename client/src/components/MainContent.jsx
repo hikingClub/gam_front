@@ -4,8 +4,12 @@ import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Button, Input, Snackbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import "regenerator-runtime/runtime";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
 import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
@@ -36,10 +40,11 @@ const MainContent = () => {
   const [isImageSearch, setIsImageSearch] = useState(false); // 이미지 검색 모드 상태
   const navigate = useNavigate();
 
+  // 이미지 검색 기능
   const handleImageSearchToggle = async () => {
     setIsImageSearch(!isImageSearch);
-    // 이미지 검색 모드 활성화 시 스낵바를 표시하지 않음
     if (isImageSearch) {
+      // 이미지 검색 모드 활성화 시 스낵바를 표시하지 않음
       setOpenSnackbar(false);
     }
     const fileInput = document.createElement("input");
@@ -63,6 +68,27 @@ const MainContent = () => {
     };
     fileInput.click();
   };
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  // 음성인식
+  useEffect(() => {
+    if (transcript) {
+      setSearchKeyword(transcript);
+
+      // 3초 뒤에 검색 이벤트 실행
+      const timer = setTimeout(() => {
+        handleSearchClick();
+      }, 3000);
+
+      // 클린업 함수: 다음 인식이 시작되기 전에 타이머 제거
+      return () => clearTimeout(timer);
+    }
+  }, [transcript]);
 
   const handleInputChange = async e => {
     const inputValue = e.target.value;
@@ -107,7 +133,15 @@ const MainContent = () => {
     setOpenSnackbar(false);
   };
 
-  const iconStyle = {
+  const startListening = () => {
+    SpeechRecognition.startListening({ language: "ko-KR" });
+  };
+
+  const handleMicClick = () => {
+    startListening();
+  };
+
+  const searchIconStyle = {
     fontSize: "1.45em",
     cursor: "pointer",
     color: "#3f51b5",
@@ -139,6 +173,20 @@ const MainContent = () => {
     );
   };
 
+  const micIconStyle = {
+    fontSize: "1.45em",
+    cursor: "pointer",
+    color: listening ? "red" : "#3f51b5", // 음성 인식 중이면 빨간색, 아니면 기본색
+    marginLeft: "5px", // 원하는 간격으로 조정
+    "&:hover": {
+      color: listening ? "darkred" : "#8e24aa", // 음성 인식 중이면 hover 시 어두운 빨간색, 아니면 보라색
+    },
+  };
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <div className="main-content-container">
       <div className="home-center">
@@ -158,12 +206,10 @@ const MainContent = () => {
             endAdornment={
               <>
                 <SearchIcon
-                  sx={{ ...iconStyle, marginBottom: "5px" }}
+                  sx={{ ...searchIconStyle, marginBottom: "5px" }}
                   onClick={handleSearchClick}
                 />
-                <Link to="/test">
-                  <MicIcon sx={iconStyle} />
-                </Link>
+                <MicIcon sx={micIconStyle} onClick={handleMicClick} />
                 <Button
                   sx={{ minWidth: "auto", p: 0 }}
                   onClick={handleImageSearchToggle}

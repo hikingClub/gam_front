@@ -1,16 +1,39 @@
+import React, { useState, useEffect } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import NavRight from "./NavRight";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import "regenerator-runtime/runtime";
 
 const Navbar = () => {
-  const [searchKeyword, setSearchKeyword] = useState(""); // 검색 키워드 상태 추가
+  const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  const {
+    transcript,
+    finalTranscript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (finalTranscript || transcript) {
+      console.log("Transcript detected:", finalTranscript || transcript);
+      setSearchKeyword(finalTranscript || transcript);
+      const timer = setTimeout(() => {
+        handleSearchClick();
+      }, 2000); // 2초 대기 후 검색 실행
+      return () => clearTimeout(timer); // 타이머 정리
+    }
+  }, [finalTranscript, transcript]);
 
   useEffect(() => {
     // URL에서 검색어 파라미터 읽기
@@ -37,6 +60,33 @@ const Navbar = () => {
   // 홈버튼
   const handleHomeClick = () => {
     navigate("/");
+  };
+
+  const handleMicClick = () => {
+    if (browserSupportsSpeechRecognition) {
+      SpeechRecognition.startListening({
+        language: "ko-KR",
+        continuous: false,
+        interimResults: false, // 최종 결과만 받도록 설정
+      });
+    } else {
+      console.error("Browser doesn't support speech recognition.");
+    }
+  };
+
+  const handleSearchClick = () => {
+    console.log("Search Clicked with keyword:", searchKeyword);
+    if (searchKeyword.trim() !== "") {
+      navigate(`/search?keyword=${encodeURIComponent(searchKeyword)}`);
+    } else {
+      console.log("Search keyword is empty.");
+    }
+  };
+
+  const micIconStyle = {
+    fontSize: "1.45em",
+    cursor: "pointer",
+    color: listening ? "red" : "inherit", // 음성 인식 중이면 빨간색, 아니면 기본색
   };
 
   return (
@@ -68,8 +118,8 @@ const Navbar = () => {
             variant="outlined"
             fullWidth
             placeholder="새로운 검색어를 입력하세요!"
-            value={searchKeyword}
-            onChange={handleInputChange}
+            value={searchKeyword} // 상태를 value에 바인딩
+            onChange={handleInputChange} // 입력 시 상태 업데이트
             onKeyDown={handleKeyDown}
             InputProps={{
               endAdornment: (
@@ -77,8 +127,8 @@ const Navbar = () => {
                   <IconButton onClick={handleSearchSubmit}>
                     <SearchIcon />
                   </IconButton>
-                  <IconButton>
-                    <MicIcon />
+                  <IconButton onClick={handleMicClick}>
+                    <MicIcon sx={micIconStyle} />
                   </IconButton>
                 </>
               ),

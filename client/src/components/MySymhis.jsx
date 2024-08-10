@@ -4,10 +4,10 @@ import { FaStar } from "react-icons/fa";
 
 const listItems = [
   "데이터 처리 장치 및 데이터 처리 방법",
-  "데이터 신경망",
+  "인공신경망",
   "데이터 분석 시스템, 데이터 분석 방법 및 프로그램",
-  "책 읽어주는 엄샘 책임샘",
-  "데이터나운",
+  "책 읽어주는 사람",
+  "ElasticSearch",
 ];
 
 const MySymhis = () => {

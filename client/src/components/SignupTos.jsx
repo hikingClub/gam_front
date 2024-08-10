@@ -106,7 +106,7 @@ const SignupTos = () => {
                 checked={allChecked}
                 onChange={handleAllChecked}
               />
-              <span className="label">전체 동의하기</span>
+              <span className="total-label">전체 동의하기</span>
             </label>
           </div>
           <div className="chk_box_con">

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/NavRight.css";
 import { useAuth } from "./AuthContext";
 
 const NavRight = () => {
-  const { isLoggedIn, logout, userData } = useAuth(); // userData를 추가로 가져옴
+  const { isLoggedIn, logout, userData } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
   const navigate = useNavigate();
 
+  const dropdownRef = useRef(null); // dropdown 참조를 위한 useRef 추가
+  const alarmDropdownRef = useRef(null); // 알림 dropdown 참조를 위한 useRef 추가
+
   useEffect(() => {
     console.log("isLoggedIn 상태 변경:", isLoggedIn);
-    console.log("UserData:", userData); // userData를 확인하는 콘솔 로그
+    console.log("UserData:", userData);
   }, [isLoggedIn, userData]);
 
   const handleLogout = () => {
@@ -33,16 +36,30 @@ const NavRight = () => {
     }
   };
 
-  const uid = userData?.uid;
-  const name = userData?.name;
+  // userData에서 nickname을 가져옴
+  const nickname = userData?.nickname || "사용자";
 
-  console.log("uid: ", uid);
-  // displayName 결정 로직
-  const displayName = userData
-    ? userData.name
-      ? name || id // 소셜 로그인 사용자는 name이 있으면 표시, 없으면 uid
-      : userData // 일반 로그인 사용자는 전체 userData 객체를 문자열로 변환하여 표시
-    : "사용자";
+  console.log("사용자 이름 또는 닉네임: ", nickname);
+
+  // dropdown 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+      if (
+        alarmDropdownRef.current &&
+        !alarmDropdownRef.current.contains(event.target)
+      ) {
+        setShowAlarmDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="button-container">
@@ -56,7 +73,7 @@ const NavRight = () => {
             </strong>{" "}
             님 환영합니다
           </span>
-          <div className="notification-container">
+          <div className="notification-container" ref={alarmDropdownRef}>
             <button
               className="button notification-button"
               onClick={toggleAlarmDropdown}
@@ -92,57 +109,59 @@ const NavRight = () => {
               </div>
             )}
           </div>
-          <button className="user-toggle-button" onClick={toggleDropdown}>
-            <span className="dropdown-toggle">
-              {showDropdown ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-chevron-up"
-                >
-                  <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-chevron-down"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              )}
-            </span>
-          </button>
-          {showDropdown && (
-            <div className="dropdown-menu">
-              <a href="/mypagemenu" className="dropdown-link">
-                마이페이지
-              </a>
-              <a href="#" className="dropdown-link">
-                관심키워드
-              </a>
-              <a href="#" className="dropdown-link">
-                즐겨찾기
-              </a>
-              <a href="#" onClick={handleLogout} className="dropdown-link">
-                로그아웃
-              </a>
-            </div>
-          )}
+          <div ref={dropdownRef}>
+            <button className="user-toggle-button" onClick={toggleDropdown}>
+              <span className="dropdown-toggle">
+                {showDropdown ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-chevron-up"
+                  >
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-chevron-down"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                )}
+              </span>
+            </button>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                <a href="/mypagemenu" className="dropdown-link">
+                  마이페이지
+                </a>
+                <a href="#" className="dropdown-link">
+                  관심키워드
+                </a>
+                <a href="#" className="dropdown-link">
+                  즐겨찾기
+                </a>
+                <a href="#" onClick={handleLogout} className="dropdown-link">
+                  로그아웃
+                </a>
+              </div>
+            )}
+          </div>
         </>
       ) : (
         <Link to="/ModernLogin">

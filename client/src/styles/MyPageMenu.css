@@ -4,7 +4,7 @@
   justify-content: center; /* 수평 정렬 */
   align-items: center; /* 수직 정렬 */
   height: 100vh;
-  background-color: rgb(0, 55, 88); /* 필요에 따라 배경색 설정 */
+  background-color: white; /* 필요에 따라 배경색 설정 */
   padding-top: 5vh;
 }
 
@@ -14,7 +14,7 @@
   justify-content: center;
   margin: 0 8vh 0 10vh; /* 좌우 마진 통합 */
   padding: 0 4vh; /* 좌우 패딩 통합 */
-  background-color: #e5eaf2; /* #e5eaf2 */
+  background-color: #eef3fe;
   border-radius: 0.5vh;
   box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
   height: 80vh;
@@ -27,8 +27,13 @@
   font-size: 4vh;
   font-weight: 800;
   margin: 1.5vh 0; /* 상하 마진 통합 */
+  text-align: left;
 }
 
+.mypagetitle span {
+  font-size: 2.5vh;
+  margin-left: 1.5vh;
+}
 .mymenubar-title p {
   color: black;
   font-size: 2vh;
@@ -39,7 +44,6 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  /* padding: 2vh; */
   gap: 2vh;
   margin: 0 auto;
   box-sizing: border-box;
@@ -47,12 +51,6 @@
   /* background-color: red; */
   height: 100%;
 }
-
-/* .vertical-line {
-  width: 1px;
-  background-color: rgb(0, 55, 88, 0.3);
-  height: 47vh;
-} */
 
 .usage-component1,
 .usage-component2 {
