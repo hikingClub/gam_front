@@ -7,7 +7,7 @@ export const fetchRecommendSearch = async ({
   user_id,
   keyword,
   pageNum = "1",
-  pagePer = "500",
+  pagePer = "100",
 }) => {
   try {
     const response = await axios.post(

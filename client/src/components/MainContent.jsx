@@ -1,3 +1,5 @@
+// 1. MainContent.jsx
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Button, Input, Snackbar } from "@mui/material";
@@ -7,7 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
 import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
+import { uploadImageForSearch } from "../utils/imageSearch"; // 이미지 검색 함수 가져오기
 import { fetchRecommendSearch } from "../utils/recommendSearch";
+import { useAuth } from "./AuthContext";
 
 const DetailedSearchButton = styled(Button)({
   marginLeft: "8px",
@@ -25,15 +29,44 @@ const DetailedSearchButton = styled(Button)({
 });
 
 const MainContent = () => {
+  const { userData } = useAuth(); // 현재 로그인된 사용자의 데이터
   const [searchKeyword, setSearchKeyword] = useState("");
   const [suggestions, setSuggestions] = useState([]); // 자동완성 제안을 저장하는 상태
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isImageSearch, setIsImageSearch] = useState(false); // 이미지 검색 모드 상태
   const navigate = useNavigate();
+
+  const handleImageSearchToggle = async () => {
+    setIsImageSearch(!isImageSearch);
+    // 이미지 검색 모드 활성화 시 스낵바를 표시하지 않음
+    if (isImageSearch) {
+      setOpenSnackbar(false);
+    }
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.onchange = async e => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          // 이미지 검색 함수 호출
+          const result = await uploadImageForSearch(file);
+          console.log("이미지 검색 결과:", result); // 결과를 콘솔에 출력
+          navigate(`/search`, {
+            state: { resultData: result, imageTitle: file.name },
+          });
+        } catch (error) {
+          console.error("Error performing image search:", error);
+          setOpenSnackbar(true); // 오류 발생 시 사용자에게 알림
+        }
+      }
+    };
+    fileInput.click();
+  };
 
   const handleInputChange = async e => {
     const inputValue = e.target.value;
     setSearchKeyword(inputValue);
-
     if (inputValue.trim().length > 0) {
       // 자동완성 제안 요청
       const results = await fetchAutocompleteSuggestions(inputValue);
@@ -86,10 +119,24 @@ const MainContent = () => {
 
   // 추천검색 결과 가져오기 함수
   const handleFetchRecommendSearch = async () => {
-    const user_id = 4; // 테스트 유저 ID - seq(int)
-    const keyword = "전기"; // 테스트 키워드
+    console.log("사용자 SEQ:", userData.seq);
+    const user_id = userData.seq; // 현재 로그인된 사용자의 seq
+    const keyword = searchKeyword.trim(); // 사용자가 입력한 검색어
+
+    if (keyword.length === 0) {
+      setOpenSnackbar(true); // 검색어가 비어있으면 스낵바 알림을 보여줍니다
+      return;
+    }
+
     const result = await fetchRecommendSearch({ user_id, keyword });
-    console.log(result);
+    console.log("추천 검색 결과:", result);
+    // 추천 검색 결과를 검색 페이지로 네비게이션하면서 state로 데이터 전달
+    navigate(
+      `/search?keyword=${encodeURIComponent(keyword)}&recommended=true`,
+      {
+        state: { recommendedData: result },
+      }
+    );
   };
 
   return (
@@ -117,13 +164,21 @@ const MainContent = () => {
                 <Link to="/test">
                   <MicIcon sx={iconStyle} />
                 </Link>
+                <Button
+                  sx={{ minWidth: "auto", p: 0 }}
+                  onClick={handleImageSearchToggle}
+                >
+                  <ImageSearchIcon
+                    sx={{ ...iconStyle, mb: "7px", fontSize: "1.75em" }}
+                  />
+                </Button>
               </>
             }
             sx={{
               width: "400px",
               height: "50px",
               padding: "10px",
-              paddingLeft: "15px", // placeholder 위치
+              paddingLeft: "15px",
               fontSize: "1.2em",
               fontFamily: '"Noto Sans KR", sans-serif',
             }}

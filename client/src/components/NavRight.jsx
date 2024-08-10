@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
 import "../styles/NavRight.css";
+import { useAuth } from "./AuthContext";
 
 const NavRight = () => {
   const { isLoggedIn, logout, userData } = useAuth(); // userData를 추가로 가져옴
@@ -52,7 +52,7 @@ const NavRight = () => {
             <strong>
               {userData.isSocialLogin
                 ? displayName
-                : JSON.stringify(displayName)}
+                : JSON.stringify(displayName.uid)}
             </strong>{" "}
             님 환영합니다
           </span>

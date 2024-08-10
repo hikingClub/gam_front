@@ -1,3 +1,5 @@
+import { faLink, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AddCircleOutline, DeleteOutline, Update } from "@mui/icons-material";
 import {
   Box,
@@ -10,6 +12,7 @@ import {
   List,
   ListItem,
   Modal,
+  Paper,
   TablePagination,
   Typography,
 } from "@mui/material";
@@ -113,6 +116,42 @@ function UpdatedPage({ data }) {
       })),
     },
   ];
+
+  const modalStyles = {
+    modalBox: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 400,
+      overflow: "hidden",
+      borderRadius: "16px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.5)",
+      p: 4,
+    },
+    modalTitle: {
+      fontWeight: "bold",
+      mb: 2,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between", // 내용과 버튼 사이에 공간 배분
+    },
+    modalDescription: {
+      mt: 2,
+      pb: 2,
+    },
+    linkButton: {
+      mb: 1, // 기존 마진 유지
+      width: "25%", // 버튼 너비 조정
+      whiteSpace: "nowrap", // 버튼 텍스트 줄바꿈 방지
+    },
+    closeButton: {
+      mt: 2,
+      width: "50%", // 닫기 버튼 너비 조정
+      mx: "auto", // 닫기 버튼을 X축 중앙에 위치
+      display: "block", // 블록 레벨 요소로 변경하여 중앙 정렬 가능
+    },
+  };
 
   return (
     <Box sx={{ flexGrow: 1, m: 3, marginTop: 15 }}>
@@ -225,44 +264,59 @@ function UpdatedPage({ data }) {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-title" variant="h6" component="h2">
-            상세 정보
-          </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
-            <strong>유형:</strong> {selectedDetail.type}
-            <br />
-            <strong>분류:</strong> {selectedDetail.classification}
-            <br />
-            <strong>기관:</strong> {selectedDetail.publisher}
-            <br />
-            <strong>날짜:</strong> {selectedDetail.date}
-            <br />
-            <strong>요약:</strong> {selectedDetail.description}
-            <br />
-            <strong>원본링크:</strong>{" "}
-            <a
+        <Paper sx={modalStyles.modalBox}>
+          <div>
+            <Typography
+              id="modal-title"
+              variant="h6"
+              component="h2"
+              sx={modalStyles.modalTitle}
+            >
+              상세 정보
+            </Typography>
+            <Button
               href={selectedDetail.identifier}
               target="_blank"
               rel="noopener noreferrer"
+              variant="contained"
+              color="primary"
+              sx={modalStyles.linkButton}
             >
-              {selectedDetail.identifier}
-            </a>
-          </Typography>
-          <Button onClick={handleCloseModal}>닫기</Button>
-        </Box>
+              <FontAwesomeIcon icon={faLink} /> 링크 보기
+            </Button>
+          </div>
+
+          <div id="modal-description" sx={modalStyles.modalDescription}>
+            <Box sx={{ pb: 1 }}>
+              <strong>유형:</strong> {selectedDetail.type}
+            </Box>
+            <Divider variant="middle" />
+
+            <Box sx={{ py: 1 }}>
+              <strong>분류:</strong> {selectedDetail.classification}
+            </Box>
+            <Divider variant="middle" />
+
+            <Box sx={{ py: 1 }}>
+              <strong>기관:</strong> {selectedDetail.publisher}
+            </Box>
+            <Divider variant="middle" />
+
+            <Box sx={{ py: 1 }}>
+              <strong>날짜:</strong> {selectedDetail.date}
+            </Box>
+            <Divider variant="middle" />
+
+            <Box sx={{ py: 1 }}>
+              <strong>요약:</strong> {selectedDetail.description}
+            </Box>
+            <Divider variant="middle" />
+          </div>
+
+          <Button onClick={handleCloseModal} sx={modalStyles.closeButton}>
+            <FontAwesomeIcon icon={faTimes} /> 닫기
+          </Button>
+        </Paper>
       </Modal>
     </Box>
   );

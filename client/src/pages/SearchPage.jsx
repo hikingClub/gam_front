@@ -64,14 +64,52 @@ const SearchPage = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const keyword = params.get("keyword");
+    const recommended = params.get("recommended") === "true";
     const tabParam = params.get("tab");
     const tab = tabParam ? tabParam : "전체";
+
     if (keyword) {
-      setSearchKeyword(keyword); // 검색 키워드 설정
-      handleFetchData(keyword); // 전체 데이터를 가져옴
+      setSearchKeyword(keyword);
+
+      if (recommended && location.state && location.state.recommendedData) {
+        // 전달받은 추천 검색 데이터를 바로 사용
+        const data = location.state.recommendedData;
+        console.log("추천 검색 데이터 수신:", data);
+
+        setAllResults(data.result || []);
+        const filtered = { 전체: data.result || [] };
+        tabPaths.forEach(tab => {
+          if (tab !== "전체") {
+            filtered[tab] = data.result.filter(post => post.type_name === tab);
+          }
+        });
+        setFilteredResults(filtered);
+        setResults(filtered[tabPaths[value]] || []);
+      } else {
+        // 일반 검색 로직
+        handleFetchData(keyword);
+      }
+    } else if (location.state && location.state.resultData) {
+      // 이미지 검색 결과를 받은 경우
+      const data = location.state.resultData;
+      console.log("이미지 검색 데이터 수신:", data);
+      console.log("검색페이지에서 이건?", location.state.imageTitle);
+
+      setAllResults(data.result || []);
+      const filtered = { 전체: data.result || [] };
+      tabPaths.forEach(tab => {
+        if (tab !== "전체") {
+          filtered[tab] = data.result.filter(post => post.type_name === tab);
+        }
+      });
+      setFilteredResults(filtered);
+      setResults(filtered[tabPaths[value]] || []);
     }
-    setValue(tabPaths.indexOf(tab));
-  }, [location.search]);
+
+    const tabIndex = tabPaths.indexOf(tab);
+    setValue(tabIndex);
+    console.log("현재 탭:", tab, "인덱스:", tabIndex);
+  }, [location.search, location.state]); // location.state도 의존성에 추가
 
   // 페이지나 검색 결과가 변경될 때 설명 토글 상태를 리셋
   useEffect(() => {
@@ -87,7 +125,7 @@ const SearchPage = () => {
 
   const handleFetchData = async keyword => {
     try {
-      const data = await fetchData(keyword, "100"); // pagePer일단 100개!
+      const data = await fetchData(keyword, "200"); // pagePer일단 100개!
       setAllResults(data.result || []); // 모든 데이터를 저장 - for caching
 
       // 각 탭별로 데이터를 분류하여 filteredResults 객체에 저장
@@ -127,7 +165,7 @@ const SearchPage = () => {
   // 정렬1: 날짜 정렬
   const handleYearFilterChange = selectedYear => {
     if (selectedYear === "전체") {
-      setResults(allResults); // "전체"가 선택되면 모든 결과를 보여줍니다.
+      setResults(allResults); // "전체"가 선택되면 모든 결과show
     } else {
       const numberOfYears = Number(
         selectedYear.replace("최근 ", "").replace("년", "")
@@ -158,6 +196,7 @@ const SearchPage = () => {
     new URLSearchParams(location.search).get("tab") === "멀티미디어";
 
   const offset = currentPage * postsPerPage;
+  console.log("중간체크!", results);
   const currentPosts = results.slice(offset, offset + postsPerPage); // results에서 현재 페이지의 포스트 추출
   const pageCount = Math.ceil(results.length / postsPerPage); // 전체 페이지 수 계산
 
@@ -197,6 +236,8 @@ const SearchPage = () => {
         resultCount={results.length}
         onYearChange={handleYearFilterChange} // 콜백함수를 prop으로 전달
         onViewChange={handleViewChange} // SearchNav에 새로운 prop 전달
+        isRecommended={location.search.includes("recommended=true")} // 추천검색인 경우, "추천 검색결과"보여주기 위함
+        imageTitle={location.state?.imageTitle || ""} // 이미지 제목 전달
       />
       {/* 하단 카드 */}
       <Box sx={{ width: "90%" }}>
