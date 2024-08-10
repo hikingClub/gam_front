@@ -1,0 +1,90 @@
+.detail-content-main-container {
+  display: flex;
+  justify-content: center; /* 수평 정렬 */
+  align-items: center; /* 수직 정렬 */
+  height: 100vh;
+  background-color: red; /* 필요에 따라 배경색 설정 */
+  padding-top: 5vh;
+}
+
+.detail-content-inner-container {
+  flex: 1;
+  justify-content: center;
+  margin: 0 8vh 0 10vh;
+  padding: 3% 4%;
+  background-color: white; /* #eef3fe */
+  border-radius: 0.5rem;
+  box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  position: relative; /* 절대 위치를 위한 상대 위치 설정 */
+}
+
+.detail-content-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+}
+
+.detail-content-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.detail-content-date {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.detail-content-info {
+  margin-bottom: 2rem;
+}
+
+.detail-content-info > * {
+  margin-bottom: 0.75rem;
+}
+
+.detail-content-company-name,
+.detail-content-summary,
+.detail-content-author-affiliation,
+.detail-content-publisher,
+.detail-content-org-code,
+.detail-content-org-name,
+.detail-content-doc-id,
+.detail-content-type-name {
+  font-size: 1rem;
+  color: #495057;
+}
+
+.detail-content-url a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.detail-content-url a:hover {
+  text-decoration: underline;
+}
+
+.detail-content-actions {
+  display: flex;
+  gap: 1rem;
+  position: absolute; /* 절대 위치 */
+  top: 10rem; /* 상단에서 1rem 떨어진 위치 */
+  right: 1rem; /* 오른쪽에서 1rem 떨어진 위치 */
+}
+
+.detail-content-tags {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.detail-content-tag {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #e9ecef;
+  color: #495057;
+}

@@ -17,18 +17,19 @@ import MySubscription from "./MySubscription";
 import MyAccessReq from "./MyAccessReq";
 import MyAccount from "./MyAccount";
 import { useAuth } from "./AuthContext";
+import axios from "axios";
 
 const blue = {
-  50: "#0037581a",
-  100: "#00375833",
-  200: "#0037584d",
-  300: "#00375866",
-  400: "#00375880",
-  500: "#00375899",
-  600: "#003758b3",
-  700: "#003758cc",
-  800: "#003758e6",
-  900: "#003758",
+  50: "#eef3fe",
+  100: "#dae4fb",
+  200: "#c9d8fb",
+  300: "#b9ccfa",
+  400: "#9ca9c0",
+  500: "#95b3fa",
+  600: "#749cfa",
+  700: "#3671f9",
+  800: "#004cff",
+  900: "#002374",
 };
 
 const grey = {
@@ -45,7 +46,7 @@ const grey = {
 };
 
 const StyledTab = styled(Tab)`
-  color: ${grey[700]};
+  color: ${grey[800]};
   cursor: pointer;
   font-size: 0.975rem;
   font-weight: 600;
@@ -59,13 +60,14 @@ const StyledTab = styled(Tab)`
   justify-content: center;
 
   &:hover {
-    background-color: ${blue[300]};
+    background-color: ${blue[700]};
     color: white;
   }
 
   &:focus {
     color: #fff;
-    outline: 3px solid ${blue[800]};
+    border: 0.1rem solid ${blue[700]};
+    outline: 1px solid ${blue[100]};
   }
 
   &.${tabClasses.selected} {
@@ -102,7 +104,7 @@ const StyledTabPanel = styled(TabPanel)`
 
 const StyledTabsList = styled(TabsList)`
   min-width: 200px;
-  background-color: ${blue[100]};
+  background-color: ${blue[300]};
   border-radius: 0.5rem;
   margin-bottom: 10px;
   display: flex;
@@ -116,21 +118,36 @@ const StyledTabsList = styled(TabsList)`
 const MyPageMenu = () => {
   const [tabValue, setTabValue] = useState(0);
   const { isLoggedIn, userData } = useAuth();
+  const [displayName, setDisplayName] = useState("사용자");
 
   useEffect(() => {
-    console.log("userData:", userData);
-  }, [userData]);
+    if (isLoggedIn) {
+      // 사용자 설정 정보를 가져옴
+      const fetchUserSettings = async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:8080/mypage/settings",
+            {
+              withCredentials: true,
+            }
+          );
 
-  // userData에서 필요한 속성 추출
-  const uid = userData?.uid;
-  const name = userData?.name;
+          console.log("응답 데이터:", response.data);
 
-  // displayName 결정 로직
-  const displayName = userData
-    ? userData.name
-      ? name || uid // 소셜 로그인 사용자는 name이 있으면 표시, 없으면 uid
-      : JSON.stringify(userData) // 일반 로그인 사용자는 전체 userData 객체를 문자열로 변환하여 표시
-    : "사용자";
+          // 닉네임 또는 기타 사용자 정보를 표시
+          if (response.data.nickname) {
+            setDisplayName(response.data.nickname);
+          } else if (response.data.name) {
+            setDisplayName(response.data.name);
+          }
+        } catch (error) {
+          console.error("설정 정보를 가져오는 데 실패했습니다:", error);
+        }
+      };
+
+      fetchUserSettings();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="mymenubar-container">
@@ -144,12 +161,10 @@ const MyPageMenu = () => {
           }}
         >
           <div className="mypagetitle" style={{ textAlign: "left" }}>
-            마이페이지
+            <strong>{displayName}</strong> <span>님의 마이페이지</span>
           </div>
           <div style={{ textAlign: "right" }}>
-            <p>
-              <strong>{displayName}</strong> 님
-            </p>
+            <p></p>
           </div>
         </div>
         <div className="mymenubar-sidebar">
@@ -167,7 +182,6 @@ const MyPageMenu = () => {
                 <div className="usage-component1">
                   <MyUsageSearch />
                 </div>
-                <div className="vertical-line"></div>
                 <div className="usage-component2">
                   <MyUsageView />
                 </div>

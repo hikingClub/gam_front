@@ -1,10 +1,9 @@
-/* src/styles/SignupTos.css */
 .terms-main-container {
   display: flex;
   justify-content: center; /* 수평 정렬 */
   align-items: center; /* 수직 정렬 */
   height: 100vh;
-  background-color: rgb(0, 55, 88); /* 필요에 따라 배경색 설정 */
+  background-color: white; /* 필요에 따라 배경색 설정 */
   padding-top: 5vh;
 }
 
@@ -13,35 +12,33 @@
   justify-content: center;
   margin: 0 8vh 0 10vh; /* 좌우 마진 통합 */
   padding: 0 4vh; /* 좌우 패딩 통합 */
-  background-color: #e5eaf2; /* #e5eaf2 */
+  background-color: #eef3fe;
   border-radius: 0.5vh;
   box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
   height: 80vh;
   max-height: 80vh;
   box-sizing: border-box;
-  overflow-y: scroll;
 }
 
-/* 스크롤바 스타일 */
-.terms-inner-container::-webkit-scrollbar {
-  width: 12px;
-}
-
-.terms-inner-container::-webkit-scrollbar-thumb {
-  background-color: #003758cc;
-  border-radius: 6px;
-  border: 2px solid #e5eaf2;
-}
-
-.terms-inner-container::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
-  border-radius: 6px;
-}
+/* .terms-inner-container::-webkit-scrollbar {
+    width: 0.75rem;
+  }
+  
+  .terms-inner-container::-webkit-scrollbar-thumb {
+    background-color: #003758cc;
+    border-radius: 0.375rem;
+    border: 0.125rem solid #e5eaf2;
+  }
+  
+  .terms-inner-container::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 0.375rem;
+  } */
 
 .terms-container-content {
   margin: auto;
   padding: 1.5rem;
-  width: 50%;
+  width: 40%;
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem 0.3rem rgba(0, 0, 0, 0.1);
@@ -67,12 +64,12 @@
 
 .intro-text {
   text-align: left; /* 텍스트 왼쪽 정렬 */
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .chk_box_01 {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .chk_box_con {
@@ -80,28 +77,40 @@
   border: 1px solid #e0e0e0;
   background-color: #f5f8fd;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .no-border {
-  border: none; /* 테두리 제거 */
+  border: none;
+  margin-left: 0.5rem;
 }
 
 .checkbox {
   display: flex;
   align-items: center;
+  margin-left: 0.5rem; /* 체크박스와 라벨 사이의 간격 조절 */
 }
 
 .checkbox input {
   margin-right: 1rem;
+  transform: scale(1.5); /* 체크박스 크기 조절 */
+  -webkit-transform: scale(1.5); /* 크롬, 사파리 호환성 */
+  -moz-transform: scale(1.5); /* 파이어폭스 호환성 */
+  -o-transform: scale(1.5); /* 구형 오페라 호환성 */
+  -ms-transform: scale(1.5); /* 구형 IE 호환성 */
+}
+
+.total-label {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .label {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .chk_box_con a,
@@ -139,6 +148,8 @@
   color: #fff;
   border: none;
   border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -193,7 +204,7 @@
     padding-right: 5rem;
   }
 
-  .terms-container {
+  .terms-container-content {
     width: 80%;
   }
 
@@ -208,7 +219,7 @@
     padding-right: 2rem;
   }
 
-  .terms-container {
+  .terms-container-content {
     width: 90%;
   }
 
@@ -223,7 +234,7 @@
     padding-right: 1rem;
   }
 
-  .terms-container {
+  .terms-container-content {
     width: 95%;
   }
 

@@ -13,7 +13,7 @@ const MyUsageSearch = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      console.log("로그인 상태가 아닙니다.");
+      //   console.log("로그인 상태가 아닙니다.");
       return; // 로그인 상태가 아닐 경우 함수 종료
     }
 
@@ -24,7 +24,7 @@ const MyUsageSearch = () => {
           pagePer: itemsPerPage, // 페이지당 항목 수
         });
 
-        console.log("로그인은 됐습니다");
+        // console.log("Search | 로그인은 됐습니다");
 
         const response = await axios.get(
           `http://localhost:8080/mypage/kwdhistory?${params.toString()}`,
@@ -41,7 +41,7 @@ const MyUsageSearch = () => {
         console.log("응답 전체:", response);
 
         // 응답 데이터만 출력하고 싶을 때
-        console.log("응답 데이터:", response.data);
+        // console.log("응답 데이터:", response.data);
 
         // 서버로부터 받은 데이터를 배열 형태로 정렬하고 저장
         let result = Array.isArray(response.data) ? response.data : [];
@@ -52,14 +52,14 @@ const MyUsageSearch = () => {
         );
 
         setSearchHistory(result);
-        console.log("정렬된 검색 기록:", result);
+        // console.log("정렬된 검색 기록:", result);
       } catch (error) {
-        console.error("요청 중 발생한 에러:", error);
+        // console.error("요청 중 발생한 에러:", error);
 
         if (error.response && error.response.status === 401) {
-          console.error(
-            "로그인 상태가 아닙니다. 로그인 후 다시 시도해 주세요."
-          );
+          //   console.error(
+          //     "로그인 상태가 아닙니다. 로그인 후 다시 시도해 주세요."
+          //   );
           // 로그인 페이지로 리다이렉트하거나 사용자에게 알림
         } else {
           console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);

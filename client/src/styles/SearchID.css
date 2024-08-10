@@ -1,10 +1,22 @@
 .id-container-main {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+  justify-content: center; /* 수평 정렬 */
+  align-items: center; /* 수직 정렬 */
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: white; /* 필요에 따라 배경색 설정 */
+  padding-top: 5vh;
+}
+
+.id-inner-container-main {
+  flex: 1;
+  justify-content: center;
+  margin: 0 8vh 0 10vh; /* 좌우 마진 통합 */
+  padding: 0 4vh; /* 좌우 패딩 통합 */
+  background-color: #eef3fe;
+  border-radius: 0.3125rem;
+  box-shadow: 0 0.5rem 0.625rem 0.1875rem rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  box-sizing: border-box;
 }
 
 .id-container {
@@ -12,14 +24,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 5%;
+  margin: 3%;
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem 0.3rem rgba(0, 0, 0, 0.1);
-  padding: 2.85rem;
-  padding-left: 34rem;
-  padding-right: 34rem;
-  background-color: #e5eaf2;
-  height: 65vh;
+  padding: 7rem 0;
+  padding-left: 23%;
+  padding-right: 23%;
+  background-color: white;
+  max-height: 40vh;
   overflow: hidden;
 }
 
@@ -30,19 +42,37 @@
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
-  padding: 0 20vh;
+  padding: 0 10vh;
 }
 
-.id-title-id a,
-.id-title-pw a {
-  color: rgba(0, 0, 0, 0.638);
+.id-title-id a {
+  color: rgb(0, 0, 0);
   text-decoration: none;
+  font-weight: bold;
+  background-color: #aac5ffc0;
+  padding: 0.5rem;
+  width: 98%;
+  border-radius: 0.5rem;
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); /* 사다리꼴 모양 */
+  display: inline-block; /* 필요한 경우 요소를 inline-block으로 설정 */
+}
+
+.id-title-pw a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #d3d3d394;
+  padding: 0.5rem;
+  width: 98%;
+  border-radius: 0.5rem;
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); /* 사다리꼴 모양 */
+  display: inline-block; /* 필요한 경우 요소를 inline-block으로 설정 */
 }
 
 .id-title-id hr,
 .id-title-pw hr {
-  border: 0.2vh solid rgba(0, 0, 0, 0.303);
-  border-radius: 0.5rem;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.303); /* 0.1vh -> 0.0625rem */
+  border-radius: 10rem;
 }
 
 .id-title-id,
@@ -54,20 +84,16 @@
 
 .id-title-id:hover a,
 .id-title-pw:hover a {
-  color: rgba(0, 0, 255, 0.507);
-}
-
-.id-title-id:hover hr,
-.id-title-pw:hover hr {
-  border-color: rgba(0, 0, 255, 0.507);
+  color: rgb(255, 255, 255);
+  background-color: #002374;
 }
 
 .id-input-boxes {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
-  width: 100%;
-  max-width: 1000px;
+  gap: 0.625rem; /* 1vh -> 0.625rem */
+  width: 80%;
+  max-width: 62.5rem; /* 1000px -> 62.5rem */
   margin-bottom: 5vh;
   padding: 1rem;
 }
@@ -76,42 +102,43 @@
 .id-email-box {
   display: flex;
   align-items: center;
-  gap: 0.54rem;
-  font-size: 1.3rem;
+  gap: 0.5rem;
+  font-size: 1.4rem;
 }
 
 .id-input-field {
   flex: 1;
-  padding: 1.2vh;
+  padding: 0.8125rem; /* 1.3vh -> 0.8125rem */
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  margin-top: 1vh;
+  margin-top: 0.625rem; /* 1vh -> 0.625rem */
   box-sizing: border-box;
-  margin-left: 1.5vh;
-  font-size: 1rem;
+  margin-left: 0.9375rem; /* 1.5vh -> 0.9375rem */
+  font-size: 1.1rem;
 }
 
 .id-btns {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80%;
   gap: 0.5rem;
-  max-width: 1000px;
+  max-width: 62.5rem; /* 1000px -> 62.5rem */
 }
 
 .id-next-button,
 .id-login-button {
   width: 100%;
-  padding: 1vh 3vw;
+  padding: 0.625rem 3vw; /* 1vh -> 0.625rem */
   background-color: white;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .id-next-button {
   color: #005614;
-  border: 0.1px solid #017c1e67;
+  border: 0.00625rem solid #017c1e67; /* 0.1px -> 0.00625rem */
 }
 
 .id-next-button:hover {
@@ -122,7 +149,7 @@
 
 .id-login-button {
   color: #007bff;
-  border: 0.1px solid #007bff6c;
+  border: 0.00625rem solid #007bff6c; /* 0.1px -> 0.00625rem */
 }
 
 .id-login-button:hover {
@@ -133,4 +160,16 @@
 .id-required {
   color: red;
   margin-left: 0.25rem;
+}
+
+.search-id-success-message {
+  color: blue;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.search-id-error-message {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
