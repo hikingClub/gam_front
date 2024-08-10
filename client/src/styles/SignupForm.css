@@ -1,24 +1,24 @@
 .signupform-main-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
   height: 100vh;
-  background-color: rgb(0, 55, 88);
+  background-color: white;
   padding-top: 5vh;
 }
 
 .signup-form {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 5vw;
-  padding: 0 2vw;
-  background-color: #e5eaf2;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.8rem 1rem 0.3rem rgba(0, 0, 0, 0.1);
+  justify-content: center; /* 내부 요소를 중앙 정렬 */
+  align-items: center;
+  margin: 0 8vh 0 10vh;
+  padding: 0 60vh;
+  background-color: #eef3fe;
+  border-radius: 0.5vh;
+  box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
   height: 80vh;
   max-height: 80vh;
+  /* overflow-y: scroll; */
   box-sizing: border-box;
 }
 
@@ -29,7 +29,7 @@
   background-color: white;
   border-radius: 0.5rem;
   overflow-y: scroll;
-  height: 96%;
+  height: 95%;
   max-width: 60rem;
 }
 
@@ -60,16 +60,15 @@
   width: 100%;
 }
 
-.signup-form .form-input {
+.form-input {
   flex: 1;
   padding: 0.5rem;
   margin-right: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border: 1px solid #00375866;
   border-radius: 4px;
   box-sizing: border-box;
-  width: 100%;
-  max-width: 25rem;
+  width: 25rem;
   margin-bottom: 0.1rem;
 }
 
@@ -215,7 +214,7 @@
 
 .submit-button-gayip {
   position: relative;
-  height: 10%;
+  height: 5%;
 }
 
 .form-button-submit-button {
@@ -224,10 +223,11 @@
   width: 7.5rem;
   right: 0.1rem;
   bottom: 0.5rem;
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1rem;
   background-color: #0037581a;
   border: 0.1rem solid #003758cc;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .form-button-submit-button:hover {

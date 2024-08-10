@@ -1,49 +1,74 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import "../styles/NavRight.css";
 
 const NavRight = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout, userData } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
-  const userName = "marioahn";
+  const navigate = useNavigate();
+
+  const dropdownRef = useRef(null); // dropdown 참조를 위한 useRef 추가
+  const alarmDropdownRef = useRef(null); // 알림 dropdown 참조를 위한 useRef 추가
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 세션 스토리지에서 로그인 상태 확인_yj
-    const storedLoggedInState = sessionStorage.getItem("isLoggedIn");
-    if (storedLoggedInState === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    sessionStorage.setItem("isLoggedIn", "true"); // 로그인 상태를 세션에 저장시킴_yj
-  };
+    console.log("isLoggedIn 상태 변경:", isLoggedIn);
+    console.log("UserData:", userData);
+  }, [isLoggedIn, userData]);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setShowDropdown(false);
-    sessionStorage.removeItem("isLoggedIn"); // 로그아웃 시 세션에서도 삭제_yj
-    window.location.href = "/"; // 로그아웃 시 메인 화면으로 리디렉션
+    setShowAlarmDropdown(false);
+    navigate("/");
   };
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    if (isLoggedIn) {
+      setShowDropdown(prev => !prev);
+    }
   };
 
   const toggleAlarmDropdown = () => {
-    setShowAlarmDropdown(!showAlarmDropdown);
+    if (isLoggedIn) {
+      setShowAlarmDropdown(prev => !prev);
+    }
   };
+
+  // userData에서 nickname을 가져옴
+  const nickname = userData?.nickname || "사용자";
+
+  console.log("사용자 이름 또는 닉네임: ", nickname);
+
+  // dropdown 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+      if (
+        alarmDropdownRef.current &&
+        !alarmDropdownRef.current.contains(event.target)
+      ) {
+        setShowAlarmDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="button-container">
       {isLoggedIn ? (
         <>
-          <div className="welcome-message">
-            {/* <strong>{userName}</strong> 님 환영합니다 */}
-          </div>
-          <div className="notification-container">
+          <span className="welcome-message">
+            <strong>{nickname}</strong> 님 환영합니다
+          </span>
+          <div className="notification-container" ref={alarmDropdownRef}>
             <button
               className="button notification-button"
               onClick={toggleAlarmDropdown}
@@ -79,62 +104,63 @@ const NavRight = () => {
               </div>
             )}
           </div>
-          <button className="user-toggle-button" onClick={toggleDropdown}>
-            {/* <span className="username">님</span> */}
-            <span className="dropdown-toggle">
-              {showDropdown ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-chevron-up"
-                >
-                  <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-chevron-down"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              )}
-            </span>
-          </button>
-          {showDropdown && (
-            <div className="dropdown-menu">
-              <a href="/mypagemenu" className="dropdown-link">
-                마이페이지
-              </a>
-              <a href="#" className="dropdown-link">
-                관심키워드
-              </a>
-              <a href="#" className="dropdown-link">
-                즐겨찾기
-              </a>
-              <a href="#" onClick={handleLogout} className="dropdown-link">
-                로그아웃
-              </a>
-            </div>
-          )}
+          <div ref={dropdownRef}>
+            <button className="user-toggle-button" onClick={toggleDropdown}>
+              <span className="dropdown-toggle">
+                {showDropdown ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-chevron-up"
+                  >
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-chevron-down"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                )}
+              </span>
+            </button>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                <a href="/mypagemenu" className="dropdown-link">
+                  마이페이지
+                </a>
+                <a href="#" className="dropdown-link">
+                  관심키워드
+                </a>
+                <a href="#" className="dropdown-link">
+                  즐겨찾기
+                </a>
+                <a href="#" onClick={handleLogout} className="dropdown-link">
+                  로그아웃
+                </a>
+              </div>
+            )}
+          </div>
         </>
       ) : (
         <Link to="/ModernLogin">
-          <button className="button" onClick={handleLogin}>
+          <button className="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

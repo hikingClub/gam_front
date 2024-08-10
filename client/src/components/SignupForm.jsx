@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignupForm.css";
@@ -19,23 +19,23 @@ const SignupForm = () => {
   const [emailChecked, setEmailChecked] = useState(false);
   const [uidChecked, setUidChecked] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false); // 이메일 인증 확인 상태
-  const [isTimerActive, setIsTimerActive] = useState(false); // 타이머 활성화 여부
-  const [timeLeft, setTimeLeft] = useState(300); // 3-5분 타이머
+  const [timeLeft, setTimeLeft] = useState(300); // 5분 (300초) 타이머
 
   const navigate = useNavigate();
 
   useEffect(() => {
     let timer;
-    if (isTimerActive && timeLeft > 0) {
+    if (emailChecked && timeLeft > 0) {
       timer = setInterval(() => {
-        setTimeLeft(timeLeft - 1);
+        setTimeLeft(prevTime => prevTime - 1);
       }, 1000);
     } else if (timeLeft === 0) {
-      setIsTimerActive(false);
+      clearInterval(timer);
+      setEmailChecked(false);
       alert("인증 시간이 만료되었습니다. 다시 인증을 시도해주세요.");
     }
     return () => clearInterval(timer);
-  }, [isTimerActive, timeLeft]);
+  }, [emailChecked, timeLeft]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -47,14 +47,18 @@ const SignupForm = () => {
     if (name === "email") {
       setEmailChecked(false);
       setEmailVerified(false); // 이메일이 변경되면 인증 상태 초기화
-      setIsTimerActive(false);
-      setTimeLeft(300); // 타이머 초기화
     } else if (name === "uid") {
       setUidChecked(false);
     }
   };
 
   const handleUidCheck = async () => {
+    const uidRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,10}$/;
+    if (!uidRegex.test(form.uid)) {
+      alert("4~10자의 영문 소문자+숫자만 사용가능합니다");
+      return;
+    }
+
     try {
       const response = await axios.get(
         `http://localhost:8080/member/checkUid?uid=${form.uid}`
@@ -77,35 +81,37 @@ const SignupForm = () => {
 
   const handleEmailCheck = async () => {
     try {
-      // 이메일 중복 확인
-      const checkResponse = await axios.post(
-        `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
+      // 이메일 중복 확인 요청
+      const checkResponse = await axios.get(
+        `http://localhost:8080/member/checkEmail?email=${form.email}`
       );
+
       if (checkResponse.data) {
-        // 중복된 이메일이면 경고 메시지 표시
+        // 중복된 이메일인 경우
         alert("이미 사용 중인 이메일입니다.");
         return;
       }
 
-      // 이메일 중복이 아닌 경우 인증 메일 발송
-      const response = await axios.post(
+      // 중복이 아닌 경우, 인증 이메일 발송 요청
+      const sendResponse = await axios.post(
         `http://localhost:8080/member/sendVerificationMail?email=${form.email}`
       );
-      if (response.status === 200) {
+
+      if (sendResponse.status === 200) {
         alert("인증 이메일이 발송되었습니다.");
         setEmailChecked(true);
-        setIsTimerActive(true); // 타이머 시작
+      } else {
+        alert("인증 이메일 발송 실패: " + sendResponse.data);
       }
     } catch (error) {
       console.error(
-        "이메일 중복 확인 에러:",
+        "이메일 처리 중 오류 발생:",
         error.response ? error.response.data : error.message
       );
-      alert("이메일 확인 중 오류가 발생했습니다.");
+      alert("이메일 처리 중 오류가 발생했습니다.");
     }
   };
 
-  // 이메일 인증 확인 요청 함수
   const handleVerifyEmail = async () => {
     try {
       const response = await axios.post(
@@ -114,7 +120,6 @@ const SignupForm = () => {
       if (response.status === 200) {
         alert("이메일 인증 성공!");
         setEmailVerified(true); // 인증 성공 시 상태 업데이트
-        setIsTimerActive(false); // 타이머 중지
       }
     } catch (error) {
       console.error(
@@ -128,6 +133,23 @@ const SignupForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    // 아이디 유효성 검사
+    const uidRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,10}$/;
+    if (!uidRegex.test(form.uid)) {
+      alert("4~10자의 영문 소문자+숫자만 사용가능합니다");
+      return;
+    }
+
+    // 비밀번호 유효성 검사
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*+=-]).{8,16}$/;
+    if (!passwordRegex.test(form.password)) {
+      alert(
+        "비밀번호는 8~16자의 영문 대소문자 + 숫자 + 특수문자 조합이어야 합니다. 사용 가능한 특수문자: ! @ # $ % ^ & * + = -"
+      );
+      return;
+    }
+
     if (!form.nickname) {
       alert("이름을 입력하세요.");
       return;
@@ -160,11 +182,6 @@ const SignupForm = () => {
 
     if (!form.password) {
       alert("비밀번호를 입력하세요.");
-      return;
-    }
-
-    if (form.password.length < 8 || form.password.length > 16) {
-      alert("비밀번호는 8~16자 사이여야 합니다.");
       return;
     }
 
@@ -225,14 +242,14 @@ const SignupForm = () => {
 
             <div className="form-sections">
               <label className="text-indent">
-                닉네임<span className="required">*</span>
+                이름<span className="required">*</span>
                 <div className="form-group">
                   <input
                     type="text"
                     name="nickname"
                     value={form.nickname}
                     onChange={handleChange}
-                    placeholder="닉네임을 입력하세요."
+                    placeholder="이름을 입력하세요."
                     required
                     className="form-input"
                   />
@@ -241,7 +258,7 @@ const SignupForm = () => {
 
               <label className="text-indent">
                 아이디<span className="required">*</span>
-                <small>4~10자의 영문 소문자, 숫자만 사용가능합니다.</small>
+                <small>4~10자의 영문 소문자+숫자만 사용가능합니다.</small>
                 <div className="form-group">
                   <input
                     type="text"
@@ -277,7 +294,7 @@ const SignupForm = () => {
                   />
                   {emailChecked ? (
                     <span className="emailcheck-timer">
-                      남은 시간: {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
+                      {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
                     </span>
                   ) : (
                     <button

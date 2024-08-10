@@ -16,18 +16,20 @@ import MyRecommend from "./MyRecommend";
 import MySubscription from "./MySubscription";
 import MyAccessReq from "./MyAccessReq";
 import MyAccount from "./MyAccount";
+import { useAuth } from "./AuthContext";
+import axios from "axios";
 
 const blue = {
-  50: "#0037581a", // rgb(0, 55, 88, 0.1)
-  100: "#00375833", // rgb(0, 55, 88, 0.2)
-  200: "#0037584d", // rgb(0, 55, 88, 0.3)
-  300: "#00375866", // rgb(0, 55, 88, 0.4)
-  400: "#00375880", // rgb(0, 55, 88, 0.5)
-  500: "#00375899", // rgb(0, 55, 88, 0.6)
-  600: "#003758b3", // rgb(0, 55, 88, 0.7)
-  700: "#003758cc", // rgb(0, 55, 88, 0.8)
-  800: "#003758e6", // rgb(0, 55, 88, 0.9)
-  900: "#003758", // rgb(0, 55, 88)
+  50: "#eef3fe",
+  100: "#dae4fb",
+  200: "#c9d8fb",
+  300: "#b9ccfa",
+  400: "#9ca9c0",
+  500: "#95b3fa",
+  600: "#749cfa",
+  700: "#3671f9",
+  800: "#004cff",
+  900: "#002374",
 };
 
 const grey = {
@@ -44,7 +46,7 @@ const grey = {
 };
 
 const StyledTab = styled(Tab)`
-  color: ${grey[700]};
+  color: ${grey[800]};
   cursor: pointer;
   font-size: 0.975rem;
   font-weight: 600;
@@ -58,13 +60,14 @@ const StyledTab = styled(Tab)`
   justify-content: center;
 
   &:hover {
-    background-color: ${blue[300]};
+    background-color: ${blue[700]};
     color: white;
   }
 
   &:focus {
     color: #fff;
-    outline: 3px solid ${blue[800]};
+    border: 0.1rem solid ${blue[700]};
+    outline: 1px solid ${blue[100]};
   }
 
   &.${tabClasses.selected} {
@@ -91,18 +94,17 @@ const StyledTabPanel = styled(TabPanel)`
   gap: 1rem;
   overflow: hidden;
 
-  /* high-zoom 상태에서의 스타일 조정 */
   .high-zoom & {
-    height: auto; /* 높이를 자동으로 조정 */
-    flex: 1; /* 가용 공간을 모두 차지 */
-    max-height: 90vh; /* 최대 높이 설정 */
-    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+    height: auto;
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 `;
 
 const StyledTabsList = styled(TabsList)`
   min-width: 200px;
-  background-color: ${blue[100]};
+  background-color: ${blue[300]};
   border-radius: 0.5rem;
   margin-bottom: 10px;
   display: flex;
@@ -115,31 +117,37 @@ const StyledTabsList = styled(TabsList)`
 
 const MyPageMenu = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
+  const { isLoggedIn, userData } = useAuth();
+  const [displayName, setDisplayName] = useState("사용자");
 
   useEffect(() => {
-    try {
-      const storedNickname = localStorage.getItem("nickname");
-      const storedEmail = localStorage.getItem("email");
+    if (isLoggedIn) {
+      // 사용자 설정 정보를 가져옴
+      const fetchUserSettings = async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:8080/mypage/settings",
+            {
+              withCredentials: true,
+            }
+          );
 
-      if (storedNickname) {
-        setNickname(storedNickname);
-      } else {
-        setNickname("알 수 없음"); // 기본값 설정
-      }
+          console.log("응답 데이터:", response.data);
 
-      if (storedEmail) {
-        setEmail(storedEmail);
-      } else {
-        setEmail("알 수 없음"); // 기본값 설정
-      }
-    } catch (error) {
-      console.error("로컬 스토리지 접근 에러:", error);
-      setNickname("에러 발생");
-      setEmail("에러 발생");
+          // 닉네임 또는 기타 사용자 정보를 표시
+          if (response.data.nickname) {
+            setDisplayName(response.data.nickname);
+          } else if (response.data.name) {
+            setDisplayName(response.data.name);
+          }
+        } catch (error) {
+          console.error("설정 정보를 가져오는 데 실패했습니다:", error);
+        }
+      };
+
+      fetchUserSettings();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className="mymenubar-container">
@@ -153,13 +161,10 @@ const MyPageMenu = () => {
           }}
         >
           <div className="mypagetitle" style={{ textAlign: "left" }}>
-            마이페이지
+            <strong>{displayName}</strong> <span>님의 마이페이지</span>
           </div>
           <div style={{ textAlign: "right" }}>
-            <p>
-              <strong>{nickname}</strong>&nbsp;님&nbsp;&nbsp;/&nbsp;&nbsp;
-              {email}
-            </p>
+            <p></p>
           </div>
         </div>
         <div className="mymenubar-sidebar">
@@ -177,7 +182,6 @@ const MyPageMenu = () => {
                 <div className="usage-component1">
                   <MyUsageSearch />
                 </div>
-                <div className="vertical-line"></div>
                 <div className="usage-component2">
                   <MyUsageView />
                 </div>

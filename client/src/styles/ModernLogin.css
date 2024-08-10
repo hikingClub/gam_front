@@ -1,95 +1,135 @@
-/* ModernLogin.css */
-
 /* 부모 요소에 적용  */
 .log-container-back {
   display: flex;
   justify-content: center; /* 수평 정렬 */
   align-items: center; /* 수직 정렬 */
   height: 100vh;
-  background-color: rgb(0, 55, 88); /* 필요에 따라 배경색 설정 */
+  background-color: white; /* 필요에 따라 배경색 설정 */
   padding-top: 5vh;
+}
+
+.log-main-container {
+  flex: 1;
+  justify-content: center;
+  margin: 0 8vh 0 10vh;
+  padding: 3% 4%;
+  background-color: #eef3fe; /* #eef3fe */
+  border-radius: 0.5rem;
+  box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
 
 .log-inner-container {
   display: flex;
-  justify-content: center;
-  width: 80%;
-  flex-direction: row;
-  padding: 0 4vh;
-  margin: 0 8vh 0 10vh;
-  background-color: rgb(0, 55, 88);
-  border-radius: 0.5vh;
-  box-shadow: 0 0.8vh 1vh 0.3vh rgba(0, 0, 0, 0.1);
-  height: 80vh;
-  max-height: 80vh;
-  /* overflow-y: scroll; */
-  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  height: 100%;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  flex-wrap: wrap; /* 반응형을 위한 flex-wrap 추가 */
 }
 
 .login-section,
 .welcome-section {
   flex: 1;
-  padding: 3vh 2vh;
+  padding-bottom: 1.5rem;
   text-align: center;
   background-color: white;
   color: black;
-  border: 7px double rgba(130, 130, 130, 0.32);
-  border-radius: 1vh;
-  margin: 5vh;
-  font-size: 2vh;
+  border: 0.7em double rgba(130, 130, 130, 0.32);
+  border-radius: 1em;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 90%;
+  max-width: 48%;
+  position: relative;
+  margin-bottom: 9%;
 }
 
-/* .welcome-section.hovered {
-    background: black;
-    color: white;
-  }
-  
-  .welcome-section.hovered .welcome-text {
-    display: none;
-  }
-  
-  .welcome-section.hovered .hover-text {
-    display: block;
-  } */
+.hidden {
+  background-color: #001544;
+  color: white;
+}
 
-.heading-xl {
-  font-size: 3vh;
+.hidden * {
+  visibility: hidden;
+}
+
+.hover-kingImage {
+  width: 12rem;
+  height: auto;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  /* box-shadow: 0 5px 5px 5px rgba(255, 255, 255, 0.3); */
+}
+
+.hidden .hover-kingImage {
+  visibility: visible;
+  /* opacity: 50%; */
+}
+
+.login-section.hovered,
+.welcome-section.hovered {
+  background-color: #001544;
+  color: white;
+  box-shadow: 0 0.8vh 1vh 0.6vh rgba(0, 0, 0, 0.2);
+}
+
+.welcome-section.hovered .welcome-text,
+.login-section.hovered .welcome-text {
+  display: none;
+}
+
+.heading-xl,
+.hover-text {
+  font-size: 2em;
   font-weight: 700;
-  margin-top: 5vh;
-  margin-bottom: 3vh;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
 .sns-text {
-  margin-bottom: 1vh;
-  font-size: 2vh;
+  margin-top: 8%;
+  font-size: 1.3em;
 }
+
 .signup-link {
   color: #434d5b;
-  font-size: 2vh;
-  margin-top: 3.9vh;
+  font-size: 1.3em;
+  text-decoration: none;
+  margin-top: 3%;
 }
 
 .social-login {
   display: flex;
   justify-content: center;
-  gap: 3vh;
-  margin: 1vh;
-  padding-top: 3vh;
-  padding-bottom: 3vh;
+  gap: 15%;
+  margin: 1%;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
-
 .sns-icon {
   cursor: pointer;
 }
 
 .sns-icon img {
-  width: 8vh;
-  height: 8vh;
-  border: 1px solid black;
-  border-radius: 1vh;
+  width: 4.5em;
+  height: 4.3em;
+  border: 0.1em solid black;
+  border-radius: 1em;
   overflow: hidden;
 }
 
@@ -97,56 +137,76 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 90%; */
-  gap: 0.1vh;
-  margin-bottom: 1vh;
+  margin-top: 3%;
+  margin-bottom: 1%;
+  width: 100%;
+  max-width: 370px;
 }
 
-.input-fieldbox {
-  width: 100%; /* 입력 상자의 너비를 100%로 설정하여 부모 컨테이너에 맞춤 */
-  padding: 0.8rem 5rem; /* 버튼과 유사한 크기 설정 (rem 단위 사용) */
+.input-fieldbox-container {
+  width: 90%;
+  max-width: 370px;
+  display: flex;
+  align-items: center;
   border: 0.1rem solid gray;
   border-radius: 0.5rem;
   background: white;
+  padding: 0.8rem;
+  margin: 2%;
+}
+
+.input-fieldbox {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  margin-left: 1rem;
   color: #434d5b;
-  font-size: 1rem; /* 기본 폰트 크기 설정 */
-  cursor: text;
-  margin-top: 1rem;
-  font-weight: bold;
-  box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
-  transition: all 0.3s ease; /* 크기 변화 시 애니메이션 효과 추가 */
+}
+
+.id-icon {
+  font-size: 1.5rem; /* 아이콘 크기 */
+  color: #434d5b; /* 아이콘 색상 */
+  margin-right: 0.5rem; /* 아이콘과 입력 필드 사이의 간격 */
+}
+
+.password-icon {
+  font-size: 1.5rem; /* 아이콘 크기 */
+  color: #434d5b; /* 아이콘 색상 */
+  margin-right: 0.5rem; /* 아이콘과 입력 필드 사이의 간격 */
 }
 
 .input-fieldbox:hover,
 .input-fieldbox:focus {
-  border-color: #8282ff; /* 포커스 및 호버 시 테두리 색상 변경 */
-  background-color: #f0f0ff; /* 배경색을 살짝 변경 */
+  border: none;
+  outline: none;
 }
 
 .checkbox-container {
   display: flex;
   justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-bottom: 5vh;
+  margin-bottom: 5%;
   width: 80%; /* 부모의 너비에 맞춤 */
   max-width: 350px;
 }
 
 .checkbox-container input {
-  margin-right: 1vh;
-  width: 2.1vh;
-  height: 2.5vh;
+  margin-right: 0.5em;
+  width: 1.5em;
+  height: 1.5em;
 }
 
-.links {
-  margin: 1vh 0;
+.login-links {
+  margin: 1% 0;
 }
 
-.links a {
-  color: rgb(49, 49, 49);
+.login-links a {
+  color: #434d5b;
   text-decoration: none;
+  font-size: 1.2rem;
 }
 
-.links a:hover {
+.login-links a:hover {
   text-decoration: underline;
 }
 
@@ -154,41 +214,54 @@
 .sign-up-btn {
   width: 100%;
   max-width: 370px;
-  padding: 1vh;
-  border: none;
-  border-radius: 0.5vh;
-  background: #d2d2ff;
+  padding: 0.4rem;
+  border: 0.1rem solid #9ca9c0;
+  border-radius: 0.5rem;
+  background: #dae4fb;
   color: #434d5b;
-  font-size: 2vh;
+  font-size: 1.5em;
   cursor: pointer;
-  margin-top: 1vh;
+  margin-top: 1em;
   font-weight: bold;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .sign-in-btn:hover,
 .sign-up-btn:hover {
-  background: #8282ff;
+  background: #3671f9;
   color: white;
   font-weight: normal;
 }
 
-.hover-text {
-  display: none;
+.hover-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
   .log-inner-container {
     flex-direction: column;
     height: auto;
-    padding: 1vh;
-    margin: 1vh;
+    padding: 2%;
+    margin: 1%;
   }
 
   .login-section,
   .welcome-section {
-    padding: 2vh;
+    padding: 2%;
     margin: 0;
     overflow: hidden;
+    max-width: 100%;
+  }
+
+  .hover-content {
+    justify-content: flex-start;
   }
 }
 

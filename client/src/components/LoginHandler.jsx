@@ -1,20 +1,57 @@
-// src/components/LoginHandler.jsx
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "./AuthContext";
 
-export const loginHandler = (provider, options) => {
-  const kakaoClientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
-  console.log("카카오 클라이언트 ID:", kakaoClientId);
-  //   const naverClientId = import.meta.env.VITE_NAVER_CLIENT_ID; // 환경 변수 추가 필요
-  //   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID; // 환경 변수 추가 필요
+const LoginHandler = ({ provider }) => {
+  const navigate = useNavigate();
+  const code = new URL(window.location.href).searchParams.get("code");
+  const { login } = useAuth();
 
-  if (provider === "kakao") {
-    if (!kakaoClientId) {
-      console.error("카카오 클라이언트 ID가 정의되지 않았습니다.");
-      return;
+  useEffect(() => {
+    const socialLogin = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_APP_SPRING_API_URL}/login/oauth2/callback/${provider}?code=${code}`,
+          {
+            headers: { "Content-Type": "application/json;charset=utf-8" },
+            withCredentials: true,
+          }
+        );
+
+        if (response.status === 200) {
+          // 서버로부터의 성공적인 응답 처리
+          const userInfo = { nickname: "사용자" }; // 백엔드에서 사용자 정보를 가져오도록 수정 가능
+          const token = null; // 토큰이 필요하지 않으면 null, 필요하면 실제 토큰 값 설정
+
+          await login(userInfo, token); // 토큰이 있으면 전달, 없으면 null
+
+          alert("로그인 성공! 홈으로 이동합니다.");
+          navigate("/");
+        }
+      } catch (error) {
+        // 에러 발생 시 특별한 처리를 하지 않고 그냥 로그로 남김
+        console.error(`${provider} 로그인 중 오류 발생:`, error);
+      }
+    };
+
+    if (code) {
+      socialLogin();
+    } else {
+      alert("로그인에 실패했습니다. 인가 코드가 없습니다.");
+      navigate("/");
     }
-    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${options.redirectUri}&response_type=code`;
-    console.log("카카오 인증 URL:", kakaoAuthUrl); // 디버깅을 위해 추가
-    window.location.href = kakaoAuthUrl;
-  } else {
-    console.log("지원하지 않는 로그인 제공자:", provider);
-  }
+  }, [code, navigate, provider, login]);
+
+  return (
+    <div className="LoginHandler">
+      <div className="notice">
+        <p>로그인 중입니다.</p>
+        <p>잠시만 기다려주세요.</p>
+        <div className="spinner"></div>
+      </div>
+    </div>
+  );
 };
+
+export default LoginHandler;

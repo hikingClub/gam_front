@@ -91,7 +91,7 @@ const SignupTos = () => {
         <div className="terms-container-title">
           <h2>약관 동의</h2>
         </div>
-        <div className="terms-container">
+        <div className="terms-container-content">
           <img src={gyujangkak} alt="gyujangkak" className="gyujangkak-image" />
           <p className="intro-text">
             환영합니다!
@@ -106,7 +106,7 @@ const SignupTos = () => {
                 checked={allChecked}
                 onChange={handleAllChecked}
               />
-              <span className="label">전체 동의하기</span>
+              <span className="total-label">전체 동의하기</span>
             </label>
           </div>
           <div className="chk_box_con">
