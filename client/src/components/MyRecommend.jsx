@@ -175,21 +175,6 @@ const MyRecommend = () => {
       ];
     }
     setSubFields(subFieldOptions);
-    // 기존에 선택된 중분류 항목을 유지하고 중복 선택을 방지
-    const updatedSelectedSubFields = [...selectedSubFields];
-
-    subFieldOptions.forEach(option => {
-      if (
-        selectedSubFields.some(selected => selected.id === option.id) &&
-        !updatedSelectedSubFields.some(selected => selected.id === option.id)
-      ) {
-        updatedSelectedSubFields.push(option);
-      }
-    });
-
-    // 현재 선택된 대분류와 관련된 중분류만 추가하기
-    setSubFields(subFieldOptions);
-    setSelectedSubFields(updatedSelectedSubFields);
   };
 
   // 중분류 항목 선택 시 이름과 ID 값을 상태에 저장하는 함수
@@ -323,7 +308,7 @@ const MyRecommend = () => {
                     onClick={() => handleSubFieldClick(field)} // 전체 field 객체를 전달
                     className={
                       selectedSubFields.some(
-                        selected => selected.name === field.name
+                        selected => selected.id === field.id
                       )
                         ? "selected"
                         : ""

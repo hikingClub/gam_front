@@ -1,0 +1,164 @@
+.detail-background-container {
+  /* background-color: red; */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(191, 196, 241, 0.185);
+}
+
+.detail-content-container {
+  width: 80%;
+  /* overflow-y: scroll; */
+  margin: 7rem auto;
+  padding-top: 0.1rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-content-inner-container {
+  margin-top: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header-icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.detail-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.detail-subtitle {
+  font-size: 14px;
+  color: #777;
+}
+
+.detail-info-and-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* 요소 간 여백을 균등하게 분배 */
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.detail-info {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.detail-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
+.detail-info li {
+  margin-bottom: 5px;
+}
+
+.info-buttons {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.info-buttons button {
+  padding: 0.8rem;
+}
+
+.info-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.report-button {
+  margin-top: 10px;
+  background-color: #ff5e5e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 90%;
+}
+
+.detail-tags {
+  margin-bottom: 20px;
+}
+
+.tags span {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.detail-description {
+  margin-bottom: 20px;
+  border: 0.1rem solid rgba(128, 128, 128, 0.383);
+  border-radius: 0.5rem;
+  padding: 1.3rem;
+}
+
+.detail-description h3 {
+  margin: -1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.detail-description p {
+  margin: -1rem;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.related-knowledge {
+  margin-bottom: 20px;
+  border: 0.1rem solid rgba(128, 128, 128, 0.383);
+  border-radius: 0.5rem;
+  padding: 1.3rem;
+  height: 15rem;
+}
+
+.related-knowledge h3 {
+  margin: -1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.related-loading {
+  text-align: center;
+  color: #777;
+  justify-content: center;
+  align-items: center;
+}

@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mainLogo.png";
 import "../styles/MainContent.css";
-import { fetchAutocompleteSuggestions } from "../utils/autoComplete"; // 유틸리티 함수 불러오기
+import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";

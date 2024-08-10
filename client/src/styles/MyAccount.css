@@ -10,7 +10,7 @@
 .MyAccount-inner-container {
   display: flex;
   flex-direction: row;
-  height: 86%;
+  height: 96.7%;
   width: 100%;
   margin-top: 0.55rem;
   overflow-x: hidden;
@@ -27,7 +27,7 @@
   min-width: 20rem;
   background: #fff;
   border-radius: 0.625rem;
-  box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0.1rem 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.055);
   padding-bottom: 1.25rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -252,11 +252,89 @@
   border-radius: 0.5rem;
 }
 
-/* 기본 레이아웃 */
-.MyAccount-main-container {
-  flex: 1;
+/* 모달 오버레이 */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
   justify-content: center;
-  margin: 0 0.45rem;
-  flex-direction: row;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 컨테이너 */
+.custom-modal-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 95%;
+  max-width: 30rem;
+  text-align: center;
+  box-shadow: 0px 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-password-field {
   position: relative;
+  width: 100%;
+  margin-bottom: 0.9375rem;
+}
+
+.custom-password-field input {
+  width: calc(100% - 2.5rem);
+  padding: 0.7rem; /* 10px -> rem 단위로 변경 */
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem; /* 4px -> rem 단위로 변경 */
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.toggle-password-visibility {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.toggle-password-visibility img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.custom-modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  width: 100%;
+  margin-top: 0.625rem;
+  gap: 1rem; /* 버튼 간격 추가 (선택 사항) */
+  margin-right: 2.5rem;
+}
+
+.custom-modal-buttons button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.custom-modal-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.custom-modal-buttons button:last-child {
+  background-color: #6c757d;
+  color: white;
 }

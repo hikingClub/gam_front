@@ -72,7 +72,7 @@
   padding: 2rem; /* 패딩을 rem 단위로 설정 */
   border: 1px solid rgb(0, 55, 88, 0.3);
   border-radius: 0.8rem;
-  height: 51.7vh;
+  height: 58vh;
   box-sizing: border-box; /* 패딩과 보더가 크기 계산에 포함되도록 설정 */
 }
 
@@ -106,7 +106,7 @@
   padding: 0.8rem; /* 패딩을 rem 단위로 설정 */
   border: 1px solid #ccc;
   border-radius: 0.4rem; /* border-radius를 rem 단위로 설정 */
-  font-size: 0.9rem; /* 폰트 크기를 rem 단위로 설정 */
+  font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
 }
 
 .subs-keyword-list {
@@ -131,6 +131,7 @@
   font-size: 1rem; /* 폰트 크기를 rem 단위로 설정 */
   margin-left: 0.5rem; /* margin을 rem 단위로 설정 */
   cursor: pointer;
+  padding: 0 0.5rem;
 }
 
 .subs-keyword button:hover {
