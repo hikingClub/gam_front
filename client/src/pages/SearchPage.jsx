@@ -128,13 +128,6 @@ const SearchPage = () => {
     setSummaryToggles(Array(results.length).fill(false));
   }, [results, currentPage]);
 
-  // 설명 토글 함수를 PostCard에 전달
-  const toggleSummary = index => {
-    const newToggles = [...summaryToggles];
-    newToggles[index] = !newToggles[index];
-    setSummaryToggles(newToggles);
-  };
-
   const handleFetchData = async keyword => {
     try {
       const data = await fetchData(keyword, "200"); // pagePer일단 100개!
