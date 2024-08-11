@@ -1,16 +1,21 @@
+// 1. MainContent.jsx
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Button, Input, Snackbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/mainLogo.png";
-import "../styles/MainContent.css";
-import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import "regenerator-runtime/runtime";
+import logo from "../assets/mainLogo.png";
+import "../styles/MainContent.css";
+import { fetchAutocompleteSuggestions } from "../utils/autoComplete";
+import { uploadImageForSearch } from "../utils/imageSearch"; // 이미지 검색 함수 가져오기
+import { fetchRecommendSearch } from "../utils/recommendSearch";
+import { useAuth } from "./AuthContext";
 
 const DetailedSearchButton = styled(Button)({
   marginLeft: "8px",
@@ -28,11 +33,41 @@ const DetailedSearchButton = styled(Button)({
 });
 
 const MainContent = () => {
+  const { userData } = useAuth(); // 현재 로그인된 사용자의 데이터
   const [searchKeyword, setSearchKeyword] = useState("");
   const [suggestions, setSuggestions] = useState([]); // 자동완성 제안을 저장하는 상태
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isImageSearch, setIsImageSearch] = useState(false); // 이미지 검색 모드 상태
   const navigate = useNavigate();
 
+  // 이미지 검색 기능
+  const handleImageSearchToggle = async () => {
+    setIsImageSearch(!isImageSearch);
+    if (isImageSearch) {
+      // 이미지 검색 모드 활성화 시 스낵바를 표시하지 않음
+      setOpenSnackbar(false);
+    }
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.onchange = async e => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          // 이미지 검색 함수 호출
+          const result = await uploadImageForSearch(file);
+          console.log("이미지 검색 결과:", result); // 결과를 콘솔에 출력
+          navigate(`/search`, {
+            state: { resultData: result, imageTitle: file.name },
+          });
+        } catch (error) {
+          console.error("Error performing image search:", error);
+          setOpenSnackbar(true); // 오류 발생 시 사용자에게 알림
+        }
+      }
+    };
+    fileInput.click();
+  };
   const {
     transcript,
     listening,
@@ -40,6 +75,7 @@ const MainContent = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  // 음성인식
   useEffect(() => {
     if (transcript) {
       setSearchKeyword(transcript);
@@ -57,7 +93,6 @@ const MainContent = () => {
   const handleInputChange = async e => {
     const inputValue = e.target.value;
     setSearchKeyword(inputValue);
-
     if (inputValue.trim().length > 0) {
       // 자동완성 제안 요청
       const results = await fetchAutocompleteSuggestions(inputValue);
@@ -116,6 +151,38 @@ const MainContent = () => {
     },
   };
 
+  // 추천검색 결과 가져오기 함수
+  const handleFetchRecommendSearch = async () => {
+    console.log("사용자 SEQ:", userData.seq);
+    const user_id = userData.seq; // 현재 로그인된 사용자의 seq
+    const keyword = searchKeyword.trim(); // 사용자가 입력한 검색어
+
+    if (keyword.length === 0) {
+      setOpenSnackbar(true); // 검색어가 비어있으면 스낵바 알림을 보여줍니다
+      return;
+    }
+
+    const result = await fetchRecommendSearch({ user_id, keyword });
+    console.log("추천 검색 결과:", result);
+    // 추천 검색 결과를 검색 페이지로 네비게이션하면서 state로 데이터 전달
+    navigate(
+      `/search?keyword=${encodeURIComponent(keyword)}&recommended=true`,
+      {
+        state: { recommendedData: result },
+      }
+    );
+  };
+
+  const iconStyle = {
+    fontSize: "1.45em",
+    cursor: "pointer",
+    color: "#3f51b5",
+    marginLeft: "5px", // 원하는 간격으로 조정
+    "&:hover": {
+      color: "#8e24aa",
+    },
+  };
+
   const micIconStyle = {
     fontSize: "1.45em",
     cursor: "pointer",
@@ -153,13 +220,21 @@ const MainContent = () => {
                   onClick={handleSearchClick}
                 />
                 <MicIcon sx={micIconStyle} onClick={handleMicClick} />
+                <Button
+                  sx={{ minWidth: "auto", p: 0 }}
+                  onClick={handleImageSearchToggle}
+                >
+                  <ImageSearchIcon
+                    sx={{ ...iconStyle, mb: "7px", fontSize: "1.75em" }}
+                  />
+                </Button>
               </>
             }
             sx={{
               width: "400px",
               height: "50px",
               padding: "10px",
-              paddingLeft: "15px", // placeholder 위치
+              paddingLeft: "15px",
               fontSize: "1.2em",
               fontFamily: '"Noto Sans KR", sans-serif',
             }}
@@ -168,7 +243,9 @@ const MainContent = () => {
             onKeyDown={handleKeyDown} // 엔터키 이벤트 핸들러 추가
           />
           {/* 추천검색 버튼 */}
-          <DetailedSearchButton>상세검색</DetailedSearchButton>
+          <DetailedSearchButton onClick={handleFetchRecommendSearch}>
+            추천검색
+          </DetailedSearchButton>
           {/* 자동완성 제안 목록 */}
           {suggestions.length > 0 && (
             <ul className="autocomplete-suggestions">
@@ -189,8 +266,12 @@ const MainContent = () => {
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // 화면 상단 중앙에 위치
-        sx={{ top: "15%" }} // 위치 및 크기 조정
+        sx={{
+          position: "fixed", // 위치 고정
+          top: "50%", // 화면의 수직 중앙
+          transform: "translate(340%, -50%)", // 정 중앙으로 조정
+          width: "auto", // 너비 자동 조정
+        }}
       >
         <Alert
           onClose={handleCloseSnackbar}

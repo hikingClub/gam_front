@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/ModernLogin.css";
+import { useAuth } from "./AuthContext";
 import SocialLoginHandler from "./SocialLoginHandler";
 import { FcLock } from "react-icons/fc";
 import { IoPerson } from "react-icons/io5";

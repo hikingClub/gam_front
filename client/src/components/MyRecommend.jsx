@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "../styles/MyRecommend.css";
 
 const MyRecommend = () => {
@@ -67,7 +67,7 @@ const MyRecommend = () => {
         }
       } catch (error) {
         console.error("설정을 불러오는 중 오류가 발생했습니다:", error);
-        alert("설정을 불러오는 중 오류가 발생했습니다.");
+        alert("설 정을 불러오는 중 오류가 발생했습니다.");
       }
     };
 
