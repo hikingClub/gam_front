@@ -37,7 +37,7 @@ const NavRight = () => {
   };
 
   // userData에서 nickname을 가져옴
-  const nickname = userData?.nickname || "사용자";
+  const nickname = userData || "사용자";
 
   console.log("사용자 이름 또는 닉네임: ", nickname);
 
