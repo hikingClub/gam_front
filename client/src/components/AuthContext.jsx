@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
@@ -26,16 +27,54 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (uid, seq) => {
-    const userInfo = { uid, seq };
-    sessionStorage.setItem("user", JSON.stringify(userInfo));
-    setUserData(userInfo);
-    setIsLoggedIn(true);
+  const login = async (userInfo, token = null) => {
+    if (userInfo) {
+      sessionStorage.setItem("user", JSON.stringify(userInfo));
+      setUserData(userInfo);
+      setIsLoggedIn(true);
+
+      if (token) {
+        sessionStorage.setItem("authToken", token);
+        setAuthToken(token);
+      }
+
+      // 사용자 설정 정보 가져오기 (토큰이 필요할 경우 인증 헤더에 포함)
+      try {
+        const config = token
+          ? {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          : { withCredentials: true };
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_APP_SPRING_API_URL}/mypage/settings`,
+          config
+        );
+
+        if (response.status === 200) {
+          const fetchedUserData = response.data;
+          setUserData(fetchedUserData);
+          sessionStorage.setItem("user", JSON.stringify(fetchedUserData));
+        }
+      } catch (error) {
+        console.error("사용자 설정 정보를 가져오는 데 실패했습니다.", error);
+      }
+
+      console.log("로그인 성공");
+      console.log("저장된 사용자 데이터:", userInfo);
+      console.log("저장된 인증 토큰:", token);
+    } else {
+      console.error("Invalid userInfo provided for login");
+    }
   };
 
   const logout = () => {
     sessionStorage.removeItem("user");
-    setUserData({ uid: null, seq: null });
+    sessionStorage.removeItem("authToken");
+
+    setUserData(null);
+    setAuthToken("");
     setIsLoggedIn(false);
 
     console.log("로그아웃 성공");

@@ -36,10 +36,14 @@ const NavRight = () => {
     }
   };
 
-  // userData에서 nickname을 가져옴
-  const nickname = userData?.nickname || "사용자";
+  const name = userData?.name;
 
-  console.log("사용자 이름 또는 닉네임: ", nickname);
+  // displayName 결정 로직
+  const displayName = userData
+    ? userData.name
+      ? name || id // 소셜 로그인 사용자는 name이 있으면 표시, 없으면 uid
+      : userData // 일반 로그인 사용자는 전체 userData 객체를 문자열로 변환하여 표시
+    : "사용자";
 
   // dropdown 외부 클릭 감지
   useEffect(() => {

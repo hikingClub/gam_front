@@ -173,6 +173,16 @@ const MainContent = () => {
     );
   };
 
+  const iconStyle = {
+    fontSize: "1.45em",
+    cursor: "pointer",
+    color: "#3f51b5",
+    marginLeft: "5px", // 원하는 간격으로 조정
+    "&:hover": {
+      color: "#8e24aa",
+    },
+  };
+
   const micIconStyle = {
     fontSize: "1.45em",
     cursor: "pointer",
