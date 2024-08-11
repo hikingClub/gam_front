@@ -7,15 +7,15 @@ import {
   Chip,
   Collapse,
   Dialog,
-  DialogContent,
   DialogTitle,
+  DialogContent,
   IconButton,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import DetailContent from "./DetailContent";
 import { IoClose } from "react-icons/io5";
 import "../styles/PostCard.css";
-import DetailContent from "./DetailContent"; // DetailContent 컴포넌트 가져오기
+import React, { useState } from "react";
 
 const outerPostBox = {
   display: "flex",
@@ -208,9 +208,16 @@ const PostCard = ({ post, showSummary, onToggleSummary }) => {
       <Dialog
         open={openModal}
         onClose={handleCloseModal}
-        maxWidth="md"
+        maxWidth={false} // MUI의 기본 maxWidth 제한을 제거
         fullWidth
-        classes={{ paper: "post-modal-content" }}
+        sx={{
+          "& .MuiDialog-paper": {
+            maxWidth: "1100px", // 원하는 최대 너비를 여기서 설정
+            width: "100%", // 너비를 100%로 설정하여 maxWidth를 고려하지 않음
+            padding: "20px", // 내부 패딩 설정
+            height: "90%",
+          },
+        }}
       >
         <DialogTitle className="post-modal-title">
           상세 정보

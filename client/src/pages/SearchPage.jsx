@@ -123,6 +123,11 @@ const SearchPage = () => {
     setSummaryToggles(newToggles);
   };
 
+  // 페이지나 검색 결과가 변경될 때 설명 토글 상태를 리셋
+  useEffect(() => {
+    setSummaryToggles(Array(results.length).fill(false));
+  }, [results, currentPage]);
+
   const handleFetchData = async keyword => {
     try {
       const data = await fetchData(keyword, "200"); // pagePer일단 100개!
