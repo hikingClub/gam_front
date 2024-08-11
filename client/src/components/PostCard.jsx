@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import DescriptionIcon from "@mui/icons-material/Description";
 import {
   Box,
   Button,
@@ -6,16 +6,16 @@ import {
   CardContent,
   Chip,
   Collapse,
-  Typography,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
+  Typography,
 } from "@mui/material";
 import DetailContent from "./DetailContent";
 import { IoClose } from "react-icons/io5";
 import "../styles/PostCard.css";
-import DescriptionIcon from "@mui/icons-material/Description";
+import React, { useState } from "react";
 
 const outerPostBox = {
   display: "flex",

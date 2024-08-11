@@ -6,6 +6,7 @@ footer {
   position: relative; /* 고정 해제 - 아래에선 fixed(footer.jsx에서 조건부 렌더링) */
   bottom: 0;
   left: 0;
+  right: 0; /* 오른쪽을 0으로 설정하여 뷰포트에 맞춤 */
   box-shadow: 0 -5px 8px rgba(0, 0, 0, 0.1); /* 윗줄 그림자 추가 */
 }
 

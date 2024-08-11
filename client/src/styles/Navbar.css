@@ -2,6 +2,7 @@
   position: fixed; /* 상단에 고정 */
   top: 0;
   left: 0;
+  right: 0; /* 오른쪽을 0으로 설정하여 뷰포트에 맞춤 */
   width: 100%;
   display: flex;
   justify-content: space-between;
