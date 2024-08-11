@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
 import "../styles/NavRight.css";
+import { useAuth } from "./AuthContext";
 
 const NavRight = () => {
   const { isLoggedIn, logout, userData } = useAuth();
@@ -37,9 +37,14 @@ const NavRight = () => {
   };
 
   // userData에서 nickname을 가져옴
-  const nickname = userData?.nickname || "사용자";
+  //   const nickname = userData || "사용자";
 
-  console.log("사용자 이름 또는 닉네임: ", nickname);
+  // displayName 결정 로직 / 로그인 후 다시 점검★★★★★★★
+  const displayName = userData
+    ? userData
+      ? userData || id
+      : userData
+    : "사용자";
 
   // dropdown 외부 클릭 감지
   useEffect(() => {
@@ -66,7 +71,12 @@ const NavRight = () => {
       {isLoggedIn ? (
         <>
           <span className="welcome-message">
-            <strong>{nickname}</strong> 님 환영합니다
+            <strong>
+              {userData.isSocialLogin
+                ? displayName
+                : JSON.stringify(displayName.uid)}
+            </strong>{" "}
+            님 환영합니다
           </span>
           <div className="notification-container" ref={alarmDropdownRef}>
             <button

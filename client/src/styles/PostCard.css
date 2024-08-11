@@ -3,7 +3,7 @@
   padding: 20px; /* 모달 내부 패딩 */
   border-radius: 8px; /* 모달의 둥근 모서리 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 그림자 */
-  max-width: 900px; /* 모달 창의 최대 너비 */
+  max-width: 1200px; /* 모달 창의 최대 너비를 1200px로 증가 */
   width: 100%; /* 기본 너비 */
   height: 80vh; /* 모달 창의 높이를 화면 높이의 80%로 고정 */
   overflow-y: scroll; /* 내용이 넘칠 경우 스크롤 */
