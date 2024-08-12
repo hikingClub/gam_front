@@ -37,14 +37,9 @@ const NavRight = () => {
   };
 
   // userData에서 nickname을 가져옴
-  //   const nickname = userData || "사용자";
+  const nickname = userData?.nickname || "";
 
-  // displayName 결정 로직 / 로그인 후 다시 점검★★★★★★★
-  const displayName = userData
-    ? userData
-      ? userData || id
-      : userData
-    : "사용자";
+  console.log("사용자 이름 또는 닉네임: ", nickname);
 
   // dropdown 외부 클릭 감지
   useEffect(() => {
@@ -71,12 +66,7 @@ const NavRight = () => {
       {isLoggedIn ? (
         <>
           <span className="welcome-message">
-            <strong>
-              {userData.isSocialLogin
-                ? displayName
-                : JSON.stringify(displayName.uid)}
-            </strong>{" "}
-            님 환영합니다
+            <strong>{nickname}</strong> 님 환영합니다
           </span>
           <div className="notification-container" ref={alarmDropdownRef}>
             <button
