@@ -5,16 +5,16 @@
   white-space: nowrap;
   box-sizing: border-box;
   position: relative; /* 위치를 상대적으로 설정 */
-  top: 10.8vh; /* Navbar 아래로 위치 조정 */
-  background-color: rgba(0, 0, 0, 0.7); /* 투명한 검은색 배경 */
+  top: 11vh; /* Navbar 아래로 위치 조정 */
+  background-color: rgba(255, 255, 255, 0.7); /* 투명한 흰색 배경 */
   color: yellow; /* 노란색 글씨 */
   z-index: 10;
   display: flex;
   justify-content: space-between; /* 텍스트와 날짜 사이 공간 분배 */
   align-items: center;
   font-weight: bold; /* 전체 텍스트를 더 진하게 */
-  border-top: 3px solid #646cff; /* 상단에 보라색 구분선 추가 */
-  border-bottom: 5px solid #646cff; /* 하단에 보라색 구분선 추가 */
+  border-top: 2px solid #646cff; /* 상단에 보라색 구분선 추가 */
+  border-bottom: 4px solid #646cff; /* 하단에 보라색 구분선 추가 */
 }
 
 .marquee-content {
@@ -65,7 +65,7 @@
 .marquee-date {
   padding-right: 20px;
   font-size: 0.8em;
-  color: lightgray;
+  color: rgb(3, 3, 3);
 }
 .marquee-date i {
   margin-right: 5px; /* 아이콘과 텍스트 사이의 간격 */

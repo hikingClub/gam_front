@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import webAccessibilityImg from "../assets/webAccessibility.png";
+import metabuild from "../assets/metabuild.png";
 import "../styles/Footer.css";
 
 const Footer = () => {
@@ -25,8 +25,8 @@ const Footer = () => {
           Rights Reserved. | 주소: (06567) 서울특별시 서초구 동작대로 132
           (방배동, 안석빌딩) 9층 | 고객센터: pass-word-486
         </span>
-        <a href="https://www.wa.or.kr/board/list.asp?search=total&SearchString=%B5%F0%C1%F6%C5%D0%C1%FD%C7%F6%C0%FC&BoardID=0006">
-          <img src={webAccessibilityImg} alt="인증마크" className="cert-mark" />
+        <a href="http://www.metabuild.co.kr/Index.do?lang=kr">
+          <img src={metabuild} alt="인증마크" className="cert-mark" />
         </a>
       </div>
     </footer>
