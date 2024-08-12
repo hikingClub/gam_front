@@ -1,6 +1,6 @@
+import { Button, Chip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Typography, Button, Chip } from "@mui/material";
 import "../styles/DetailContent.css";
 
 const DetailContent = () => {
